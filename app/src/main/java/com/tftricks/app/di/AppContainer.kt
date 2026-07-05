@@ -3,6 +3,7 @@ package com.tftricks.app.di
 import android.content.Context
 import com.tftricks.app.data.local.userDataStore
 import com.tftricks.app.data.repository.DataStoreFavoritesRepository
+import com.tftricks.app.data.repository.DataStoreOverlayPrefsRepository
 import com.tftricks.app.data.repository.DataStoreSavedTeamsRepository
 import com.tftricks.app.data.repository.JsonAugmentRepository
 import com.tftricks.app.data.repository.JsonChampionRepository
@@ -15,6 +16,7 @@ import com.tftricks.app.domain.repository.AugmentRepository
 import com.tftricks.app.domain.repository.ChampionRepository
 import com.tftricks.app.domain.repository.FavoritesRepository
 import com.tftricks.app.domain.repository.ItemRepository
+import com.tftricks.app.domain.repository.OverlayPrefsRepository
 import com.tftricks.app.domain.repository.PatchNoteRepository
 import com.tftricks.app.domain.repository.SavedTeamsRepository
 import com.tftricks.app.domain.repository.TeamCompRepository
@@ -47,4 +49,6 @@ class AppContainer(context: Context) {
         DataStoreFavoritesRepository(appContext.userDataStore)
     val savedTeamsRepository: SavedTeamsRepository =
         DataStoreSavedTeamsRepository(appContext.userDataStore, json)
+    val overlayPrefsRepository: OverlayPrefsRepository =
+        DataStoreOverlayPrefsRepository(appContext.userDataStore)
 }

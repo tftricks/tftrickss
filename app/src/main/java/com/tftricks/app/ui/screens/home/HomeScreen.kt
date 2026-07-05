@@ -1,5 +1,6 @@
 package com.tftricks.app.ui.screens.home
 
+import android.provider.Settings
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,14 +17,18 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.tftricks.app.overlay.OverlayService
 import com.tftricks.app.ui.AppViewModelProvider
 import com.tftricks.app.ui.components.InfoCard
 import com.tftricks.app.ui.components.PillChip
@@ -33,6 +38,8 @@ import com.tftricks.app.ui.components.TFTricksLogo
 import com.tftricks.app.ui.components.TierBadge
 import com.tftricks.app.ui.navigation.Destination
 import com.tftricks.app.ui.theme.BrandYellow
+import com.tftricks.app.ui.theme.PureBlack
+import com.tftricks.app.ui.theme.SurfaceElevated
 import com.tftricks.app.ui.theme.TextPrimary
 import com.tftricks.app.ui.theme.TextSecondary
 import com.tftricks.app.ui.theme.costColor
@@ -84,6 +91,9 @@ fun HomeScreen(
                 QuickTile(Destination.Augments, "Augments", onOpenDestination, Modifier.weight(1f))
                 QuickTile(Destination.TeamBuilder, "Builder", onOpenDestination, Modifier.weight(1f))
             }
+
+            // In-game overlay quick toggle
+            OverlayToggleCard(onOpenDestination)
 
             // Featured S-tier comps
             SectionLabel(text = "Featured comps", modifier = Modifier.padding(top = 4.dp))
@@ -148,6 +158,50 @@ fun HomeScreen(
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun OverlayToggleCard(onOpenDestination: (Destination) -> Unit) {
+    val context = LocalContext.current
+    val isRunning by OverlayService.isRunning.collectAsStateWithLifecycle()
+
+    InfoCard {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = "In-game overlay",
+                    style = MaterialTheme.typography.titleSmall,
+                    color = TextPrimary
+                )
+                Text(
+                    text = if (isRunning) "Floating button is on screen."
+                    else "Show comps and items on top of TFT.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = TextSecondary
+                )
+            }
+            Switch(
+                checked = isRunning,
+                onCheckedChange = { wantOn ->
+                    when {
+                        !wantOn -> OverlayService.stop(context)
+                        Settings.canDrawOverlays(context) -> OverlayService.start(context)
+                        // No permission yet → walk the user through it in Overlay Settings.
+                        else -> onOpenDestination(Destination.OverlaySettings)
+                    }
+                },
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = PureBlack,
+                    checkedTrackColor = BrandYellow,
+                    uncheckedThumbColor = TextSecondary,
+                    uncheckedTrackColor = SurfaceElevated
+                )
+            )
         }
     }
 }
