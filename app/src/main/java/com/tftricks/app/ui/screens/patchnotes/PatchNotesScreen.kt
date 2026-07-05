@@ -1,5 +1,6 @@
 package com.tftricks.app.ui.screens.patchnotes
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,6 +25,7 @@ import com.tftricks.app.ui.theme.TextSecondary
 @Composable
 fun PatchNotesScreen(
     contentPadding: PaddingValues,
+    onOpenPatch: (String) -> Unit,
     viewModel: PatchNotesViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -40,7 +42,7 @@ fun PatchNotesScreen(
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             items(patchNotes, key = { it.id }) { patch ->
-                InfoCard {
+                InfoCard(modifier = Modifier.clickable { onOpenPatch(patch.id) }) {
                     Column {
                         Text(
                             text = "Patch ${patch.version} — ${patch.date}",
@@ -52,6 +54,12 @@ fun PatchNotesScreen(
                             style = MaterialTheme.typography.bodySmall,
                             color = TextSecondary,
                             modifier = Modifier.padding(top = 2.dp)
+                        )
+                        Text(
+                            text = "${patch.changes.size} changes",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = TextSecondary,
+                            modifier = Modifier.padding(top = 4.dp)
                         )
                     }
                 }

@@ -27,9 +27,22 @@ val TierA = Color(0xFF3DDC84)
 val TierB = Color(0xFF4DA6FF)
 val TierC = Color(0xFF8A8A93)
 
-// Champion cost colors (1..5)
+// Champion cost colors (1..5), standard TFT convention: grey → green → blue → purple → gold
 val Cost1 = Color(0xFF9A9AA3)
 val Cost2 = Color(0xFF3DDC84)
 val Cost3 = Color(0xFF4DA6FF)
 val Cost4 = Color(0xFFC26BFF)
 val Cost5 = BrandYellow
+
+fun costColor(cost: Int): Color = when (cost) {
+    1 -> Cost1
+    2 -> Cost2
+    3 -> Cost3
+    4 -> Cost4
+    else -> Cost5
+}
+
+// Augment tier colors
+val AugmentSilver = Color(0xFFB8B8C0)
+val AugmentGold = BrandYellow
+val AugmentPrismatic = Color(0xFF7FE7F0)

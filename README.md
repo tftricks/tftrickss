@@ -2,14 +2,15 @@
 
 TFTricks is an offline-first **Teamfight Tactics companion app** for Android with 100% original branding: pure black background, bright yellow (`#FFD400`) accent, dark-mode only.
 
-This repository currently contains **Phase 1 — the foundation**: full project setup, brand theme, navigation shell with placeholder screens, data models, bundled sample data, repositories with in-memory caching, and ViewModels proving the whole data pipeline end to end.
+The app currently covers **Phases 1–2**: full project setup, brand theme, navigation, and all main screens — dashboard, filterable databases (comps, champions, items, augments), detail screens, traits with breakpoints, item combos, patch notes, global search, a DataStore-backed favorites system, and a basic Team Builder with live trait calculation and locally saved teams.
 
 ## Tech stack
 
 - **Kotlin** + **Jetpack Compose** (Material 3)
 - **MVVM** with a hand-rolled dependency container (no DI framework yet)
 - **Offline-first**: all data comes from JSON files in `assets/data/` parsed with **kotlinx.serialization** — no network calls anywhere
-- **Compose Navigation** with a bottom navigation bar + "More" hub
+- **DataStore (Preferences)** for local persistence: favorites per category + teams saved from the Team Builder
+- **Compose Navigation** with a bottom navigation bar, a "More" hub, and parameterized detail routes (comp / champion / item / patch)
 - Min SDK **26**, target/compile SDK **35**, Gradle Kotlin DSL with a version catalog
 
 ## Project structure
@@ -30,16 +31,21 @@ app/src/main/
     │   └── AppContainer.kt         # Manual dependency wiring
     ├── data/                       # DATA LAYER
     │   ├── source/AssetJsonDataSource.kt   # Reads + parses asset JSON off the main thread
+    │   ├── local/UserDataStore.kt          # Preferences DataStore instance
     │   └── repository/                     # Repository implementations
     │       ├── CachedAssetRepository.kt    # Load-once in-memory cache base class
-    │       └── JsonRepositories.kt         # One implementation per data type
+    │       ├── JsonRepositories.kt         # One implementation per data type
+    │       ├── DataStoreFavoritesRepository.kt   # Favorite ids per category
+    │       └── DataStoreSavedTeamsRepository.kt  # Teams built in the Team Builder
     ├── domain/                     # DOMAIN LAYER
-    │   ├── model/                  # TeamComp, Champion, Item, Trait, Augment, PatchNote
+    │   ├── model/                  # TeamComp, Champion, Item, Trait, Augment, PatchNote,
+    │   │                           #   SavedTeam, FavoriteCategory
     │   └── repository/             # Repository interfaces the UI depends on
     └── ui/                         # UI LAYER (MVVM)
         ├── theme/                  # Black/yellow brand: Color, Type, Shape, Theme
-        ├── components/             # TFTricksLogo (placeholder), TierBadge, InfoCard, …
-        ├── navigation/             # Destination enum + NavHost graph
+        ├── components/             # TFTricksLogo, TierBadge, InfoCard, BoardGrid,
+        │                           #   FilterChipRow, FavoriteButton, ExpandableSection, …
+        ├── navigation/             # Destination enum, DetailRoutes, NavHost graph
         ├── AppViewModelProvider.kt # ViewModel factory wired to repositories
         └── screens/                # One package per screen (screen + ViewModel)
 ```
@@ -47,11 +53,27 @@ app/src/main/
 ### Architecture flow
 
 ```
-assets/data/*.json → AssetJsonDataSource → Json*Repository (in-memory cache)
+assets/data/*.json → AssetJsonDataSource → Json*Repository (in-memory cache) ┐
+DataStore (favorites, saved teams) ──────────────────────────────────────────┤
         → domain interfaces → ViewModel (StateFlow<UiState>) → Compose screen
 ```
 
-Each list screen collects a `StateFlow<UiState<List<T>>>` from its ViewModel and renders loading / error / success states. Screens for later phases (Team Builder, Saved Comps, Search, Settings, Overlay Settings) are placeholders behind real navigation routes.
+Each screen collects a `StateFlow<UiState<…>>` from its ViewModel and renders loading / error / success states. Filters and favorites are combined reactively, so hearts and filtered lists update instantly everywhere.
+
+### Screens
+
+- **Home** — quick-access tiles, current patch, featured S-tier comps, favorites section
+- **Team Comps** — tier/tag filters, tier badges, favorites; **Comp detail** with boards on a hex grid, carries/tanks, items, traits, game plan, strengths/weaknesses in collapsible sections
+- **Champions** — 2-column grid, cost color-coding, cost/trait filters; **detail** with ability, items, positioning, tappable best comps
+- **Traits** — expandable breakpoints + tappable champion chips
+- **Items** — category filter + **Combos** tab (component-pair explorer); **detail** with recipe, effect, best users, alternatives
+- **Augments** — tier filter, priority stars, tappable best comps
+- **Patch notes** — list + per-change detail
+- **Search** — grouped results across all data types
+- **Saved Comps** — favorited comps + teams saved from the builder
+- **Team Builder** — tap-to-place board, live trait breakpoints, save teams locally
+
+Settings and Overlay Settings remain placeholders for later phases.
 
 ### Navigation
 

@@ -3,49 +3,75 @@ package com.tftricks.app.ui.screens.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tftricks.app.di.AppContainer
+import com.tftricks.app.domain.model.Champion
+import com.tftricks.app.domain.model.FavoriteCategory
+import com.tftricks.app.domain.model.Item
 import com.tftricks.app.domain.model.TeamComp
+import com.tftricks.app.domain.model.Tier
 import com.tftricks.app.ui.common.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-/** Aggregated numbers proving the whole data pipeline works. */
-data class HomeOverview(
+data class HomeContent(
     val currentPatch: String,
-    val topComps: List<TeamComp>,
-    val championCount: Int,
-    val traitCount: Int,
-    val itemCount: Int,
-    val augmentCount: Int
+    /** S-tier comps featured on the dashboard. */
+    val featuredComps: List<TeamComp>,
+    val favoriteComps: List<TeamComp>,
+    val favoriteChampions: List<Champion>,
+    val favoriteItems: List<Item>
+)
+
+private data class HomeData(
+    val patch: String,
+    val comps: List<TeamComp>,
+    val champions: List<Champion>,
+    val items: List<Item>
 )
 
 class HomeViewModel(private val container: AppContainer) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<UiState<HomeOverview>>(UiState.Loading)
-    val uiState: StateFlow<UiState<HomeOverview>> = _uiState.asStateFlow()
+    private val data = MutableStateFlow<HomeData?>(null)
+    private val error = MutableStateFlow<String?>(null)
+
+    val uiState: StateFlow<UiState<HomeContent>> = combine(
+        data,
+        error,
+        container.favoritesRepository.favorites(FavoriteCategory.COMP),
+        container.favoritesRepository.favorites(FavoriteCategory.CHAMPION),
+        container.favoritesRepository.favorites(FavoriteCategory.ITEM)
+    ) { loaded, err, favComps, favChampions, favItems ->
+        when {
+            err != null -> UiState.Error(err)
+            loaded == null -> UiState.Loading
+            else -> UiState.Success(
+                HomeContent(
+                    currentPatch = loaded.patch,
+                    featuredComps = loaded.comps.filter { it.tier == Tier.S }
+                        .ifEmpty { loaded.comps.sortedBy { it.tier }.take(2) },
+                    favoriteComps = loaded.comps.filter { it.id in favComps },
+                    favoriteChampions = loaded.champions.filter { it.id in favChampions },
+                    favoriteItems = loaded.items.filter { it.id in favItems }
+                )
+            )
+        }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), UiState.Loading)
 
     init {
-        loadOverview()
-    }
-
-    private fun loadOverview() {
         viewModelScope.launch {
-            _uiState.value = try {
-                val comps = container.teamCompRepository.getTeamComps()
-                val patchNotes = container.patchNoteRepository.getPatchNotes()
-                UiState.Success(
-                    HomeOverview(
-                        currentPatch = patchNotes.maxByOrNull { it.date }?.version ?: "—",
-                        topComps = comps.sortedBy { it.tier }.take(3),
-                        championCount = container.championRepository.getChampions().size,
-                        traitCount = container.traitRepository.getTraits().size,
-                        itemCount = container.itemRepository.getItems().size,
-                        augmentCount = container.augmentRepository.getAugments().size
-                    )
+            try {
+                data.value = HomeData(
+                    patch = container.patchNoteRepository.getPatchNotes()
+                        .maxByOrNull { it.date }?.version ?: "—",
+                    comps = container.teamCompRepository.getTeamComps(),
+                    champions = container.championRepository.getChampions(),
+                    items = container.itemRepository.getItems()
                 )
             } catch (e: Exception) {
-                UiState.Error(e.message ?: "Failed to load data")
+                error.value = e.message ?: "Failed to load data"
             }
         }
     }

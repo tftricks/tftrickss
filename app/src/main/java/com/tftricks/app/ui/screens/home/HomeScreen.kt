@@ -1,7 +1,10 @@
 package com.tftricks.app.ui.screens.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,58 +26,69 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tftricks.app.ui.AppViewModelProvider
 import com.tftricks.app.ui.components.InfoCard
+import com.tftricks.app.ui.components.PillChip
+import com.tftricks.app.ui.components.SectionLabel
 import com.tftricks.app.ui.components.StateContent
 import com.tftricks.app.ui.components.TFTricksLogo
 import com.tftricks.app.ui.components.TierBadge
+import com.tftricks.app.ui.navigation.Destination
 import com.tftricks.app.ui.theme.BrandYellow
+import com.tftricks.app.ui.theme.TextPrimary
 import com.tftricks.app.ui.theme.TextSecondary
+import com.tftricks.app.ui.theme.costColor
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun HomeScreen(
     contentPadding: PaddingValues,
+    onOpenDestination: (Destination) -> Unit,
+    onOpenComp: (String) -> Unit,
+    onOpenChampion: (String) -> Unit,
+    onOpenItem: (String) -> Unit,
     viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-    StateContent(state = state, modifier = Modifier.padding(contentPadding)) { overview ->
+    StateContent(state = state, modifier = Modifier.padding(contentPadding)) { content ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(contentPadding)
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            TFTricksLogo(modifier = Modifier.padding(top = 8.dp))
-
-            Text(
-                text = "Patch ${overview.currentPatch} • offline data",
-                style = MaterialTheme.typography.labelMedium,
-                color = TextSecondary
-            )
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            // Branding + patch
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth()
             ) {
-                StatTile("Champions", overview.championCount, Modifier.weight(1f))
-                StatTile("Traits", overview.traitCount, Modifier.weight(1f))
-                StatTile("Items", overview.itemCount, Modifier.weight(1f))
-                StatTile("Augments", overview.augmentCount, Modifier.weight(1f))
+                TFTricksLogo(markSize = 64.dp)
+                Text(
+                    text = "Patch ${content.currentPatch} • offline data",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = TextSecondary,
+                    modifier = Modifier.padding(top = 6.dp)
+                )
             }
 
-            Text(
-                text = "Top Comps",
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 4.dp)
-            )
+            // Quick access
+            SectionLabel(text = "Quick access")
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                QuickTile(Destination.TeamComps, "Meta Comps", onOpenDestination, Modifier.weight(1f))
+                QuickTile(Destination.Champions, "Champions", onOpenDestination, Modifier.weight(1f))
+                QuickTile(Destination.Items, "Items", onOpenDestination, Modifier.weight(1f))
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                QuickTile(Destination.Traits, "Traits", onOpenDestination, Modifier.weight(1f))
+                QuickTile(Destination.Augments, "Augments", onOpenDestination, Modifier.weight(1f))
+                QuickTile(Destination.TeamBuilder, "Builder", onOpenDestination, Modifier.weight(1f))
+            }
 
-            overview.topComps.forEach { comp ->
-                InfoCard {
+            // Featured S-tier comps
+            SectionLabel(text = "Featured comps", modifier = Modifier.padding(top = 4.dp))
+            content.featuredComps.forEach { comp ->
+                InfoCard(modifier = Modifier.clickable { onOpenComp(comp.id) }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         TierBadge(comp.tier)
                         Spacer(modifier = Modifier.width(12.dp))
@@ -81,7 +96,7 @@ fun HomeScreen(
                             Text(
                                 text = comp.name,
                                 style = MaterialTheme.typography.titleSmall,
-                                color = MaterialTheme.colorScheme.onBackground
+                                color = TextPrimary
                             )
                             Text(
                                 text = comp.tags.joinToString(" • "),
@@ -92,23 +107,74 @@ fun HomeScreen(
                     }
                 }
             }
+
+            // Favorites
+            val hasFavorites = content.favoriteComps.isNotEmpty() ||
+                content.favoriteChampions.isNotEmpty() ||
+                content.favoriteItems.isNotEmpty()
+            if (hasFavorites) {
+                SectionLabel(text = "Favorites", modifier = Modifier.padding(top = 4.dp))
+                content.favoriteComps.forEach { comp ->
+                    InfoCard(modifier = Modifier.clickable { onOpenComp(comp.id) }) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            TierBadge(comp.tier)
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Text(
+                                text = comp.name,
+                                style = MaterialTheme.typography.titleSmall,
+                                color = TextPrimary
+                            )
+                        }
+                    }
+                }
+                if (content.favoriteChampions.isNotEmpty() || content.favoriteItems.isNotEmpty()) {
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        content.favoriteChampions.forEach { champion ->
+                            PillChip(
+                                text = champion.name,
+                                contentColor = costColor(champion.cost),
+                                onClick = { onOpenChampion(champion.id) }
+                            )
+                        }
+                        content.favoriteItems.forEach { item ->
+                            PillChip(
+                                text = item.name,
+                                onClick = { onOpenItem(item.id) }
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
 @Composable
-private fun StatTile(label: String, value: Int, modifier: Modifier = Modifier) {
-    InfoCard(modifier = modifier) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
-            Text(
-                text = value.toString(),
-                style = MaterialTheme.typography.titleLarge,
-                color = BrandYellow
+private fun QuickTile(
+    destination: Destination,
+    label: String,
+    onOpen: (Destination) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    InfoCard(modifier = modifier.clickable { onOpen(destination) }) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Icon(
+                imageVector = destination.icon,
+                contentDescription = null,
+                tint = BrandYellow
             )
             Text(
                 text = label,
                 style = MaterialTheme.typography.labelSmall,
-                color = TextSecondary
+                color = TextSecondary,
+                modifier = Modifier.padding(top = 6.dp),
+                maxLines = 1
             )
         }
     }
