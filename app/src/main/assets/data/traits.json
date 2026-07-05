@@ -1,0 +1,87 @@
+[
+  {
+    "id": "trait_sorcerer",
+    "name": "Sorcerer",
+    "description": "Sorcerers gain bonus ability power and grant ability power to the whole team.",
+    "breakpoints": [
+      { "count": 2, "effect": "+20 ability power to Sorcerers" },
+      { "count": 4, "effect": "+45 ability power to Sorcerers, +10 to the team" },
+      { "count": 6, "effect": "+80 ability power to Sorcerers, +25 to the team" }
+    ],
+    "champions": ["Ziggs", "Lux", "Katarina", "Ahri"]
+  },
+  {
+    "id": "trait_duelist",
+    "name": "Duelist",
+    "description": "Duelists gain stacking attack speed with every attack, up to 8 stacks.",
+    "breakpoints": [
+      { "count": 2, "effect": "4% attack speed per stack" },
+      { "count": 4, "effect": "8% attack speed per stack" },
+      { "count": 6, "effect": "12% attack speed per stack and 12% dodge chance" }
+    ],
+    "champions": ["Vayne", "Yasuo", "Katarina", "Sett"]
+  },
+  {
+    "id": "trait_vanguard",
+    "name": "Vanguard",
+    "description": "Vanguards gain armor and magic resist, doubled while above half health.",
+    "breakpoints": [
+      { "count": 2, "effect": "+25 armor and magic resist" },
+      { "count": 4, "effect": "+55 armor and magic resist" },
+      { "count": 6, "effect": "+100 armor and magic resist" }
+    ],
+    "champions": ["Garen", "Poppy", "Nautilus", "Leona"]
+  },
+  {
+    "id": "trait_sniper",
+    "name": "Sniper",
+    "description": "Snipers gain +1 attack range and deal bonus damage per hex between them and their target.",
+    "breakpoints": [
+      { "count": 2, "effect": "8% bonus damage per hex" },
+      { "count": 4, "effect": "16% bonus damage per hex" }
+    ],
+    "champions": ["Vayne", "Tristana", "Aphelios"]
+  },
+  {
+    "id": "trait_brawler",
+    "name": "Brawler",
+    "description": "Brawlers gain bonus maximum health.",
+    "breakpoints": [
+      { "count": 2, "effect": "+300 health" },
+      { "count": 4, "effect": "+700 health" }
+    ],
+    "champions": ["Poppy", "Jinx", "Sett"]
+  },
+  {
+    "id": "trait_mystic",
+    "name": "Mystic",
+    "description": "Your whole team gains magic resist.",
+    "breakpoints": [
+      { "count": 2, "effect": "+30 magic resist for the team" },
+      { "count": 3, "effect": "+55 magic resist for the team" },
+      { "count": 5, "effect": "+100 magic resist for the team" }
+    ],
+    "champions": ["Lux", "Nautilus", "Ahri", "Leona", "Kayle"]
+  },
+  {
+    "id": "trait_blademaster",
+    "name": "Blademaster",
+    "description": "Blademasters have a chance to strike additional times on each attack.",
+    "breakpoints": [
+      { "count": 2, "effect": "35% chance for one extra strike" },
+      { "count": 4, "effect": "35% chance for two extra strikes" }
+    ],
+    "champions": ["Garen", "Yasuo", "Kayle"]
+  },
+  {
+    "id": "trait_gunner",
+    "name": "Gunner",
+    "description": "Gunners gain stacking attack damage every time they attack, resetting on takedown windows.",
+    "breakpoints": [
+      { "count": 2, "effect": "+5% attack damage per stack, max 4 stacks" },
+      { "count": 4, "effect": "+8% attack damage per stack, max 5 stacks" },
+      { "count": 6, "effect": "+12% attack damage per stack, max 6 stacks" }
+    ],
+    "champions": ["Ziggs", "Tristana", "Jinx", "Aphelios"]
+  }
+]

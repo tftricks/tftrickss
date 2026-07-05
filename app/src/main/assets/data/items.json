@@ -1,0 +1,119 @@
+[
+  {
+    "id": "item_infinity_edge",
+    "name": "Infinity Edge",
+    "components": ["B.F. Sword", "Sparring Gloves"],
+    "effect": "+35% attack damage, +35% critical strike chance. Abilities can critically strike.",
+    "bestUsers": ["Aphelios", "Tristana", "Jinx"],
+    "goodAlternatives": ["Giant Slayer", "Bloodthirster"],
+    "category": "AD"
+  },
+  {
+    "id": "item_giant_slayer",
+    "name": "Giant Slayer",
+    "components": ["B.F. Sword", "Recurve Bow"],
+    "effect": "+25% attack damage, +10% attack speed. Deal 25% bonus damage to enemies with more than 1750 max health.",
+    "bestUsers": ["Jinx", "Vayne", "Aphelios"],
+    "goodAlternatives": ["Infinity Edge"],
+    "category": "AD"
+  },
+  {
+    "id": "item_guinsoos_rageblade",
+    "name": "Guinsoo's Rageblade",
+    "components": ["Recurve Bow", "Needlessly Large Rod"],
+    "effect": "Attacks grant 5% stacking attack speed. No cap.",
+    "bestUsers": ["Kayle", "Vayne", "Tristana"],
+    "goodAlternatives": ["Blue Buff"],
+    "category": "attackSpeed"
+  },
+  {
+    "id": "item_bloodthirster",
+    "name": "Bloodthirster",
+    "components": ["B.F. Sword", "Negatron Cloak"],
+    "effect": "+20% attack damage, +20 magic resist, 20% omnivamp. Once per combat, gain a shield at 40% health.",
+    "bestUsers": ["Yasuo", "Vayne", "Kayle"],
+    "goodAlternatives": ["Titan's Resolve"],
+    "category": "AD"
+  },
+  {
+    "id": "item_jeweled_gauntlet",
+    "name": "Jeweled Gauntlet",
+    "components": ["Needlessly Large Rod", "Sparring Gloves"],
+    "effect": "+35 ability power, +35% critical strike chance. Abilities can critically strike.",
+    "bestUsers": ["Ahri", "Katarina", "Lux"],
+    "goodAlternatives": ["Rabadon's Deathcap"],
+    "category": "AP"
+  },
+  {
+    "id": "item_archangels_staff",
+    "name": "Archangel's Staff",
+    "components": ["Needlessly Large Rod", "Tear of the Goddess"],
+    "effect": "+20 ability power, +15 starting mana. Gain 30 ability power every 5 seconds of combat.",
+    "bestUsers": ["Lux", "Ahri"],
+    "goodAlternatives": ["Blue Buff", "Rabadon's Deathcap"],
+    "category": "AP"
+  },
+  {
+    "id": "item_rabadons_deathcap",
+    "name": "Rabadon's Deathcap",
+    "components": ["Needlessly Large Rod", "Needlessly Large Rod"],
+    "effect": "+50 ability power. Amplify all damage dealt by 20%.",
+    "bestUsers": ["Ahri", "Ziggs", "Katarina"],
+    "goodAlternatives": ["Jeweled Gauntlet"],
+    "category": "AP"
+  },
+  {
+    "id": "item_blue_buff",
+    "name": "Blue Buff",
+    "components": ["Tear of the Goddess", "Tear of the Goddess"],
+    "effect": "+50 starting mana. After casting, set mana to 15 and deal 8% bonus damage for 8 seconds.",
+    "bestUsers": ["Ziggs", "Ahri", "Lux"],
+    "goodAlternatives": ["Archangel's Staff"],
+    "category": "mana"
+  },
+  {
+    "id": "item_warmogs_armor",
+    "name": "Warmog's Armor",
+    "components": ["Giant's Belt", "Giant's Belt"],
+    "effect": "+800 health. Regenerate 1.5% max health per second.",
+    "bestUsers": ["Leona", "Nautilus", "Garen"],
+    "goodAlternatives": ["Gargoyle Stoneplate", "Sunfire Cape"],
+    "category": "tank"
+  },
+  {
+    "id": "item_gargoyle_stoneplate",
+    "name": "Gargoyle Stoneplate",
+    "components": ["Chain Vest", "Negatron Cloak"],
+    "effect": "+30 armor, +30 magic resist. Gain 12 armor and magic resist for each enemy targeting the holder.",
+    "bestUsers": ["Leona", "Poppy", "Sett"],
+    "goodAlternatives": ["Warmog's Armor"],
+    "category": "tank"
+  },
+  {
+    "id": "item_sunfire_cape",
+    "name": "Sunfire Cape",
+    "components": ["Chain Vest", "Giant's Belt"],
+    "effect": "+250 health, +20 armor. Every 2 seconds, burn a nearby enemy for 1% of their max health and reduce their healing.",
+    "bestUsers": ["Nautilus", "Garen", "Sett"],
+    "goodAlternatives": ["Gargoyle Stoneplate"],
+    "category": "tank"
+  },
+  {
+    "id": "item_titans_resolve",
+    "name": "Titan's Resolve",
+    "components": ["Recurve Bow", "Chain Vest"],
+    "effect": "+10% attack speed, +20 armor. Gain stacking attack damage and ability power when attacking or taking damage; at 25 stacks, gain bonus resists.",
+    "bestUsers": ["Yasuo", "Katarina", "Sett"],
+    "goodAlternatives": ["Bloodthirster"],
+    "category": "AD"
+  },
+  {
+    "id": "item_redemption",
+    "name": "Redemption",
+    "components": ["Tear of the Goddess", "Giant's Belt"],
+    "effect": "+250 health, +15 starting mana. Every 5 seconds, heal nearby allies for 15% of their missing health.",
+    "bestUsers": ["Nautilus", "Poppy", "Leona"],
+    "goodAlternatives": ["Sunfire Cape"],
+    "category": "utility"
+  }
+]

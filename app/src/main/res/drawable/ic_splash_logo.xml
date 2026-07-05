@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Placeholder TFTricks mark: yellow hex shield with a spark. Replace with the real logo later. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Hex shield outline -->
+    <path
+        android:pathData="M54,26 L79,40 L79,68 L54,82 L29,68 L29,40 Z"
+        android:strokeColor="#FFD400"
+        android:strokeWidth="5"
+        android:strokeLineJoin="miter"
+        android:fillColor="#00000000" />
+
+    <!-- Four-point spark -->
+    <path
+        android:pathData="M54,40 C56.5,49 59,51.5 68,54 C59,56.5 56.5,59 54,68 C51.5,59 49,56.5 40,54 C49,51.5 51.5,49 54,40 Z"
+        android:fillColor="#FFD400" />
+</vector>

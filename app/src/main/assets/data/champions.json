@@ -1,0 +1,242 @@
+[
+  {
+    "id": "champ_garen",
+    "name": "Garen",
+    "cost": 1,
+    "traits": ["Vanguard", "Blademaster"],
+    "ability": {
+      "name": "Judgment",
+      "description": "Spins for 3 seconds, dealing physical damage per second to adjacent enemies and reducing incoming damage while spinning.",
+      "manaStart": 30,
+      "manaMax": 80
+    },
+    "recommendedItems": ["Warmog's Armor", "Sunfire Cape", "Gargoyle Stoneplate"],
+    "role": "Tank",
+    "positioningNotes": "Front-center hex to soak the first engage.",
+    "bestComps": ["comp_duelist_vayne", "comp_blademaster_flex"]
+  },
+  {
+    "id": "champ_vayne",
+    "name": "Vayne",
+    "cost": 1,
+    "traits": ["Sniper", "Duelist"],
+    "ability": {
+      "name": "Silver Bolts",
+      "description": "Every third attack deals bonus true damage based on the target's maximum health.",
+      "manaStart": 0,
+      "manaMax": 0
+    },
+    "recommendedItems": ["Guinsoo's Rageblade", "Giant Slayer", "Bloodthirster"],
+    "role": "AD Carry",
+    "positioningNotes": "Back corner, opposite side of enemy assassins.",
+    "bestComps": ["comp_duelist_vayne"]
+  },
+  {
+    "id": "champ_ziggs",
+    "name": "Ziggs",
+    "cost": 1,
+    "traits": ["Sorcerer", "Gunner"],
+    "ability": {
+      "name": "Mini Bomb",
+      "description": "Hurls a bomb at the current target, dealing magic damage to it and half damage to adjacent enemies.",
+      "manaStart": 10,
+      "manaMax": 50
+    },
+    "recommendedItems": ["Blue Buff", "Jeweled Gauntlet", "Rabadon's Deathcap"],
+    "role": "AP Carry",
+    "positioningNotes": "Back row, central hex for maximum splash coverage.",
+    "bestComps": ["comp_vertical_sorcerers"]
+  },
+  {
+    "id": "champ_poppy",
+    "name": "Poppy",
+    "cost": 1,
+    "traits": ["Vanguard", "Brawler"],
+    "ability": {
+      "name": "Buckler Toss",
+      "description": "Throws her buckler at the farthest enemy, dealing magic damage. The buckler returns and grants Poppy a shield.",
+      "manaStart": 50,
+      "manaMax": 100
+    },
+    "recommendedItems": ["Warmog's Armor", "Gargoyle Stoneplate", "Redemption"],
+    "role": "Tank",
+    "positioningNotes": "Front line, one hex off center to split cleave damage.",
+    "bestComps": ["comp_duelist_vayne", "comp_gunner_fast8"]
+  },
+  {
+    "id": "champ_yasuo",
+    "name": "Yasuo",
+    "cost": 2,
+    "traits": ["Blademaster", "Duelist"],
+    "ability": {
+      "name": "Steel Tempest",
+      "description": "Dashes to a new target and slashes in a line, dealing physical damage. Every third cast knocks up enemies hit.",
+      "manaStart": 0,
+      "manaMax": 40
+    },
+    "recommendedItems": ["Bloodthirster", "Titan's Resolve", "Infinity Edge"],
+    "role": "Fighter",
+    "positioningNotes": "Second row flank so he dashes after the front line collides.",
+    "bestComps": ["comp_blademaster_flex", "comp_duelist_vayne"]
+  },
+  {
+    "id": "champ_lux",
+    "name": "Lux",
+    "cost": 2,
+    "traits": ["Sorcerer", "Mystic"],
+    "ability": {
+      "name": "Final Spark",
+      "description": "Fires a beam across the board in a line, dealing magic damage to all enemies hit.",
+      "manaStart": 40,
+      "manaMax": 90
+    },
+    "recommendedItems": ["Archangel's Staff", "Jeweled Gauntlet", "Blue Buff"],
+    "role": "AP Carry",
+    "positioningNotes": "Back row, aligned with the enemy carry's column.",
+    "bestComps": ["comp_vertical_sorcerers", "comp_mystic_vanguard"]
+  },
+  {
+    "id": "champ_tristana",
+    "name": "Tristana",
+    "cost": 2,
+    "traits": ["Gunner", "Sniper"],
+    "ability": {
+      "name": "Explosive Charge",
+      "description": "Places a bomb on the current target that detonates after 3 attacks, dealing physical damage in a small area.",
+      "manaStart": 30,
+      "manaMax": 70
+    },
+    "recommendedItems": ["Guinsoo's Rageblade", "Infinity Edge", "Giant Slayer"],
+    "role": "AD Carry",
+    "positioningNotes": "Back corner behind the tank wall.",
+    "bestComps": ["comp_gunner_fast8"]
+  },
+  {
+    "id": "champ_katarina",
+    "name": "Katarina",
+    "cost": 3,
+    "traits": ["Sorcerer", "Duelist"],
+    "ability": {
+      "name": "Death Lotus",
+      "description": "Channels, throwing daggers at the closest enemies, dealing magic damage and reducing healing.",
+      "manaStart": 20,
+      "manaMax": 60
+    },
+    "recommendedItems": ["Jeweled Gauntlet", "Rabadon's Deathcap", "Titan's Resolve"],
+    "role": "AP Assassin",
+    "positioningNotes": "Second row center so her lotus clips both flanks.",
+    "bestComps": ["comp_vertical_sorcerers"]
+  },
+  {
+    "id": "champ_nautilus",
+    "name": "Nautilus",
+    "cost": 3,
+    "traits": ["Vanguard", "Mystic"],
+    "ability": {
+      "name": "Depth Charge",
+      "description": "Sends a shockwave to the farthest enemy, knocking up and stunning everything in its path.",
+      "manaStart": 60,
+      "manaMax": 120
+    },
+    "recommendedItems": ["Warmog's Armor", "Sunfire Cape", "Redemption"],
+    "role": "Tank",
+    "positioningNotes": "Front center; his stun path crosses the most enemies from there.",
+    "bestComps": ["comp_mystic_vanguard", "comp_vertical_sorcerers"]
+  },
+  {
+    "id": "champ_jinx",
+    "name": "Jinx",
+    "cost": 4,
+    "traits": ["Gunner", "Brawler"],
+    "ability": {
+      "name": "Get Excited!",
+      "description": "Gains attack speed on takedown. At maximum stacks she swaps to her rocket launcher, dealing splash physical damage.",
+      "manaStart": 0,
+      "manaMax": 0
+    },
+    "recommendedItems": ["Guinsoo's Rageblade", "Giant Slayer", "Infinity Edge"],
+    "role": "AD Carry",
+    "positioningNotes": "Back corner; reposition away from the enemy's dive threats each stage.",
+    "bestComps": ["comp_gunner_fast8"]
+  },
+  {
+    "id": "champ_ahri",
+    "name": "Ahri",
+    "cost": 4,
+    "traits": ["Sorcerer", "Mystic"],
+    "ability": {
+      "name": "Orb of Deception",
+      "description": "Fires an orb through the target that returns to her, dealing magic damage both ways.",
+      "manaStart": 30,
+      "manaMax": 80
+    },
+    "recommendedItems": ["Blue Buff", "Jeweled Gauntlet", "Rabadon's Deathcap"],
+    "role": "AP Carry",
+    "positioningNotes": "Back row center to line the orb through stacked enemies.",
+    "bestComps": ["comp_vertical_sorcerers", "comp_mystic_vanguard"]
+  },
+  {
+    "id": "champ_leona",
+    "name": "Leona",
+    "cost": 4,
+    "traits": ["Vanguard", "Mystic"],
+    "ability": {
+      "name": "Solar Flare",
+      "description": "Calls down a flare on the largest enemy cluster, stunning and dealing magic damage. Leona gains massive damage reduction.",
+      "manaStart": 40,
+      "manaMax": 100
+    },
+    "recommendedItems": ["Gargoyle Stoneplate", "Warmog's Armor", "Sunfire Cape"],
+    "role": "Tank",
+    "positioningNotes": "Front center, main tank hex — she should always take the first cast.",
+    "bestComps": ["comp_gunner_fast8", "comp_mystic_vanguard"]
+  },
+  {
+    "id": "champ_aphelios",
+    "name": "Aphelios",
+    "cost": 4,
+    "traits": ["Sniper", "Gunner"],
+    "ability": {
+      "name": "Moonlight Vigil",
+      "description": "Fires a volley at the farthest enemies, dealing physical damage and marking them to take bonus damage from his attacks.",
+      "manaStart": 50,
+      "manaMax": 110
+    },
+    "recommendedItems": ["Infinity Edge", "Giant Slayer", "Bloodthirster"],
+    "role": "AD Carry",
+    "positioningNotes": "Deep back corner to maximize Sniper range bonus.",
+    "bestComps": ["comp_gunner_fast8"]
+  },
+  {
+    "id": "champ_kayle",
+    "name": "Kayle",
+    "cost": 5,
+    "traits": ["Blademaster", "Mystic"],
+    "ability": {
+      "name": "Divine Ascent",
+      "description": "Ascends, gaining attack range and waves of bonus true damage on her attacks. At 3 stars she ascends fully at combat start.",
+      "manaStart": 0,
+      "manaMax": 0
+    },
+    "recommendedItems": ["Guinsoo's Rageblade", "Rabadon's Deathcap", "Bloodthirster"],
+    "role": "Hybrid Carry",
+    "positioningNotes": "Back line flank; she scales, so protect her early in the fight.",
+    "bestComps": ["comp_blademaster_flex", "comp_mystic_vanguard"]
+  },
+  {
+    "id": "champ_sett",
+    "name": "Sett",
+    "cost": 5,
+    "traits": ["Brawler", "Duelist"],
+    "ability": {
+      "name": "The Show Stopper",
+      "description": "Grabs the highest-health enemy and slams them into the ground, dealing physical damage in a large area based on their max health.",
+      "manaStart": 70,
+      "manaMax": 140
+    },
+    "recommendedItems": ["Warmog's Armor", "Titan's Resolve", "Sunfire Cape"],
+    "role": "Fighter",
+    "positioningNotes": "Front line, offset from the main tank so both soak separate threats.",
+    "bestComps": ["comp_blademaster_flex", "comp_duelist_vayne"]
+  }
+]

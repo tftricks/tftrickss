@@ -1,0 +1,92 @@
+[
+  {
+    "id": "aug_featherweights",
+    "name": "Featherweights",
+    "tier": "Silver",
+    "effect": "Your 1- and 2-cost units gain 20% attack speed and 20% movement speed.",
+    "bestComps": ["comp_duelist_vayne"],
+    "notes": "Strong pick for reroll comps that keep cheap carries late.",
+    "priorityRating": 3
+  },
+  {
+    "id": "aug_best_friends",
+    "name": "Best Friends",
+    "tier": "Silver",
+    "effect": "Units starting combat adjacent to exactly one ally gain 12% attack speed and 15 armor.",
+    "bestComps": ["comp_duelist_vayne", "comp_blademaster_flex"],
+    "notes": "Requires paired positioning — remember to split your board into duos.",
+    "priorityRating": 2
+  },
+  {
+    "id": "aug_spoils_of_war",
+    "name": "Spoils of War",
+    "tier": "Silver",
+    "effect": "Enemies you kill have a 20% chance to drop loot.",
+    "bestComps": [],
+    "notes": "Best taken on a strong early board that win-streaks stage 2.",
+    "priorityRating": 3
+  },
+  {
+    "id": "aug_rich_get_richer",
+    "name": "Rich Get Richer",
+    "tier": "Gold",
+    "effect": "Gain 12 gold. Your maximum interest is increased to 7.",
+    "bestComps": ["comp_gunner_fast8"],
+    "notes": "Econ engine for fast 8 comps; weak if you must roll early.",
+    "priorityRating": 4
+  },
+  {
+    "id": "aug_level_up",
+    "name": "Level Up!",
+    "tier": "Gold",
+    "effect": "Gain 2 free levels now. Buying XP grants +2 bonus XP.",
+    "bestComps": ["comp_gunner_fast8", "comp_mystic_vanguard"],
+    "notes": "Accelerates 4-cost carry comps to level 8 a full stage early.",
+    "priorityRating": 4
+  },
+  {
+    "id": "aug_trade_sector",
+    "name": "Trade Sector",
+    "tier": "Gold",
+    "effect": "Gain a free shop refresh each round.",
+    "bestComps": ["comp_duelist_vayne", "comp_vertical_sorcerers"],
+    "notes": "Excellent for reroll comps hunting 3-star carries.",
+    "priorityRating": 4
+  },
+  {
+    "id": "aug_jeweled_lotus",
+    "name": "Jeweled Lotus",
+    "tier": "Gold",
+    "effect": "Magic damage from abilities can critically strike. Your team gains 15% critical strike chance.",
+    "bestComps": ["comp_vertical_sorcerers"],
+    "notes": "Effectively a free Jeweled Gauntlet component for AP boards.",
+    "priorityRating": 3
+  },
+  {
+    "id": "aug_titanic_force",
+    "name": "Titanic Force",
+    "tier": "Gold",
+    "effect": "Your units with more than 1600 max health gain 3% of their max health as attack damage.",
+    "bestComps": ["comp_blademaster_flex", "comp_mystic_vanguard"],
+    "notes": "Turns fat frontliners like Sett into secondary carries.",
+    "priorityRating": 3
+  },
+  {
+    "id": "aug_golden_ticket",
+    "name": "Golden Ticket",
+    "tier": "Prismatic",
+    "effect": "Each shop refresh has a 40% chance to refund its cost.",
+    "bestComps": ["comp_duelist_vayne", "comp_vertical_sorcerers"],
+    "notes": "Roughly doubles your rolls over a game — premium for any reroll line.",
+    "priorityRating": 5
+  },
+  {
+    "id": "aug_radiant_relics",
+    "name": "Radiant Relics",
+    "tier": "Prismatic",
+    "effect": "Gain a Radiant version of a craftable item of your choice.",
+    "bestComps": ["comp_gunner_fast8", "comp_vertical_sorcerers"],
+    "notes": "Take the Radiant carry item that matches your comp's main damage type.",
+    "priorityRating": 5
+  }
+]

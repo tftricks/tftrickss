@@ -1,0 +1,30 @@
+[
+  {
+    "id": "patch_26_2",
+    "version": "26.2",
+    "date": "2026-07-02",
+    "summary": "Gunner stacking toned down, Sorcerer late game buffed, small item pass on Bloodthirster and Redemption.",
+    "changes": [
+      { "target": "Gunner", "description": "6-piece attack damage per stack reduced from 14% to 12%." },
+      { "target": "Sorcerer", "description": "6-piece team ability power increased from 20 to 25." },
+      { "target": "Jinx", "description": "Rocket launcher splash damage reduced by 10% at 2 stars." },
+      { "target": "Kayle", "description": "Ascension attack range bonus now also applies at 1 star." },
+      { "target": "Bloodthirster", "description": "Shield threshold raised from 33% to 40% health." },
+      { "target": "Redemption", "description": "Heal reduced from 18% to 15% of missing health." }
+    ]
+  },
+  {
+    "id": "patch_26_1",
+    "version": "26.1",
+    "date": "2026-06-18",
+    "summary": "Season opener: Vanguard rework, Duelist dodge added at 6, economy augments rebalanced.",
+    "changes": [
+      { "target": "Vanguard", "description": "Reworked: resists now double above 50% health instead of flat scaling." },
+      { "target": "Duelist", "description": "New 6-piece bonus: 12% dodge chance." },
+      { "target": "Vayne", "description": "Silver Bolts true damage increased from 7% to 8% max health." },
+      { "target": "Nautilus", "description": "Depth Charge stun duration reduced from 2.5 to 2 seconds." },
+      { "target": "Rich Get Richer", "description": "Gold granted reduced from 15 to 12." },
+      { "target": "Trade Sector", "description": "No longer grants bonus gold on round win." }
+    ]
+  }
+]
