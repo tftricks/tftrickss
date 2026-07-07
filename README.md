@@ -149,6 +149,17 @@ All game data lives in `app/src/main/assets/data/`. Edit the JSON, rebuild, done
 
 ## How to build the APK
 
+### No local setup: download from GitHub Actions
+
+The repo ships a workflow (`.github/workflows/build-apk.yml`) that builds a debug APK in the cloud on every push to `main` — and can be re-run anytime by hand:
+
+1. Push to `main` (or open the repo's **Actions** tab → **Build debug APK** → **Run workflow** to trigger it manually without pushing).
+2. When the run turns green, open it and scroll down to the **Artifacts** section.
+3. Download **tftricks-debug-apk** — it arrives as a `.zip`; unzip it to get `app-debug.apk`.
+4. Copy the APK to your phone and open it. Android will ask you to allow **"Install unknown apps"** for your browser/file manager the first time — enable it, then install. (Debug APKs are signed with a debug key, so Play Protect may show an extra confirmation.)
+
+### Local builds
+
 Requirements: **Android Studio** (Ladybug or newer) with JDK 17+. First build downloads the Android SDK/AGP automatically.
 
 ### Debug build
