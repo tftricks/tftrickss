@@ -1,287 +1,1780 @@
 [
   {
-    "id": "comp_gunner_fast8",
-    "name": "Gunner Fast 8",
+    "id": "comp_contract_killer",
+    "name": "Contract Killer",
+    "tier": "A",
+    "difficulty": "Hard",
+    "patchVersion": "26.2",
+    "finalBoard": [
+      {
+        "champion": "Cho'Gath",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Gragas",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Meepsie",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Pyke",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Karma",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Master Yi",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "The Machine Herald",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Sona",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [
+      {
+        "champion": "Gragas"
+      },
+      {
+        "champion": "Meepsie"
+      },
+      {
+        "champion": "Pyke"
+      }
+    ],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Gragas",
+      "Meepsie",
+      "Pyke"
+    ],
+    "tankChampions": [
+      "Cho'Gath"
+    ],
+    "bestItems": [],
+    "_todo_bestItems": "TODO: verify exact items — not reliably readable from source screenshots",
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Full positioning TBD — anchor Cho'Gath center-front and keep Gragas, Meepsie, Pyke on the back row away from dive threats.",
+    "levelingGuide": "Hold at level 6 once you arrive and slow-roll there; only push further after Gragas, Meepsie, Pyke hit their target star level.",
+    "economyGuide": "Keep gold above 50 while slow-rolling at level 6 to maximize hit odds without losing interest.",
+    "rollTiming": "Slow-roll at level 6, spending only gold above 50 each round until Gragas, Meepsie, Pyke are 3-starred.",
+    "whenToPlay": "Take this line when you find early copies of Gragas, Meepsie, Pyke or see them go uncontested. Best taken when the key augment is offered or already in hand.",
+    "strengths": [
+      "Reliable payoff once carries are 3-starred",
+      "Cheap to hit and easy to rebuild after a loss streak"
+    ],
+    "weaknesses": [
+      "Weak mid-game if the roll is contested",
+      "Vulnerable before carries reach their target star level",
+      "Falls off hard without the comp's signature augment"
+    ],
+    "tags": [
+      "Slow Roll 6",
+      "Augment-reliant"
+    ],
+    "slowRollLevel": 6,
+    "earlyGameChampions": [
+      "Gragas",
+      "Meepsie",
+      "Pyke"
+    ],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_dark_stars",
+    "name": "Dark Stars",
     "tier": "S",
     "difficulty": "Medium",
     "patchVersion": "26.2",
     "finalBoard": [
-      { "champion": "Leona", "position": 24, "items": ["Gargoyle Stoneplate", "Warmog's Armor"] },
-      { "champion": "Nautilus", "position": 26 },
-      { "champion": "Poppy", "position": 22 },
-      { "champion": "Sett", "position": 25 },
-      { "champion": "Jinx", "position": 6, "items": ["Guinsoo's Rageblade", "Giant Slayer", "Infinity Edge"] },
-      { "champion": "Aphelios", "position": 0, "items": ["Infinity Edge"] },
-      { "champion": "Tristana", "position": 3 },
-      { "champion": "Ziggs", "position": 4 }
+      {
+        "champion": "Cho'Gath",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Mordekaiser",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Kaisa",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Aurelion Sol",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Karma",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Tahm Kench",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "The Machine Herald",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Jhin",
+        "items": [],
+        "starTarget": 2
+      }
     ],
     "earlyGameBoard": [
-      { "champion": "Ziggs" },
-      { "champion": "Tristana" },
-      { "champion": "Poppy" },
-      { "champion": "Garen" }
+      {
+        "champion": "Cho'Gath"
+      },
+      {
+        "champion": "Kaisa"
+      },
+      {
+        "champion": "Aurelion Sol"
+      }
     ],
-    "midGameBoard": [
-      { "champion": "Tristana", "items": ["Guinsoo's Rageblade"] },
-      { "champion": "Ziggs" },
-      { "champion": "Poppy" },
-      { "champion": "Nautilus" },
-      { "champion": "Yasuo" },
-      { "champion": "Lux" }
+    "midGameBoard": [],
+    "carryChampions": [
+      "Mordekaiser",
+      "Karma",
+      "Tahm Kench"
     ],
-    "carryChampions": ["Jinx", "Aphelios"],
-    "tankChampions": ["Leona", "Nautilus"],
-    "bestItems": ["Guinsoo's Rageblade", "Giant Slayer", "Infinity Edge", "Gargoyle Stoneplate"],
-    "alternativeItems": ["Bloodthirster", "Warmog's Armor", "Sunfire Cape"],
-    "traitsActive": [
-      { "trait": "Gunner", "count": 4 },
-      { "trait": "Vanguard", "count": 4 },
-      { "trait": "Brawler", "count": 2 },
-      { "trait": "Mystic", "count": 2 }
+    "tankChampions": [
+      "Cho'Gath",
+      "Mordekaiser",
+      "Tahm Kench"
     ],
-    "positioningNotes": "Jinx in the corner farthest from enemy assassins, Aphelios on the opposite corner so one flank always survives. Full tank wall front-center.",
-    "levelingGuide": "Standard fast 8: level 5 at 2-5, level 6 at 3-2, level 7 at 4-1, push level 8 at 4-5.",
-    "economyGuide": "Greed to 50 gold by stage 3 and hold interest. Only break streaks if you would bleed below 60 HP.",
-    "rollTiming": "Roll down to ~20 gold at level 8 (4-5) for Jinx and Aphelios 2-star, then slow-roll above 50.",
-    "whenToPlay": "Play this when you hit an early econ augment or a win-streak stage 2 board. Gunner opener with Ziggs and Tristana makes the transition free.",
+    "bestItems": [],
+    "_todo_bestItems": "TODO: verify exact items — not reliably readable from source screenshots",
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Full positioning TBD — front-load Cho'Gath, Mordekaiser, Tahm Kench and place Mordekaiser, Karma, Tahm Kench on the back row for protection.",
+    "levelingGuide": "Level aggressively to hit 8 as early as possible, prioritizing XP over economy once the early board is stable.",
+    "economyGuide": "Spend down for XP once stable; don't over-greed for interest past level 8.",
+    "rollTiming": "Roll down at level 8 once you're there, looking for Mordekaiser, Karma, Tahm Kench and upgrades.",
+    "whenToPlay": "Take this line when your early board is stable enough to level fast into 8. Requires the trait emblem on Mordekaiser to fully activate the vertical trait line.",
     "strengths": [
-      "Strongest level 8 power spike in the meta",
-      "Two-carry setup survives focus fire",
-      "Flexible item holders all game"
+      "Strong late-game power spike at level 8",
+      "Flexible frontline that's rarely contested"
     ],
     "weaknesses": [
-      "Weak mid game if you bleed HP before level 8",
-      "Contested heavily in high-ELO lobbies",
-      "Needs 2-star 4-costs to stabilize"
+      "Weak mid-game before hitting level 8",
+      "Needs HP to survive the leveling window",
+      "Dead in the water without the emblem for Mordekaiser"
     ],
-    "tags": ["fast8", "AD", "flex"]
+    "tags": [
+      "Fast 8",
+      "Emblem comp"
+    ],
+    "slowRollLevel": null,
+    "earlyGameChampions": [
+      "Cho'Gath",
+      "Kaisa",
+      "Aurelion Sol"
+    ],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
   },
   {
-    "id": "comp_duelist_vayne",
-    "name": "Vayne Duelist Reroll",
-    "tier": "A",
-    "difficulty": "Easy",
-    "patchVersion": "26.2",
-    "finalBoard": [
-      { "champion": "Vayne", "position": 1, "items": ["Guinsoo's Rageblade", "Giant Slayer", "Bloodthirster"], "starTarget": 3 },
-      { "champion": "Yasuo", "position": 15, "items": ["Titan's Resolve"], "starTarget": 3 },
-      { "champion": "Garen", "position": 24, "items": ["Warmog's Armor", "Sunfire Cape"], "starTarget": 3 },
-      { "champion": "Poppy", "position": 26, "starTarget": 3 },
-      { "champion": "Sett", "position": 25 },
-      { "champion": "Katarina", "position": 16 },
-      { "champion": "Tristana", "position": 3 },
-      { "champion": "Leona", "position": 22 }
-    ],
-    "earlyGameBoard": [
-      { "champion": "Vayne", "items": ["Guinsoo's Rageblade"] },
-      { "champion": "Garen" },
-      { "champion": "Poppy" },
-      { "champion": "Yasuo" }
-    ],
-    "midGameBoard": [
-      { "champion": "Vayne", "items": ["Guinsoo's Rageblade", "Giant Slayer"] },
-      { "champion": "Yasuo" },
-      { "champion": "Garen" },
-      { "champion": "Poppy" },
-      { "champion": "Katarina" },
-      { "champion": "Nautilus" }
-    ],
-    "carryChampions": ["Vayne", "Yasuo"],
-    "tankChampions": ["Garen", "Poppy"],
-    "bestItems": ["Guinsoo's Rageblade", "Giant Slayer", "Bloodthirster", "Warmog's Armor"],
-    "alternativeItems": ["Infinity Edge", "Titan's Resolve", "Gargoyle Stoneplate"],
-    "traitsActive": [
-      { "trait": "Duelist", "count": 4 },
-      { "trait": "Vanguard", "count": 4 },
-      { "trait": "Sniper", "count": 2 },
-      { "trait": "Blademaster", "count": 2 }
-    ],
-    "positioningNotes": "Vayne one hex off the corner so enemy snipers reach the tank line first. Yasuo second row on the same side to clean up divers.",
-    "levelingGuide": "Stay level 6 through stage 3 while slow-rolling. Push 7 at 4-2 once Vayne and Garen hit 3 stars.",
-    "economyGuide": "Slow-roll above 50 gold from 3-1. Never dip below 50 until your carries are 3-starred.",
-    "rollTiming": "Roll every round at level 6, only the gold above 50.",
-    "whenToPlay": "Take this line with an early 2-star Vayne, Duelist augments, or when nobody else is on 1-cost reroll.",
-    "strengths": [
-      "Very stable mid game — rarely bleeds",
-      "Cheap to hit; forgiving for newer players",
-      "3-star Vayne shreds tank-heavy lobbies with true damage"
-    ],
-    "weaknesses": [
-      "Hard caps in power at 3-star carries",
-      "Falls off against multiple 2-star legendary boards",
-      "Griefed badly if Vaynes are contested"
-    ],
-    "tags": ["reroll", "AD", "beginner"]
-  },
-  {
-    "id": "comp_vertical_sorcerers",
-    "name": "Vertical Sorcerers",
+    "id": "comp_dark_star_snipers",
+    "name": "Dark Star Snipers",
     "tier": "A",
     "difficulty": "Medium",
     "patchVersion": "26.2",
     "finalBoard": [
-      { "champion": "Ahri", "position": 3, "items": ["Blue Buff", "Jeweled Gauntlet", "Rabadon's Deathcap"] },
-      { "champion": "Katarina", "position": 17 },
-      { "champion": "Lux", "position": 1, "items": ["Archangel's Staff"] },
-      { "champion": "Ziggs", "position": 5 },
-      { "champion": "Nautilus", "position": 24, "items": ["Warmog's Armor", "Sunfire Cape"] },
-      { "champion": "Leona", "position": 26 },
-      { "champion": "Poppy", "position": 22 },
-      { "champion": "Kayle", "position": 0 }
+      {
+        "champion": "Jax",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Mordekaiser",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Nunu",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Xayah",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Bard",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Jhin",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Morgana",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Shen",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Vex",
+        "items": [],
+        "starTarget": 2
+      }
     ],
     "earlyGameBoard": [
-      { "champion": "Ziggs", "items": ["Blue Buff"] },
-      { "champion": "Lux" },
-      { "champion": "Poppy" },
-      { "champion": "Garen" }
+      {
+        "champion": "Mordekaiser"
+      },
+      {
+        "champion": "Shen"
+      },
+      {
+        "champion": "Jax"
+      }
     ],
-    "midGameBoard": [
-      { "champion": "Lux", "items": ["Blue Buff", "Jeweled Gauntlet"] },
-      { "champion": "Ziggs" },
-      { "champion": "Katarina" },
-      { "champion": "Nautilus" },
-      { "champion": "Poppy" },
-      { "champion": "Garen" }
+    "midGameBoard": [],
+    "carryChampions": [
+      "Nunu",
+      "Jhin"
     ],
-    "carryChampions": ["Ahri", "Katarina"],
-    "tankChampions": ["Nautilus", "Leona"],
-    "bestItems": ["Blue Buff", "Jeweled Gauntlet", "Rabadon's Deathcap", "Warmog's Armor"],
-    "alternativeItems": ["Archangel's Staff", "Redemption", "Gargoyle Stoneplate"],
-    "traitsActive": [
-      { "trait": "Sorcerer", "count": 4 },
-      { "trait": "Mystic", "count": 3 },
-      { "trait": "Vanguard", "count": 3 },
-      { "trait": "Duelist", "count": 2 }
+    "tankChampions": [
+      "Mordekaiser",
+      "Nunu",
+      "Shen"
     ],
-    "positioningNotes": "Ahri center-back to line her orb through the enemy front line. Katarina second row center. Wrap tanks around her against assassins.",
-    "levelingGuide": "Level 6 at 3-2, level 7 at 4-1, level 8 at 5-1 after stabilizing with Lux items.",
-    "economyGuide": "Standard interest play; Lux perfectly holds every Ahri item so never slam off-comp.",
-    "rollTiming": "Small roll at 7 for Katarina 2-star, main roll-down at 8 for Ahri.",
-    "whenToPlay": "Go Sorcerers with an early rod opener, Jeweled Lotus, or a 2-star Lux by stage 3.",
+    "bestItems": [],
+    "_todo_bestItems": "TODO: verify exact items — not reliably readable from source screenshots",
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Full positioning TBD — front-load Mordekaiser, Nunu, Shen and place Nunu, Jhin on the back row for protection.",
+    "levelingGuide": "Level aggressively to hit 9 as early as possible, prioritizing XP over economy once the early board is stable.",
+    "economyGuide": "Spend down for XP once stable; don't over-greed for interest past level 9.",
+    "rollTiming": "Roll down at level 9 once you're there, looking for Nunu, Jhin and upgrades.",
+    "whenToPlay": "Take this line when your early board is stable enough to level fast into 9.",
     "strengths": [
-      "Huge AoE burst turns fights instantly",
-      "Perfect item transfer from Lux to Ahri",
-      "Strong against low-resist AD boards"
+      "Strong late-game power spike at level 9",
+      "Flexible frontline that's rarely contested"
     ],
     "weaknesses": [
-      "Struggles into stacked magic resist and Mystic boards",
-      "One-carry damage profile — Ahri dies, fight ends",
-      "Positioning-dependent orb angles"
+      "Weak mid-game before hitting level 9",
+      "Needs HP to survive the leveling window"
     ],
-    "tags": ["vertical", "AP"]
+    "tags": [
+      "Fast 9"
+    ],
+    "slowRollLevel": null,
+    "earlyGameChampions": [
+      "Mordekaiser",
+      "Shen",
+      "Jax"
+    ],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
   },
   {
-    "id": "comp_mystic_vanguard",
-    "name": "Mystic Vanguard Fortress",
-    "tier": "B",
-    "difficulty": "Easy",
-    "patchVersion": "26.2",
-    "finalBoard": [
-      { "champion": "Leona", "position": 24, "items": ["Gargoyle Stoneplate", "Warmog's Armor"] },
-      { "champion": "Nautilus", "position": 26, "items": ["Redemption"] },
-      { "champion": "Garen", "position": 22 },
-      { "champion": "Poppy", "position": 25 },
-      { "champion": "Kayle", "position": 0, "items": ["Guinsoo's Rageblade", "Rabadon's Deathcap"] },
-      { "champion": "Ahri", "position": 4 },
-      { "champion": "Lux", "position": 2 },
-      { "champion": "Sett", "position": 23 }
-    ],
-    "earlyGameBoard": [
-      { "champion": "Garen" },
-      { "champion": "Poppy" },
-      { "champion": "Lux" },
-      { "champion": "Vayne" }
-    ],
-    "midGameBoard": [
-      { "champion": "Nautilus", "items": ["Warmog's Armor"] },
-      { "champion": "Garen" },
-      { "champion": "Poppy" },
-      { "champion": "Lux", "items": ["Archangel's Staff"] },
-      { "champion": "Yasuo" },
-      { "champion": "Vayne" }
-    ],
-    "carryChampions": ["Kayle", "Ahri"],
-    "tankChampions": ["Leona", "Nautilus", "Garen"],
-    "bestItems": ["Gargoyle Stoneplate", "Warmog's Armor", "Guinsoo's Rageblade", "Redemption"],
-    "alternativeItems": ["Sunfire Cape", "Rabadon's Deathcap", "Bloodthirster"],
-    "traitsActive": [
-      { "trait": "Vanguard", "count": 4 },
-      { "trait": "Mystic", "count": 5 },
-      { "trait": "Blademaster", "count": 2 },
-      { "trait": "Sorcerer", "count": 2 }
-    ],
-    "positioningNotes": "Full front wall of Vanguards. Kayle in the corner — she needs the longest possible ramp time behind the fortress.",
-    "levelingGuide": "Slow, defensive levels: 7 at 4-2, 8 at 5-2. This comp stabilizes on defense, not tempo.",
-    "economyGuide": "Loss-streak stage 2 into massive interest is acceptable — the late board outlasts everyone.",
-    "rollTiming": "Roll at 8 for Leona and Kayle. Kayle 2-star is your win condition.",
-    "whenToPlay": "Pick this with heavy tank items early, Mystic augments, or an AP-hostile lobby you want to outlast.",
-    "strengths": [
-      "Near-unkillable front line",
-      "Excellent against burst and AP lobbies",
-      "Simple positioning that rarely needs scouting"
-    ],
-    "weaknesses": [
-      "Low damage until Kayle ramps",
-      "Loses to heavy true-damage comps",
-      "Weak to healing reduction on the front line"
-    ],
-    "tags": ["vertical", "beginner"]
-  },
-  {
-    "id": "comp_blademaster_flex",
-    "name": "Blademaster Flex",
-    "tier": "C",
+    "id": "comp_bonk",
+    "name": "Bonk!",
+    "tier": "A",
     "difficulty": "Hard",
     "patchVersion": "26.2",
     "finalBoard": [
-      { "champion": "Kayle", "position": 0, "items": ["Guinsoo's Rageblade", "Bloodthirster", "Rabadon's Deathcap"] },
-      { "champion": "Yasuo", "position": 15, "items": ["Titan's Resolve"] },
-      { "champion": "Garen", "position": 24, "items": ["Sunfire Cape", "Warmog's Armor"] },
-      { "champion": "Sett", "position": 26 },
-      { "champion": "Leona", "position": 22 },
-      { "champion": "Vayne", "position": 2 },
-      { "champion": "Katarina", "position": 16 },
-      { "champion": "Nautilus", "position": 25 }
+      {
+        "champion": "Leona",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Nasus",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Teemo",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Mordekaiser",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Illaoi",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Leblanc",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Nunu",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Blitzcrank",
+        "items": [],
+        "starTarget": 2
+      }
     ],
     "earlyGameBoard": [
-      { "champion": "Garen" },
-      { "champion": "Yasuo" },
-      { "champion": "Vayne" },
-      { "champion": "Ziggs" }
+      {
+        "champion": "Nasus"
+      },
+      {
+        "champion": "Nunu"
+      }
     ],
-    "midGameBoard": [
-      { "champion": "Yasuo", "items": ["Bloodthirster"] },
-      { "champion": "Garen" },
-      { "champion": "Vayne" },
-      { "champion": "Katarina" },
-      { "champion": "Nautilus" },
-      { "champion": "Poppy" }
+    "midGameBoard": [],
+    "carryChampions": [
+      "Nasus",
+      "Nunu"
     ],
-    "carryChampions": ["Kayle", "Yasuo"],
-    "tankChampions": ["Garen", "Sett"],
-    "bestItems": ["Guinsoo's Rageblade", "Bloodthirster", "Titan's Resolve", "Sunfire Cape"],
-    "alternativeItems": ["Infinity Edge", "Rabadon's Deathcap", "Gargoyle Stoneplate"],
-    "traitsActive": [
-      { "trait": "Blademaster", "count": 3 },
-      { "trait": "Duelist", "count": 3 },
-      { "trait": "Vanguard", "count": 3 },
-      { "trait": "Mystic", "count": 2 }
+    "tankChampions": [
+      "Leona",
+      "Nasus",
+      "Mordekaiser",
+      "Illaoi",
+      "Nunu",
+      "Blitzcrank"
     ],
-    "positioningNotes": "Kayle corner with the full team shielding her diagonal. Yasuo and Katarina flank opposite sides to split enemy backline attention.",
-    "levelingGuide": "Flexible: match lobby tempo, usually 7 at 4-1 and 9 if the game goes late — Kayle at 9 is the payoff.",
-    "economyGuide": "Play tight interest and preserve HP; this line needs level 9 gold to cap.",
-    "rollTiming": "Minimal rolling until 9, then dump everything for Kayle and Sett 2-star.",
-    "whenToPlay": "Only with a Kayle hit before 4-5 plus uncontested Blademasters. A specialist line for experienced players.",
+    "bestItems": [],
+    "_todo_bestItems": "TODO: verify exact items — not reliably readable from source screenshots",
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Full positioning TBD — anchor Leona, Nasus, Mordekaiser, Illaoi, Nunu, Blitzcrank center-front and keep Nasus, Nunu on the back row away from dive threats.",
+    "levelingGuide": "Hold at level 5 once you arrive and slow-roll there; only push further after Nasus, Nunu hit their target star level.",
+    "economyGuide": "Keep gold above 50 while slow-rolling at level 5 to maximize hit odds without losing interest.",
+    "rollTiming": "Slow-roll at level 5, spending only gold above 50 each round until Nasus, Nunu are 3-starred.",
+    "whenToPlay": "Take this line when you find early copies of Nasus, Nunu or see them go uncontested. Best taken when the key augment is offered or already in hand.",
     "strengths": [
-      "Highest cap in the game with 2-star Kayle at 9",
-      "Hard to itemize against — mixed damage profile",
-      "Uses leftover comps' units, so rarely contested"
+      "Reliable payoff once carries are 3-starred",
+      "Cheap to hit and easy to rebuild after a loss streak"
     ],
     "weaknesses": [
-      "Miserable mid game",
-      "Requires precise econ and HP management",
-      "Useless if you never see Kayle"
+      "Weak mid-game if the roll is contested",
+      "Vulnerable before carries reach their target star level",
+      "Falls off hard without the comp's signature augment"
     ],
-    "tags": ["flex", "advanced", "fast8"]
+    "tags": [
+      "Slow Roll 5",
+      "Augment-reliant"
+    ],
+    "slowRollLevel": 5,
+    "earlyGameChampions": [
+      "Nasus",
+      "Nunu"
+    ],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_dark_star_rogues",
+    "name": "Dark Star Rogues",
+    "tier": "A",
+    "difficulty": "Medium",
+    "patchVersion": "26.2",
+    "finalBoard": [
+      {
+        "champion": "Cho'Gath",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Lissandra",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Meepsie",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Mordekaiser",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Kaisa",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Illaoi",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Karma",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Jhin",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [
+      {
+        "champion": "Kaisa"
+      },
+      {
+        "champion": "Illaoi"
+      }
+    ],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Kaisa",
+      "Illaoi"
+    ],
+    "tankChampions": [
+      "Cho'Gath",
+      "Mordekaiser",
+      "Illaoi"
+    ],
+    "bestItems": [],
+    "_todo_bestItems": "TODO: verify exact items — not reliably readable from source screenshots",
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Full positioning TBD — anchor Cho'Gath, Mordekaiser, Illaoi center-front and keep Kaisa, Illaoi on the back row away from dive threats.",
+    "levelingGuide": "Hold at level 7 once you arrive and slow-roll there; only push further after Kaisa, Illaoi hit their target star level.",
+    "economyGuide": "Keep gold above 50 while slow-rolling at level 7 to maximize hit odds without losing interest.",
+    "rollTiming": "Slow-roll at level 7, spending only gold above 50 each round until Kaisa, Illaoi are 3-starred.",
+    "whenToPlay": "Take this line when you find early copies of Kaisa, Illaoi or see them go uncontested.",
+    "strengths": [
+      "Reliable payoff once carries are 3-starred",
+      "Cheap to hit and easy to rebuild after a loss streak"
+    ],
+    "weaknesses": [
+      "Weak mid-game if the roll is contested",
+      "Vulnerable before carries reach their target star level"
+    ],
+    "tags": [
+      "Slow Roll 7"
+    ],
+    "slowRollLevel": 7,
+    "earlyGameChampions": [
+      "Kaisa",
+      "Illaoi"
+    ],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_challengers",
+    "name": "Challengers",
+    "tier": "A",
+    "difficulty": "Medium",
+    "patchVersion": "26.2",
+    "finalBoard": [
+      {
+        "champion": "Aatrox",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Akali",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Belveth",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Jax",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Jinx",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Diana",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Miss Fortune",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Kindred",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [
+      {
+        "champion": "Jax"
+      },
+      {
+        "champion": "Jinx"
+      }
+    ],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Jax",
+      "Jinx"
+    ],
+    "tankChampions": [
+      "Belveth"
+    ],
+    "bestItems": [],
+    "_todo_bestItems": "TODO: verify exact items — not reliably readable from source screenshots",
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Full positioning TBD — anchor Belveth center-front and keep Jax, Jinx on the back row away from dive threats.",
+    "levelingGuide": "Hold at level 6 once you arrive and slow-roll there; only push further after Jax, Jinx hit their target star level.",
+    "economyGuide": "Keep gold above 50 while slow-rolling at level 6 to maximize hit odds without losing interest.",
+    "rollTiming": "Slow-roll at level 6, spending only gold above 50 each round until Jax, Jinx are 3-starred.",
+    "whenToPlay": "Take this line when you find early copies of Jax, Jinx or see them go uncontested.",
+    "strengths": [
+      "Reliable payoff once carries are 3-starred",
+      "Cheap to hit and easy to rebuild after a loss streak"
+    ],
+    "weaknesses": [
+      "Weak mid-game if the roll is contested",
+      "Vulnerable before carries reach their target star level"
+    ],
+    "tags": [
+      "Slow Roll 6"
+    ],
+    "slowRollLevel": 6,
+    "earlyGameChampions": [
+      "Jax",
+      "Jinx"
+    ],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_doomer_vanguards",
+    "name": "Doomer Vanguards",
+    "tier": "A",
+    "difficulty": "Medium",
+    "patchVersion": "26.2",
+    "finalBoard": [
+      {
+        "champion": "Meepsie",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Mordekaiser",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Illaoi",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Karma",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Nunu",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Blitzcrank",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Bard",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Sona",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Vex",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [
+      {
+        "champion": "Mordekaiser"
+      },
+      {
+        "champion": "Illaoi"
+      },
+      {
+        "champion": "Blitzcrank"
+      }
+    ],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Nunu",
+      "Vex"
+    ],
+    "tankChampions": [
+      "Mordekaiser",
+      "Illaoi",
+      "Nunu",
+      "Blitzcrank"
+    ],
+    "bestItems": [],
+    "_todo_bestItems": "TODO: verify exact items — not reliably readable from source screenshots",
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Full positioning TBD — front-load Mordekaiser, Illaoi, Nunu, Blitzcrank and place Nunu, Vex on the back row for protection.",
+    "levelingGuide": "Level aggressively to hit 9 as early as possible, prioritizing XP over economy once the early board is stable.",
+    "economyGuide": "Spend down for XP once stable; don't over-greed for interest past level 9.",
+    "rollTiming": "Roll down at level 9 once you're there, looking for Nunu, Vex and upgrades.",
+    "whenToPlay": "Take this line when your early board is stable enough to level fast into 9.",
+    "strengths": [
+      "Strong late-game power spike at level 9",
+      "Flexible frontline that's rarely contested"
+    ],
+    "weaknesses": [
+      "Weak mid-game before hitting level 9",
+      "Needs HP to survive the leveling window"
+    ],
+    "tags": [
+      "Fast 9"
+    ],
+    "slowRollLevel": null,
+    "earlyGameChampions": [
+      "Mordekaiser",
+      "Illaoi",
+      "Blitzcrank"
+    ],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_doomer_bastions",
+    "name": "Doomer Bastions",
+    "tier": "A",
+    "difficulty": "Medium",
+    "patchVersion": "26.2",
+    "finalBoard": [
+      {
+        "champion": "Meepsie",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Mordekaiser",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Rhaast",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Karma",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Rammus",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Bard",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Blitzcrank",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Shen",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Vex",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [
+      {
+        "champion": "Mordekaiser"
+      },
+      {
+        "champion": "Rhaast"
+      },
+      {
+        "champion": "Blitzcrank"
+      }
+    ],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Rammus",
+      "Vex"
+    ],
+    "tankChampions": [
+      "Mordekaiser",
+      "Rhaast",
+      "Rammus",
+      "Blitzcrank",
+      "Shen"
+    ],
+    "bestItems": [],
+    "_todo_bestItems": "TODO: verify exact items — not reliably readable from source screenshots",
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Full positioning TBD — front-load Mordekaiser, Rhaast, Rammus, Blitzcrank, Shen and place Rammus, Vex on the back row for protection.",
+    "levelingGuide": "Level aggressively to hit 9 as early as possible, prioritizing XP over economy once the early board is stable.",
+    "economyGuide": "Spend down for XP once stable; don't over-greed for interest past level 9.",
+    "rollTiming": "Roll down at level 9 once you're there, looking for Rammus, Vex and upgrades.",
+    "whenToPlay": "Take this line when your early board is stable enough to level fast into 9.",
+    "strengths": [
+      "Strong late-game power spike at level 9",
+      "Flexible frontline that's rarely contested"
+    ],
+    "weaknesses": [
+      "Weak mid-game before hitting level 9",
+      "Needs HP to survive the leveling window"
+    ],
+    "tags": [
+      "Fast 9"
+    ],
+    "slowRollLevel": null,
+    "earlyGameChampions": [
+      "Mordekaiser",
+      "Rhaast",
+      "Blitzcrank"
+    ],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_space_groove_replicators",
+    "name": "Space Groove Replicators",
+    "tier": "S",
+    "difficulty": "Medium",
+    "patchVersion": "26.2",
+    "finalBoard": [
+      {
+        "champion": "Gwen",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Pantheon",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Ornn",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Nami",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Riven",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Tahm Kench",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Blitzcrank",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Shen",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [
+      {
+        "champion": "Pantheon"
+      },
+      {
+        "champion": "Ornn"
+      },
+      {
+        "champion": "Blitzcrank"
+      }
+    ],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Nami",
+      "Riven",
+      "Tahm Kench"
+    ],
+    "tankChampions": [
+      "Pantheon",
+      "Ornn",
+      "Tahm Kench",
+      "Blitzcrank",
+      "Shen"
+    ],
+    "bestItems": [],
+    "_todo_bestItems": "TODO: verify exact items — not reliably readable from source screenshots",
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Full positioning TBD — front-load Pantheon, Ornn, Tahm Kench, Blitzcrank, Shen and place Nami, Riven, Tahm Kench on the back row for protection.",
+    "levelingGuide": "Level aggressively to hit 8 as early as possible, prioritizing XP over economy once the early board is stable.",
+    "economyGuide": "Spend down for XP once stable; don't over-greed for interest past level 8.",
+    "rollTiming": "Roll down at level 8 once you're there, looking for Nami, Riven, Tahm Kench and upgrades.",
+    "whenToPlay": "Take this line when your early board is stable enough to level fast into 8. Requires the trait emblem on Riven to fully activate the vertical trait line.",
+    "strengths": [
+      "Strong late-game power spike at level 8",
+      "Flexible frontline that's rarely contested"
+    ],
+    "weaknesses": [
+      "Weak mid-game before hitting level 8",
+      "Needs HP to survive the leveling window",
+      "Dead in the water without the emblem for Riven"
+    ],
+    "tags": [
+      "Fast 8",
+      "Emblem comp"
+    ],
+    "slowRollLevel": null,
+    "earlyGameChampions": [
+      "Pantheon",
+      "Ornn",
+      "Blitzcrank"
+    ],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_primordian_challengers",
+    "name": "Primordian Challengers",
+    "tier": "S",
+    "difficulty": "Medium",
+    "patchVersion": "26.2",
+    "finalBoard": [
+      {
+        "champion": "Briar",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "RekSai",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Akali",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Belveth",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Jinx",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Maokai",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Rhaast",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Kindred",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [
+      {
+        "champion": "Belveth"
+      },
+      {
+        "champion": "Jinx"
+      }
+    ],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Belveth",
+      "Jinx"
+    ],
+    "tankChampions": [
+      "Briar",
+      "RekSai",
+      "Belveth",
+      "Maokai",
+      "Rhaast"
+    ],
+    "bestItems": [],
+    "_todo_bestItems": "TODO: verify exact items — not reliably readable from source screenshots",
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Full positioning TBD — anchor Briar, RekSai, Belveth, Maokai, Rhaast center-front and keep Belveth, Jinx on the back row away from dive threats.",
+    "levelingGuide": "Hold at level 6 once you arrive and slow-roll there; only push further after Belveth, Jinx hit their target star level.",
+    "economyGuide": "Keep gold above 50 while slow-rolling at level 6 to maximize hit odds without losing interest.",
+    "rollTiming": "Slow-roll at level 6, spending only gold above 50 each round until Belveth, Jinx are 3-starred.",
+    "whenToPlay": "Take this line when you find early copies of Belveth, Jinx or see them go uncontested.",
+    "strengths": [
+      "Reliable payoff once carries are 3-starred",
+      "Cheap to hit and easy to rebuild after a loss streak"
+    ],
+    "weaknesses": [
+      "Weak mid-game if the roll is contested",
+      "Vulnerable before carries reach their target star level"
+    ],
+    "tags": [
+      "Slow Roll 6"
+    ],
+    "slowRollLevel": 6,
+    "earlyGameChampions": [
+      "Belveth",
+      "Jinx"
+    ],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_meeple_voyagers",
+    "name": "Meeple Voyagers",
+    "tier": "A",
+    "difficulty": "Medium",
+    "patchVersion": "26.2",
+    "finalBoard": [
+      {
+        "champion": "Poppy",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Gnar",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Meepsie",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Karma",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Rammus",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "The Machine Herald",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Bard",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Jhin",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [
+      {
+        "champion": "Gnar"
+      },
+      {
+        "champion": "Rammus"
+      }
+    ],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Gnar",
+      "Rammus"
+    ],
+    "tankChampions": [
+      "Poppy",
+      "Gnar",
+      "Rammus"
+    ],
+    "bestItems": [],
+    "_todo_bestItems": "TODO: verify exact items — not reliably readable from source screenshots",
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Full positioning TBD — anchor Poppy, Gnar, Rammus center-front and keep Gnar, Rammus on the back row away from dive threats.",
+    "levelingGuide": "Hold at level 6 once you arrive and slow-roll there; only push further after Gnar, Rammus hit their target star level.",
+    "economyGuide": "Keep gold above 50 while slow-rolling at level 6 to maximize hit odds without losing interest.",
+    "rollTiming": "Slow-roll at level 6, spending only gold above 50 each round until Gnar, Rammus are 3-starred.",
+    "whenToPlay": "Take this line when you find early copies of Gnar, Rammus or see them go uncontested.",
+    "strengths": [
+      "Reliable payoff once carries are 3-starred",
+      "Cheap to hit and easy to rebuild after a loss streak"
+    ],
+    "weaknesses": [
+      "Weak mid-game if the roll is contested",
+      "Vulnerable before carries reach their target star level"
+    ],
+    "tags": [
+      "Slow Roll 6"
+    ],
+    "slowRollLevel": 6,
+    "earlyGameChampions": [
+      "Gnar",
+      "Rammus"
+    ],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_reach_for_the_stars",
+    "name": "Reach For The Stars",
+    "tier": "A",
+    "difficulty": "Hard",
+    "patchVersion": "26.2",
+    "finalBoard": [
+      {
+        "champion": "Aatrox",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Twisted Fate",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Jax",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Milio",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Pantheon",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Lulu",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Maokai",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Rhaast",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [
+      {
+        "champion": "Jax"
+      },
+      {
+        "champion": "Milio"
+      },
+      {
+        "champion": "Lulu"
+      }
+    ],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Jax",
+      "Milio",
+      "Lulu"
+    ],
+    "tankChampions": [
+      "Pantheon",
+      "Maokai",
+      "Rhaast"
+    ],
+    "bestItems": [],
+    "_todo_bestItems": "TODO: verify exact items — not reliably readable from source screenshots",
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Full positioning TBD — anchor Pantheon, Maokai, Rhaast center-front and keep Jax, Milio, Lulu on the back row away from dive threats.",
+    "levelingGuide": "Hold at level 7 once you arrive and slow-roll there; only push further after Jax, Milio, Lulu hit their target star level.",
+    "economyGuide": "Keep gold above 50 while slow-rolling at level 7 to maximize hit odds without losing interest.",
+    "rollTiming": "Slow-roll at level 7, spending only gold above 50 each round until Jax, Milio, Lulu are 3-starred.",
+    "whenToPlay": "Take this line when you find early copies of Jax, Milio, Lulu or see them go uncontested. Best taken when the key augment is offered or already in hand.",
+    "strengths": [
+      "Reliable payoff once carries are 3-starred",
+      "Cheap to hit and easy to rebuild after a loss streak"
+    ],
+    "weaknesses": [
+      "Weak mid-game if the roll is contested",
+      "Vulnerable before carries reach their target star level",
+      "Falls off hard without the comp's signature augment"
+    ],
+    "tags": [
+      "Slow Roll 7",
+      "Augment-reliant"
+    ],
+    "slowRollLevel": 7,
+    "earlyGameChampions": [
+      "Jax",
+      "Milio",
+      "Lulu"
+    ],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_space_groove_snipers",
+    "name": "Space Groove Snipers",
+    "tier": "A",
+    "difficulty": "Medium",
+    "patchVersion": "26.2",
+    "finalBoard": [
+      {
+        "champion": "Nasus",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Teemo",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Gwen",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Ornn",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Samira",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Nami",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Blitzcrank",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Shen",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [
+      {
+        "champion": "Ornn"
+      },
+      {
+        "champion": "Samira"
+      }
+    ],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Ornn",
+      "Samira"
+    ],
+    "tankChampions": [
+      "Nasus",
+      "Ornn",
+      "Blitzcrank",
+      "Shen"
+    ],
+    "bestItems": [],
+    "_todo_bestItems": "TODO: verify exact items — not reliably readable from source screenshots",
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Full positioning TBD — anchor Nasus, Ornn, Blitzcrank, Shen center-front and keep Ornn, Samira on the back row away from dive threats.",
+    "levelingGuide": "Hold at level 7 once you arrive and slow-roll there; only push further after Ornn, Samira hit their target star level.",
+    "economyGuide": "Keep gold above 50 while slow-rolling at level 7 to maximize hit odds without losing interest.",
+    "rollTiming": "Slow-roll at level 7, spending only gold above 50 each round until Ornn, Samira are 3-starred.",
+    "whenToPlay": "Take this line when you find early copies of Ornn, Samira or see them go uncontested.",
+    "strengths": [
+      "Reliable payoff once carries are 3-starred",
+      "Cheap to hit and easy to rebuild after a loss streak"
+    ],
+    "weaknesses": [
+      "Weak mid-game if the roll is contested",
+      "Vulnerable before carries reach their target star level"
+    ],
+    "tags": [
+      "Slow Roll 7"
+    ],
+    "slowRollLevel": 7,
+    "earlyGameChampions": [
+      "Ornn",
+      "Samira"
+    ],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_self_destruct",
+    "name": "Self Destruct",
+    "tier": "A",
+    "difficulty": "Hard",
+    "patchVersion": "26.2",
+    "finalBoard": [
+      {
+        "champion": "Cho'Gath",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Gragas",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Pantheon",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Pyke",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Maokai",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Urgot",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Karma",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Tahm Kench",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [
+      {
+        "champion": "Gragas"
+      },
+      {
+        "champion": "Pyke"
+      }
+    ],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Gragas",
+      "Pyke"
+    ],
+    "tankChampions": [
+      "Cho'Gath",
+      "Pantheon",
+      "Maokai",
+      "Urgot",
+      "Tahm Kench"
+    ],
+    "bestItems": [],
+    "_todo_bestItems": "TODO: verify exact items — not reliably readable from source screenshots",
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Full positioning TBD — anchor Cho'Gath, Pantheon, Maokai, Urgot, Tahm Kench center-front and keep Gragas, Pyke on the back row away from dive threats.",
+    "levelingGuide": "Hold at level 6 once you arrive and slow-roll there; only push further after Gragas, Pyke hit their target star level.",
+    "economyGuide": "Keep gold above 50 while slow-rolling at level 6 to maximize hit odds without losing interest.",
+    "rollTiming": "Slow-roll at level 6, spending only gold above 50 each round until Gragas, Pyke are 3-starred.",
+    "whenToPlay": "Take this line when you find early copies of Gragas, Pyke or see them go uncontested. Best taken when the key augment is offered or already in hand.",
+    "strengths": [
+      "Reliable payoff once carries are 3-starred",
+      "Cheap to hit and easy to rebuild after a loss streak"
+    ],
+    "weaknesses": [
+      "Weak mid-game if the roll is contested",
+      "Vulnerable before carries reach their target star level",
+      "Falls off hard without the comp's signature augment"
+    ],
+    "tags": [
+      "Slow Roll 6",
+      "Augment-reliant"
+    ],
+    "slowRollLevel": 6,
+    "earlyGameChampions": [
+      "Gragas",
+      "Pyke"
+    ],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_two_tanky",
+    "name": "Two Tanky",
+    "tier": "S",
+    "difficulty": "Hard",
+    "patchVersion": "26.2",
+    "finalBoard": [
+      {
+        "champion": "Jax",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Ornn",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Samira",
+        "items": [],
+        "starTarget": 3
+      },
+      {
+        "champion": "Nunu",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Xayah",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Blitzcrank",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [
+      {
+        "champion": "Ornn"
+      },
+      {
+        "champion": "Samira"
+      }
+    ],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Ornn",
+      "Samira"
+    ],
+    "tankChampions": [
+      "Ornn",
+      "Nunu",
+      "Blitzcrank"
+    ],
+    "bestItems": [],
+    "_todo_bestItems": "TODO: verify exact items — not reliably readable from source screenshots",
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Full positioning TBD — anchor Ornn, Nunu, Blitzcrank center-front and keep Ornn, Samira on the back row away from dive threats.",
+    "levelingGuide": "Hold at level 7 once you arrive and slow-roll there; only push further after Ornn, Samira hit their target star level.",
+    "economyGuide": "Keep gold above 50 while slow-rolling at level 7 to maximize hit odds without losing interest.",
+    "rollTiming": "Slow-roll at level 7, spending only gold above 50 each round until Ornn, Samira are 3-starred.",
+    "whenToPlay": "Take this line when you find early copies of Ornn, Samira or see them go uncontested. Best taken when the key augment is offered or already in hand.",
+    "strengths": [
+      "Reliable payoff once carries are 3-starred",
+      "Cheap to hit and easy to rebuild after a loss streak"
+    ],
+    "weaknesses": [
+      "Weak mid-game if the roll is contested",
+      "Vulnerable before carries reach their target star level",
+      "Falls off hard without the comp's signature augment"
+    ],
+    "tags": [
+      "Slow Roll 7",
+      "Augment-reliant"
+    ],
+    "slowRollLevel": 7,
+    "earlyGameChampions": [
+      "Ornn",
+      "Samira"
+    ],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_psionic_marauders",
+    "name": "Psionic Marauders",
+    "tier": "A",
+    "difficulty": "Medium",
+    "patchVersion": "26.2",
+    "finalBoard": [
+      {
+        "champion": "Belveth",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Gragas",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Maokai",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Urgot",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Kindred",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Master Yi",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Tahm Kench",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Fiora",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [
+      {
+        "champion": "Belveth"
+      },
+      {
+        "champion": "Maokai"
+      },
+      {
+        "champion": "Urgot"
+      }
+    ],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Master Yi",
+      "Tahm Kench"
+    ],
+    "tankChampions": [
+      "Belveth",
+      "Maokai",
+      "Urgot",
+      "Tahm Kench"
+    ],
+    "bestItems": [],
+    "_todo_bestItems": "TODO: verify exact items — not reliably readable from source screenshots",
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Full positioning TBD — front-load Belveth, Maokai, Urgot, Tahm Kench and place Master Yi, Tahm Kench on the back row for protection.",
+    "levelingGuide": "Level aggressively to hit 8 as early as possible, prioritizing XP over economy once the early board is stable.",
+    "economyGuide": "Spend down for XP once stable; don't over-greed for interest past level 8.",
+    "rollTiming": "Roll down at level 8 once you're there, looking for Master Yi, Tahm Kench and upgrades.",
+    "whenToPlay": "Take this line when your early board is stable enough to level fast into 8.",
+    "strengths": [
+      "Strong late-game power spike at level 8",
+      "Flexible frontline that's rarely contested"
+    ],
+    "weaknesses": [
+      "Weak mid-game before hitting level 8",
+      "Needs HP to survive the leveling window"
+    ],
+    "tags": [
+      "Fast 8"
+    ],
+    "slowRollLevel": null,
+    "earlyGameChampions": [
+      "Belveth",
+      "Maokai",
+      "Urgot"
+    ],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_arbiter_vanguards",
+    "name": "Arbiter Vanguards",
+    "tier": "A",
+    "difficulty": "Medium",
+    "patchVersion": "26.2",
+    "finalBoard": [
+      {
+        "champion": "Leona",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Meepsie",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Mordekaiser",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Zoe",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Illaoi",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Karma",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Leblanc",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Nunu",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [
+      {
+        "champion": "Leona"
+      },
+      {
+        "champion": "Mordekaiser"
+      },
+      {
+        "champion": "Illaoi"
+      }
+    ],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Leblanc",
+      "Nunu"
+    ],
+    "tankChampions": [
+      "Leona",
+      "Mordekaiser",
+      "Illaoi",
+      "Nunu"
+    ],
+    "bestItems": [],
+    "_todo_bestItems": "TODO: verify exact items — not reliably readable from source screenshots",
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Full positioning TBD — front-load Leona, Mordekaiser, Illaoi, Nunu and place Leblanc, Nunu on the back row for protection.",
+    "levelingGuide": "Level aggressively to hit 8 as early as possible, prioritizing XP over economy once the early board is stable.",
+    "economyGuide": "Spend down for XP once stable; don't over-greed for interest past level 8.",
+    "rollTiming": "Roll down at level 8 once you're there, looking for Leblanc, Nunu and upgrades.",
+    "whenToPlay": "Take this line when your early board is stable enough to level fast into 8.",
+    "strengths": [
+      "Strong late-game power spike at level 8",
+      "Flexible frontline that's rarely contested"
+    ],
+    "weaknesses": [
+      "Weak mid-game before hitting level 8",
+      "Needs HP to survive the leveling window"
+    ],
+    "tags": [
+      "Fast 8"
+    ],
+    "slowRollLevel": null,
+    "earlyGameChampions": [
+      "Leona",
+      "Mordekaiser",
+      "Illaoi"
+    ],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_arbiter_shepherds",
+    "name": "Arbiter Shepherds",
+    "tier": "A",
+    "difficulty": "Medium",
+    "patchVersion": "26.2",
+    "finalBoard": [
+      {
+        "champion": "Leona",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Lissandra",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Meepsie",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Illaoi",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Leblanc",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "The Machine Herald",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Sona",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [
+      {
+        "champion": "Leona"
+      },
+      {
+        "champion": "Illaoi"
+      },
+      {
+        "champion": "Lissandra"
+      }
+    ],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Leblanc",
+      "The Machine Herald"
+    ],
+    "tankChampions": [
+      "Leona",
+      "Illaoi"
+    ],
+    "bestItems": [],
+    "_todo_bestItems": "TODO: verify exact items — not reliably readable from source screenshots",
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Full positioning TBD — front-load Leona, Illaoi and place Leblanc, The Machine Herald on the back row for protection.",
+    "levelingGuide": "Level aggressively to hit 8 as early as possible, prioritizing XP over economy once the early board is stable.",
+    "economyGuide": "Spend down for XP once stable; don't over-greed for interest past level 8.",
+    "rollTiming": "Roll down at level 8 once you're there, looking for Leblanc, The Machine Herald and upgrades.",
+    "whenToPlay": "Take this line when your early board is stable enough to level fast into 8.",
+    "strengths": [
+      "Strong late-game power spike at level 8",
+      "Flexible frontline that's rarely contested"
+    ],
+    "weaknesses": [
+      "Weak mid-game before hitting level 8",
+      "Needs HP to survive the leveling window"
+    ],
+    "tags": [
+      "Fast 8"
+    ],
+    "slowRollLevel": null,
+    "earlyGameChampions": [
+      "Leona",
+      "Illaoi",
+      "Lissandra"
+    ],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
   }
 ]
