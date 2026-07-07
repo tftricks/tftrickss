@@ -1,6 +1,5 @@
 package com.tftricks.app.ui.screens.search
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -94,7 +93,7 @@ fun SearchScreen(
         if (results.comps.isNotEmpty()) {
             item(key = "comps_header") { SectionLabel(text = "Team Comps") }
             items(results.comps, key = { "comp_${it.id}" }) { comp ->
-                InfoCard(modifier = Modifier.clickable { onOpenComp(comp.id) }) {
+                InfoCard(onClick = { onOpenComp(comp.id) }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         TierBadge(comp.tier)
                         Spacer(modifier = Modifier.width(12.dp))
@@ -114,7 +113,7 @@ fun SearchScreen(
         if (results.champions.isNotEmpty()) {
             item(key = "champions_header") { SectionLabel(text = "Champions") }
             items(results.champions, key = { "champ_${it.id}" }) { champion ->
-                InfoCard(modifier = Modifier.clickable { onOpenChampion(champion.id) }) {
+                InfoCard(onClick = { onOpenChampion(champion.id) }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
                             text = "${champion.cost}g",
@@ -138,7 +137,7 @@ fun SearchScreen(
         if (results.traits.isNotEmpty()) {
             item(key = "traits_header") { SectionLabel(text = "Traits") }
             items(results.traits, key = { "trait_${it.id}" }) { trait ->
-                InfoCard(modifier = Modifier.clickable(onClick = onOpenTraits)) {
+                InfoCard(onClick = onOpenTraits) {
                     Text(trait.name, style = MaterialTheme.typography.titleSmall, color = BrandYellow)
                     Text(
                         text = trait.champions.joinToString(" • "),
@@ -152,7 +151,7 @@ fun SearchScreen(
         if (results.items.isNotEmpty()) {
             item(key = "items_header") { SectionLabel(text = "Items") }
             items(results.items, key = { "item_${it.id}" }) { item ->
-                InfoCard(modifier = Modifier.clickable { onOpenItem(item.id) }) {
+                InfoCard(onClick = { onOpenItem(item.id) }) {
                     Text(item.name, style = MaterialTheme.typography.titleSmall, color = TextPrimary)
                     Text(
                         text = item.category.displayName(),
@@ -166,7 +165,7 @@ fun SearchScreen(
         if (results.augments.isNotEmpty()) {
             item(key = "augments_header") { SectionLabel(text = "Augments") }
             items(results.augments, key = { "aug_${it.id}" }) { augment ->
-                InfoCard(modifier = Modifier.clickable(onClick = onOpenAugments)) {
+                InfoCard(onClick = onOpenAugments) {
                     Text(
                         text = augment.name,
                         style = MaterialTheme.typography.titleSmall,

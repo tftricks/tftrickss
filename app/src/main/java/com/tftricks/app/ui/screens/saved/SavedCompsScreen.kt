@@ -1,6 +1,5 @@
 package com.tftricks.app.ui.screens.saved
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -71,7 +70,7 @@ fun SavedCompsScreen(
                 }
             }
             items(content.favoriteComps, key = { "fav_${it.id}" }) { comp ->
-                InfoCard(modifier = Modifier.clickable { onOpenComp(comp.id) }) {
+                InfoCard(onClick = { onOpenComp(comp.id) }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         TierBadge(comp.tier)
                         Spacer(modifier = Modifier.width(12.dp))
@@ -100,7 +99,7 @@ fun SavedCompsScreen(
             }
             if (content.savedTeams.isEmpty()) {
                 item(key = "teams_empty") {
-                    InfoCard(modifier = Modifier.clickable(onClick = onOpenBuilder)) {
+                    InfoCard(onClick = onOpenBuilder) {
                         Text(
                             text = "No saved teams yet.",
                             style = MaterialTheme.typography.bodyMedium,

@@ -1,6 +1,5 @@
 package com.tftricks.app.ui.screens.items
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -66,9 +65,7 @@ fun ItemCombosTab(
                         (it.componentA == second && it.componentB == first)
                 }
                 InfoCard(
-                    modifier = if (recipe != null) {
-                        Modifier.clickable { onOpenItem(recipe.result.id) }
-                    } else Modifier
+                    onClick = recipe?.let { { onOpenItem(it.result.id) } }
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,

@@ -13,14 +13,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import android.app.Activity
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.tftricks.app.TFTricksApplication
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tftricks.app.domain.model.BoardUnit
 import com.tftricks.app.ui.AppViewModelProvider
@@ -49,6 +53,13 @@ fun CompDetailScreen(
     viewModel: CompDetailViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    // Interstitial hook (no-op unless AdsConfig.INTERSTITIALS_ENABLED).
+    val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        (context.applicationContext as TFTricksApplication).container.adsManager
+            .onCompDetailOpened(context as? Activity)
+    }
 
     StateContent(state = state, modifier = Modifier.padding(contentPadding)) { content ->
         val comp = content.comp

@@ -1,6 +1,5 @@
 package com.tftricks.app.ui.screens.champions
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,6 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tftricks.app.domain.model.Champion
 import com.tftricks.app.ui.AppViewModelProvider
+import com.tftricks.app.ui.components.BannerAdSlot
 import com.tftricks.app.ui.components.FavoriteButton
 import com.tftricks.app.ui.components.FilterChipRow
 import com.tftricks.app.ui.components.InfoCard
@@ -40,52 +40,54 @@ fun ChampionsScreen(
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     StateContent(state = state, modifier = Modifier.padding(contentPadding)) { content ->
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(
-                start = 16.dp,
-                end = 16.dp,
-                top = contentPadding.calculateTopPadding() + 8.dp,
-                bottom = contentPadding.calculateBottomPadding() + 16.dp
-            ),
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(contentPadding)
         ) {
-            item(key = "cost_filter", span = { GridItemSpan(maxLineSpan) }) {
-                FilterChipRow(
-                    options = (1..5).toList(),
-                    isSelected = { it == content.selectedCost },
-                    onToggle = viewModel::selectCost,
-                    label = { "${it}g" }
-                )
-            }
-            item(key = "trait_filter", span = { GridItemSpan(maxLineSpan) }) {
-                FilterChipRow(
-                    options = content.allTraits,
-                    isSelected = { it == content.selectedTrait },
-                    onToggle = viewModel::selectTrait,
-                    label = { it }
-                )
-            }
-            if (content.champions.isEmpty()) {
-                item(key = "empty", span = { GridItemSpan(maxLineSpan) }) {
-                    Text(
-                        text = "No champions match the selected filters.",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = TextSecondary,
-                        modifier = Modifier.padding(vertical = 24.dp)
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = Modifier.weight(1f),
+                contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                item(key = "cost_filter", span = { GridItemSpan(maxLineSpan) }) {
+                    FilterChipRow(
+                        options = (1..5).toList(),
+                        isSelected = { it == content.selectedCost },
+                        onToggle = viewModel::selectCost,
+                        label = { "${it}g" }
+                    )
+                }
+                item(key = "trait_filter", span = { GridItemSpan(maxLineSpan) }) {
+                    FilterChipRow(
+                        options = content.allTraits,
+                        isSelected = { it == content.selectedTrait },
+                        onToggle = viewModel::selectTrait,
+                        label = { it }
+                    )
+                }
+                if (content.champions.isEmpty()) {
+                    item(key = "empty", span = { GridItemSpan(maxLineSpan) }) {
+                        Text(
+                            text = "No champions match the selected filters.",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = TextSecondary,
+                            modifier = Modifier.padding(vertical = 24.dp)
+                        )
+                    }
+                }
+                items(content.champions, key = { it.id }) { champion ->
+                    ChampionCard(
+                        champion = champion,
+                        isFavorite = champion.id in content.favoriteIds,
+                        onClick = { onOpenChampion(champion.id) },
+                        onToggleFavorite = { viewModel.toggleFavorite(champion.id) }
                     )
                 }
             }
-            items(content.champions, key = { it.id }) { champion ->
-                ChampionCard(
-                    champion = champion,
-                    isFavorite = champion.id in content.favoriteIds,
-                    onClick = { onOpenChampion(champion.id) },
-                    onToggleFavorite = { viewModel.toggleFavorite(champion.id) }
-                )
-            }
+            BannerAdSlot(modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp))
         }
     }
 }
@@ -97,7 +99,7 @@ private fun ChampionCard(
     onClick: () -> Unit,
     onToggleFavorite: () -> Unit
 ) {
-    InfoCard(modifier = Modifier.clickable(onClick = onClick)) {
+    InfoCard(onClick = onClick) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()

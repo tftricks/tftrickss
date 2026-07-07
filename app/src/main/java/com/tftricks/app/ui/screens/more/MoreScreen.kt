@@ -1,6 +1,5 @@
 package com.tftricks.app.ui.screens.more
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -37,7 +36,7 @@ fun MoreScreen(
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         items(Destination.moreDestinations, key = { it.route }) { destination ->
-            InfoCard(modifier = Modifier.clickable { onNavigate(destination) }) {
+            InfoCard(onClick = { onNavigate(destination) }) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = destination.icon,

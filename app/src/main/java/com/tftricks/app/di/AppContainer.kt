@@ -1,6 +1,7 @@
 package com.tftricks.app.di
 
 import android.content.Context
+import com.tftricks.app.ads.AdsManager
 import com.tftricks.app.data.local.userDataStore
 import com.tftricks.app.data.repository.DataStoreFavoritesRepository
 import com.tftricks.app.data.repository.DataStoreOverlayPrefsRepository
@@ -51,4 +52,6 @@ class AppContainer(context: Context) {
         DataStoreSavedTeamsRepository(appContext.userDataStore, json)
     val overlayPrefsRepository: OverlayPrefsRepository =
         DataStoreOverlayPrefsRepository(appContext.userDataStore)
+
+    val adsManager: AdsManager = AdsManager(appContext)
 }

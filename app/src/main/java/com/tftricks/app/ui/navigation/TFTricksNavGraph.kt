@@ -1,5 +1,8 @@
 package com.tftricks.app.ui.navigation
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -51,7 +54,12 @@ fun TFTricksNavGraph(
     NavHost(
         navController = navController,
         startDestination = Destination.Home.route,
-        modifier = modifier
+        modifier = modifier,
+        // Quick cross-fades: smooth without slowing down mid-game lookups.
+        enterTransition = { fadeIn(animationSpec = tween(200)) },
+        exitTransition = { fadeOut(animationSpec = tween(150)) },
+        popEnterTransition = { fadeIn(animationSpec = tween(200)) },
+        popExitTransition = { fadeOut(animationSpec = tween(150)) }
     ) {
         composable(Destination.Home.route) {
             HomeScreen(
@@ -104,7 +112,12 @@ fun TFTricksNavGraph(
                 onOpenAugments = { navController.navigate(Destination.Augments.route) }
             )
         }
-        composable(Destination.Settings.route) { SettingsScreen(contentPadding) }
+        composable(Destination.Settings.route) {
+            SettingsScreen(
+                contentPadding = contentPadding,
+                onOpenOverlaySettings = { navController.navigate(Destination.OverlaySettings.route) }
+            )
+        }
         composable(Destination.OverlaySettings.route) { OverlaySettingsScreen(contentPadding) }
 
         composable(

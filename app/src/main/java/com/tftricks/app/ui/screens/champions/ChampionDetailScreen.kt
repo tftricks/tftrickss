@@ -1,6 +1,5 @@
 package com.tftricks.app.ui.screens.champions
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -148,7 +147,7 @@ fun ChampionDetailScreen(
             if (content.bestComps.isNotEmpty()) {
                 SectionLabel(text = "Best comps", modifier = Modifier.padding(top = 4.dp))
                 content.bestComps.forEach { comp ->
-                    InfoCard(modifier = Modifier.clickable { onOpenComp(comp.id) }) {
+                    InfoCard(onClick = { onOpenComp(comp.id) }) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             TierBadge(comp.tier)
                             Spacer(modifier = Modifier.width(12.dp))

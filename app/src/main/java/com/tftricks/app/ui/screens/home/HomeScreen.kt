@@ -1,7 +1,6 @@
 package com.tftricks.app.ui.screens.home
 
 import android.provider.Settings
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -30,6 +29,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tftricks.app.overlay.OverlayService
 import com.tftricks.app.ui.AppViewModelProvider
+import com.tftricks.app.ui.components.BannerAdSlot
 import com.tftricks.app.ui.components.InfoCard
 import com.tftricks.app.ui.components.PillChip
 import com.tftricks.app.ui.components.SectionLabel
@@ -61,10 +61,14 @@ fun HomeScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(contentPadding)
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState())
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
             // Branding + patch
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -98,7 +102,7 @@ fun HomeScreen(
             // Featured S-tier comps
             SectionLabel(text = "Featured comps", modifier = Modifier.padding(top = 4.dp))
             content.featuredComps.forEach { comp ->
-                InfoCard(modifier = Modifier.clickable { onOpenComp(comp.id) }) {
+                InfoCard(onClick = { onOpenComp(comp.id) }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         TierBadge(comp.tier)
                         Spacer(modifier = Modifier.width(12.dp))
@@ -125,7 +129,7 @@ fun HomeScreen(
             if (hasFavorites) {
                 SectionLabel(text = "Favorites", modifier = Modifier.padding(top = 4.dp))
                 content.favoriteComps.forEach { comp ->
-                    InfoCard(modifier = Modifier.clickable { onOpenComp(comp.id) }) {
+                    InfoCard(onClick = { onOpenComp(comp.id) }) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             TierBadge(comp.tier)
                             Spacer(modifier = Modifier.width(12.dp))
@@ -158,6 +162,8 @@ fun HomeScreen(
                     }
                 }
             }
+            }
+            BannerAdSlot(modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp))
         }
     }
 }
@@ -213,7 +219,7 @@ private fun QuickTile(
     onOpen: (Destination) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    InfoCard(modifier = modifier.clickable { onOpen(destination) }) {
+    InfoCard(modifier = modifier, onClick = { onOpen(destination) }) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()

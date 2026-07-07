@@ -20,6 +20,7 @@ import com.tftricks.app.ui.screens.patchnotes.PatchNotesViewModel
 import com.tftricks.app.ui.screens.saved.SavedCompsViewModel
 import com.tftricks.app.ui.screens.search.SearchViewModel
 import com.tftricks.app.ui.screens.settings.OverlaySettingsViewModel
+import com.tftricks.app.ui.screens.settings.SettingsViewModel
 import com.tftricks.app.ui.screens.traits.TraitsViewModel
 
 /**
@@ -78,6 +79,7 @@ object AppViewModelProvider {
             )
         }
         initializer { OverlaySettingsViewModel(app()) }
+        initializer { SettingsViewModel(app()) }
     }
 
     private fun CreationExtras.app(): TFTricksApplication =

@@ -1,7 +1,7 @@
 package com.tftricks.app.ui.screens.items
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -27,6 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tftricks.app.domain.model.Item
 import com.tftricks.app.domain.model.ItemCategory
 import com.tftricks.app.ui.AppViewModelProvider
+import com.tftricks.app.ui.components.BannerAdSlot
 import com.tftricks.app.ui.components.FavoriteButton
 import com.tftricks.app.ui.components.FilterChipRow
 import com.tftricks.app.ui.components.InfoCard
@@ -79,10 +80,13 @@ fun ItemsScreen(
                     unselectedContentColor = TextSecondary
                 )
             }
-            when (tab) {
-                0 -> ItemDatabaseTab(content, viewModel, onOpenItem)
-                else -> ItemCombosTab(content, onOpenItem)
+            Box(modifier = Modifier.weight(1f)) {
+                when (tab) {
+                    0 -> ItemDatabaseTab(content, viewModel, onOpenItem)
+                    else -> ItemCombosTab(content, onOpenItem)
+                }
             }
+            BannerAdSlot(modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp))
         }
     }
 }
@@ -134,7 +138,7 @@ private fun ItemCard(
     onClick: () -> Unit,
     onToggleFavorite: () -> Unit
 ) {
-    InfoCard(modifier = Modifier.clickable(onClick = onClick)) {
+    InfoCard(onClick = onClick) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()

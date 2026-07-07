@@ -11,5 +11,6 @@ class TFTricksApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         container = AppContainer(this)
+        container.adsManager.initialize()
     }
 }

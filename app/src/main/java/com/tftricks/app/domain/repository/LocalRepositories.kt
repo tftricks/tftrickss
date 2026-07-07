@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.Flow
 interface FavoritesRepository {
     fun favorites(category: FavoriteCategory): Flow<Set<String>>
     suspend fun toggle(category: FavoriteCategory, id: String)
+
+    /** Removes every favorite in every category. */
+    suspend fun clearAll()
 }
 
 /** Locally persisted teams built in the Team Builder. */

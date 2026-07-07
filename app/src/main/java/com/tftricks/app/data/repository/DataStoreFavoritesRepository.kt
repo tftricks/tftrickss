@@ -29,4 +29,10 @@ class DataStoreFavoritesRepository(
             prefs[key] = if (id in current) current - id else current + id
         }
     }
+
+    override suspend fun clearAll() {
+        dataStore.edit { prefs ->
+            FavoriteCategory.entries.forEach { prefs.remove(keyFor(it)) }
+        }
+    }
 }
