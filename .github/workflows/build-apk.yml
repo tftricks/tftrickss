@@ -1,8 +1,7 @@
 name: Build debug APK
 
 on:
-  push:
-    branches: [main]
+  push: # every push to any branch
   workflow_dispatch: # manual re-run from the Actions tab, no push needed
 
 jobs:
