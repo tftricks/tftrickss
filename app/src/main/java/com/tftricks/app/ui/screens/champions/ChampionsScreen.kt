@@ -4,9 +4,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -26,8 +29,10 @@ import com.tftricks.app.ui.AppViewModelProvider
 import com.tftricks.app.ui.components.BannerAdSlot
 import com.tftricks.app.ui.components.FavoriteButton
 import com.tftricks.app.ui.components.FilterChipRow
+import com.tftricks.app.ui.components.GameIcon
 import com.tftricks.app.ui.components.InfoCard
 import com.tftricks.app.ui.components.StateContent
+import com.tftricks.app.ui.components.rememberDataDragonRepository
 import com.tftricks.app.ui.theme.TextSecondary
 import com.tftricks.app.ui.theme.costColor
 
@@ -38,6 +43,8 @@ fun ChampionsScreen(
     viewModel: ChampionsViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val dataDragon = rememberDataDragonRepository()
+    val championIcons by dataDragon.championIconUrls.collectAsStateWithLifecycle()
 
     StateContent(state = state, modifier = Modifier.padding(contentPadding)) { content ->
         Column(
@@ -81,6 +88,7 @@ fun ChampionsScreen(
                 items(content.champions, key = { it.id }) { champion ->
                     ChampionCard(
                         champion = champion,
+                        iconUrl = championIcons[champion.id],
                         isFavorite = champion.id in content.favoriteIds,
                         onClick = { onOpenChampion(champion.id) },
                         onToggleFavorite = { viewModel.toggleFavorite(champion.id) }
@@ -95,6 +103,7 @@ fun ChampionsScreen(
 @Composable
 private fun ChampionCard(
     champion: Champion,
+    iconUrl: String?,
     isFavorite: Boolean,
     onClick: () -> Unit,
     onToggleFavorite: () -> Unit
@@ -104,6 +113,12 @@ private fun ChampionCard(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
+            GameIcon(
+                url = iconUrl,
+                borderColor = costColor(champion.cost),
+                modifier = Modifier.size(44.dp)
+            )
+            Spacer(modifier = Modifier.width(10.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(

@@ -44,6 +44,9 @@ class OverlayPanelState(
         container.favoritesRepository.favorites(FavoriteCategory.COMP)
             .stateIn(scope, SharingStarted.Eagerly, emptySet())
 
+    val championIconUrls: StateFlow<Map<String, String>> = container.dataDragonRepository.championIconUrls
+    val itemIconUrls: StateFlow<Map<String, String>> = container.dataDragonRepository.itemIconUrls
+
     val savedTeams: StateFlow<List<SavedTeam>> =
         container.savedTeamsRepository.savedTeams
             .stateIn(scope, SharingStarted.Eagerly, emptyList())

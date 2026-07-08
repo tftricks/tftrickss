@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -43,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import com.tftricks.app.domain.model.OverlaySettings
 import com.tftricks.app.domain.model.TeamComp
 import com.tftricks.app.overlay.OverlayPanelState
+import com.tftricks.app.ui.components.GameIcon
 import com.tftricks.app.ui.components.TierBadge
 import com.tftricks.app.ui.screens.augments.color
 import com.tftricks.app.ui.theme.BrandYellow
@@ -206,6 +208,8 @@ private fun OverlayTabContent(
     val augments by panelState.augments.collectAsState()
     val favoriteCompIds by panelState.favoriteCompIds.collectAsState()
     val savedTeams by panelState.savedTeams.collectAsState()
+    val championIcons by panelState.championIconUrls.collectAsState()
+    val itemIcons by panelState.itemIconUrls.collectAsState()
 
     val rowPadding = if (compact) 5.dp else 9.dp
     val titleStyle =
@@ -242,6 +246,8 @@ private fun OverlayTabContent(
             OverlayTab.ITEMS -> {
                 items(items.filter { it.name.matches() }, key = { it.id }) { item ->
                     OverlayRow(rowPadding) {
+                        GameIcon(url = itemIcons[item.id], modifier = Modifier.size(28.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
                         Column {
                             Text(item.name, style = titleStyle, color = TextPrimary)
                             Text(
@@ -277,6 +283,12 @@ private fun OverlayTabContent(
             OverlayTab.CHAMPIONS -> {
                 items(champions.filter { it.name.matches() }, key = { it.id }) { champion ->
                     OverlayRow(rowPadding) {
+                        GameIcon(
+                            url = championIcons[champion.id],
+                            borderColor = costColor(champion.cost),
+                            modifier = Modifier.size(28.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "${champion.cost}g",
                             style = titleStyle,
@@ -342,11 +354,19 @@ private fun OverlayTabContent(
                             ) {
                                 team.units.sortedBy { it.position }.forEach { unit ->
                                     val champion = championsById[unit.championId]
-                                    Text(
-                                        text = champion?.name ?: unit.championId,
-                                        style = bodyStyle,
-                                        color = costColor(champion?.cost ?: 1)
-                                    )
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        GameIcon(
+                                            url = championIcons[unit.championId],
+                                            borderColor = costColor(champion?.cost ?: 1),
+                                            modifier = Modifier.size(16.dp)
+                                        )
+                                        Spacer(modifier = Modifier.width(3.dp))
+                                        Text(
+                                            text = champion?.name ?: unit.championId,
+                                            style = bodyStyle,
+                                            color = costColor(champion?.cost ?: 1)
+                                        )
+                                    }
                                 }
                             }
                         }

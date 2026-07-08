@@ -5,9 +5,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -30,8 +33,10 @@ import com.tftricks.app.ui.AppViewModelProvider
 import com.tftricks.app.ui.components.BannerAdSlot
 import com.tftricks.app.ui.components.FavoriteButton
 import com.tftricks.app.ui.components.FilterChipRow
+import com.tftricks.app.ui.components.GameIcon
 import com.tftricks.app.ui.components.InfoCard
 import com.tftricks.app.ui.components.StateContent
+import com.tftricks.app.ui.components.rememberDataDragonRepository
 import com.tftricks.app.ui.theme.BrandYellow
 import com.tftricks.app.ui.theme.PureBlack
 import com.tftricks.app.ui.theme.TextSecondary
@@ -53,6 +58,8 @@ fun ItemsScreen(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     var tab by rememberSaveable { mutableIntStateOf(0) }
+    val dataDragon = rememberDataDragonRepository()
+    val itemIcons by dataDragon.itemIconUrls.collectAsStateWithLifecycle()
 
     StateContent(state = state, modifier = Modifier.padding(contentPadding)) { content ->
         Column(
@@ -82,7 +89,7 @@ fun ItemsScreen(
             }
             Box(modifier = Modifier.weight(1f)) {
                 when (tab) {
-                    0 -> ItemDatabaseTab(content, viewModel, onOpenItem)
+                    0 -> ItemDatabaseTab(content, viewModel, itemIcons, onOpenItem)
                     else -> ItemCombosTab(content, onOpenItem)
                 }
             }
@@ -95,6 +102,7 @@ fun ItemsScreen(
 private fun ItemDatabaseTab(
     content: ItemsContent,
     viewModel: ItemsViewModel,
+    itemIcons: Map<String, String>,
     onOpenItem: (String) -> Unit
 ) {
     LazyColumn(
@@ -123,6 +131,7 @@ private fun ItemDatabaseTab(
         items(content.items, key = { it.id }) { item ->
             ItemCard(
                 item = item,
+                iconUrl = itemIcons[item.id],
                 isFavorite = item.id in content.favoriteIds,
                 onClick = { onOpenItem(item.id) },
                 onToggleFavorite = { viewModel.toggleFavorite(item.id) }
@@ -134,6 +143,7 @@ private fun ItemDatabaseTab(
 @Composable
 private fun ItemCard(
     item: Item,
+    iconUrl: String?,
     isFavorite: Boolean,
     onClick: () -> Unit,
     onToggleFavorite: () -> Unit
@@ -143,6 +153,8 @@ private fun ItemCard(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
+            GameIcon(url = iconUrl, modifier = Modifier.size(40.dp))
+            Spacer(modifier = Modifier.width(10.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = item.name,

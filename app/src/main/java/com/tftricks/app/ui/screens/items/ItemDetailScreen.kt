@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -21,10 +24,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tftricks.app.ui.AppViewModelProvider
 import com.tftricks.app.ui.components.FavoriteButton
+import com.tftricks.app.ui.components.GameIcon
 import com.tftricks.app.ui.components.InfoCard
 import com.tftricks.app.ui.components.PillChip
 import com.tftricks.app.ui.components.SectionLabel
 import com.tftricks.app.ui.components.StateContent
+import com.tftricks.app.ui.components.rememberDataDragonRepository
 import com.tftricks.app.ui.theme.BrandYellow
 import com.tftricks.app.ui.theme.TextPrimary
 import com.tftricks.app.ui.theme.TextSecondary
@@ -38,6 +43,8 @@ fun ItemDetailScreen(
     viewModel: ItemDetailViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val dataDragon = rememberDataDragonRepository()
+    val itemIcons by dataDragon.itemIconUrls.collectAsStateWithLifecycle()
 
     StateContent(state = state, modifier = Modifier.padding(contentPadding)) { content ->
         val item = content.item
@@ -52,6 +59,8 @@ fun ItemDetailScreen(
         ) {
             InfoCard {
                 Row(verticalAlignment = Alignment.CenterVertically) {
+                    GameIcon(url = itemIcons[item.id], modifier = Modifier.size(56.dp))
+                    Spacer(modifier = Modifier.width(12.dp))
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = item.name,

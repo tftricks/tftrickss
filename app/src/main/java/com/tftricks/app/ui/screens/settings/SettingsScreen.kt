@@ -211,11 +211,19 @@ fun SettingsScreen(
                 modifier = Modifier.padding(top = 6.dp)
             )
             Text(
-                text = "Offline Teamfight Tactics companion. All data is bundled with the app — " +
-                    "no accounts, no tracking, no network calls.",
+                text = "Offline-first Teamfight Tactics companion. Comp, champion, and item data " +
+                    "is bundled with the app; champion and item icons are fetched from Riot's " +
+                    "Data Dragon CDN and cached for offline use afterward. No accounts, no tracking.",
                 style = MaterialTheme.typography.bodySmall,
                 color = TextSecondary,
                 modifier = Modifier.padding(top = 2.dp)
+            )
+            Text(
+                text = "TFTricks was created under Riot Games' 'Legal Jibber Jabber' policy using " +
+                    "assets owned by Riot Games. Riot Games does not endorse or sponsor this project.",
+                style = MaterialTheme.typography.bodySmall,
+                color = TextSecondary,
+                modifier = Modifier.padding(top = 10.dp)
             )
         }
     }

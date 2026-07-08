@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -33,10 +34,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tftricks.app.ui.AppViewModelProvider
 import com.tftricks.app.ui.components.BoardCellData
 import com.tftricks.app.ui.components.BoardGrid
+import com.tftricks.app.ui.components.GameIcon
 import com.tftricks.app.ui.components.InfoCard
 import com.tftricks.app.ui.components.PillChip
 import com.tftricks.app.ui.components.SectionLabel
 import com.tftricks.app.ui.components.StateContent
+import com.tftricks.app.ui.components.rememberDataDragonRepository
 import com.tftricks.app.ui.theme.BrandYellow
 import com.tftricks.app.ui.theme.OutlineDark
 import com.tftricks.app.ui.theme.PureBlack
@@ -53,6 +56,8 @@ fun TeamBuilderScreen(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     var teamName by rememberSaveable { mutableStateOf("") }
+    val dataDragon = rememberDataDragonRepository()
+    val championIcons by dataDragon.championIconUrls.collectAsStateWithLifecycle()
 
     StateContent(state = state, modifier = Modifier.padding(contentPadding)) { content ->
         Column(
@@ -82,7 +87,8 @@ fun TeamBuilderScreen(
                     content.board[position]?.let { champion ->
                         BoardCellData(
                             shortName = champion.name,
-                            accentColor = costColor(champion.cost)
+                            accentColor = costColor(champion.cost),
+                            iconUrl = championIcons[champion.id]
                         )
                     }
                 },
@@ -151,13 +157,21 @@ fun TeamBuilderScreen(
                 val placedIds = content.board.values.map { it.id }.toSet()
                 content.roster.forEach { champion ->
                     val placed = champion.id in placedIds
-                    PillChip(
-                        text = "${champion.cost}g ${champion.name}",
-                        contentColor = if (placed) PureBlack else costColor(champion.cost),
-                        containerColor = if (placed) costColor(champion.cost)
-                        else MaterialTheme.colorScheme.surfaceContainerHigh,
-                        onClick = { viewModel.onChampionClick(champion) }
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        GameIcon(
+                            url = championIcons[champion.id],
+                            borderColor = costColor(champion.cost),
+                            modifier = Modifier.size(22.dp)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        PillChip(
+                            text = "${champion.cost}g ${champion.name}",
+                            contentColor = if (placed) PureBlack else costColor(champion.cost),
+                            containerColor = if (placed) costColor(champion.cost)
+                            else MaterialTheme.colorScheme.surfaceContainerHigh,
+                            onClick = { viewModel.onChampionClick(champion) }
+                        )
+                    }
                 }
             }
 

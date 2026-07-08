@@ -44,8 +44,12 @@ fun OverlayCompDetail(
     onBack: () -> Unit
 ) {
     val champions by panelState.champions.collectAsState()
+    val championIcons by panelState.championIconUrls.collectAsState()
     val costByName = remember(champions) {
         champions.associate { it.name to it.cost }
+    }
+    val iconIdByName = remember(champions) {
+        champions.associate { it.name to it.id }
     }
     val championColor = { name: String -> costColor(costByName[name] ?: 1) }
 
@@ -84,7 +88,8 @@ fun OverlayCompDetail(
                     positioned[position]?.let { unit ->
                         BoardCellData(
                             shortName = unit.champion,
-                            accentColor = championColor(unit.champion)
+                            accentColor = championColor(unit.champion),
+                            iconUrl = iconIdByName[unit.champion]?.let { championIcons[it] }
                         )
                     }
                 }
