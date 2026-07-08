@@ -28,7 +28,15 @@ data class TeamComp(
     val whenToPlay: String,
     val strengths: List<String>,
     val weaknesses: List<String>,
-    val tags: List<String> = emptyList()
+    val tags: List<String> = emptyList(),
+    /** Level to slow-roll at for a reroll comp, or null for fast-leveling comps. */
+    val slowRollLevel: Int? = null,
+    /** Low-cost champions from this comp's roster worth playing before the comp comes online. */
+    val earlyGameChampions: List<String> = emptyList(),
+    /** Suggested roster swaps keyed by level (as a string, e.g. "7"). */
+    val levelAlternatives: Map<String, List<String>> = emptyMap(),
+    /** Champion names in priority order for god-offering carousel picks. */
+    val godOfferingPriority: List<String> = emptyList()
 )
 
 /**
