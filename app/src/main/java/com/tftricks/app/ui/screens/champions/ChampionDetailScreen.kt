@@ -18,17 +18,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.layout.size
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tftricks.app.ui.AppViewModelProvider
 import com.tftricks.app.ui.components.FavoriteButton
+import com.tftricks.app.ui.components.GameIcon
 import com.tftricks.app.ui.components.InfoCard
 import com.tftricks.app.ui.components.PillChip
 import com.tftricks.app.ui.components.SectionLabel
 import com.tftricks.app.ui.components.StateContent
 import com.tftricks.app.ui.components.TierBadge
+import com.tftricks.app.ui.components.rememberDataDragonRepository
 import com.tftricks.app.ui.theme.BrandYellow
 import com.tftricks.app.ui.theme.TextPrimary
 import com.tftricks.app.ui.theme.TextSecondary
@@ -43,6 +46,8 @@ fun ChampionDetailScreen(
     viewModel: ChampionDetailViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val dataDragon = rememberDataDragonRepository()
+    val championIcons by dataDragon.championIconUrls.collectAsStateWithLifecycle()
 
     StateContent(state = state, modifier = Modifier.padding(contentPadding)) { content ->
         val champion = content.champion
@@ -58,6 +63,12 @@ fun ChampionDetailScreen(
             // Header
             InfoCard {
                 Row(verticalAlignment = Alignment.CenterVertically) {
+                    GameIcon(
+                        url = championIcons[champion.name],
+                        borderColor = costColor(champion.cost),
+                        modifier = Modifier.size(56.dp)
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
                     Text(
                         text = "${champion.cost}g",
                         style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Black),

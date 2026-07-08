@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -41,9 +42,11 @@ fun OverlayCompDetail(
     comp: TeamComp,
     panelState: OverlayPanelState,
     compact: Boolean,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val champions by panelState.champions.collectAsState()
+    val championIcons by panelState.championIconUrls.collectAsState()
     val costByName = remember(champions) {
         champions.associate { it.name to it.cost }
     }
@@ -54,7 +57,7 @@ fun OverlayCompDetail(
     val bodyStyle =
         if (compact) MaterialTheme.typography.labelSmall else MaterialTheme.typography.bodySmall
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = modifier.fillMaxSize()) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onBack) {
                 Icon(
@@ -70,7 +73,8 @@ fun OverlayCompDetail(
 
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .weight(1f)
+                .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
                 .padding(top = 4.dp, bottom = 8.dp),
             verticalArrangement = Arrangement.spacedBy(if (compact) 6.dp else 10.dp)
@@ -84,7 +88,8 @@ fun OverlayCompDetail(
                     positioned[position]?.let { unit ->
                         BoardCellData(
                             shortName = unit.champion,
-                            accentColor = championColor(unit.champion)
+                            accentColor = championColor(unit.champion),
+                            iconUrl = championIcons[unit.champion]
                         )
                     }
                 }

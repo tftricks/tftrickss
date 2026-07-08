@@ -12,6 +12,7 @@ import com.tftricks.app.data.repository.JsonItemRepository
 import com.tftricks.app.data.repository.JsonPatchNoteRepository
 import com.tftricks.app.data.repository.JsonTeamCompRepository
 import com.tftricks.app.data.repository.JsonTraitRepository
+import com.tftricks.app.data.remote.DataDragonRepository
 import com.tftricks.app.data.source.AssetJsonDataSource
 import com.tftricks.app.domain.repository.AugmentRepository
 import com.tftricks.app.domain.repository.ChampionRepository
@@ -45,6 +46,9 @@ class AppContainer(context: Context) {
     val traitRepository: TraitRepository = JsonTraitRepository(dataSource)
     val augmentRepository: AugmentRepository = JsonAugmentRepository(dataSource)
     val patchNoteRepository: PatchNoteRepository = JsonPatchNoteRepository(dataSource)
+
+    val dataDragonRepository: DataDragonRepository =
+        DataDragonRepository(appContext, championRepository, itemRepository, teamCompRepository, json)
 
     val favoritesRepository: FavoritesRepository =
         DataStoreFavoritesRepository(appContext.userDataStore)

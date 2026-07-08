@@ -37,6 +37,7 @@ import com.tftricks.app.ui.components.PillChip
 import com.tftricks.app.ui.components.SectionLabel
 import com.tftricks.app.ui.components.StateContent
 import com.tftricks.app.ui.components.TierBadge
+import com.tftricks.app.ui.components.rememberDataDragonRepository
 import com.tftricks.app.ui.theme.BrandYellow
 import com.tftricks.app.ui.theme.DangerRed
 import com.tftricks.app.ui.theme.SuccessGreen
@@ -53,6 +54,8 @@ fun CompDetailScreen(
     viewModel: CompDetailViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val dataDragon = rememberDataDragonRepository()
+    val championIcons by dataDragon.championIconUrls.collectAsStateWithLifecycle()
 
     // Interstitial hook (no-op unless AdsConfig.INTERSTITIALS_ENABLED).
     val context = LocalContext.current
@@ -129,7 +132,8 @@ fun CompDetailScreen(
                         positioned[position]?.let { unit ->
                             BoardCellData(
                                 shortName = unit.champion,
-                                accentColor = championColor(unit.champion)
+                                accentColor = championColor(unit.champion),
+                                iconUrl = championIcons[unit.champion]
                             )
                         }
                     }

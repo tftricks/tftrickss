@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,11 +21,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.tftricks.app.ui.theme.BrandYellow
 import com.tftricks.app.ui.theme.OutlineDark
 import com.tftricks.app.ui.theme.SurfaceCard
@@ -32,7 +36,9 @@ import com.tftricks.app.ui.theme.SurfaceCard
 /** What to render inside an occupied board cell. */
 data class BoardCellData(
     val shortName: String,
-    val accentColor: Color
+    val accentColor: Color,
+    /** Data Dragon champion portrait URL; falls back to [shortName] text when null. */
+    val iconUrl: String? = null
 )
 
 /**
@@ -81,15 +87,26 @@ fun BoardGrid(
                             contentAlignment = Alignment.Center
                         ) {
                             if (cell != null) {
-                                Text(
-                                    text = cell.shortName,
-                                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 8.sp),
-                                    color = cell.accentColor,
-                                    textAlign = TextAlign.Center,
-                                    maxLines = 2,
-                                    overflow = TextOverflow.Ellipsis,
-                                    modifier = Modifier.padding(1.dp)
-                                )
+                                if (cell.iconUrl != null) {
+                                    AsyncImage(
+                                        model = cell.iconUrl,
+                                        contentDescription = cell.shortName,
+                                        contentScale = ContentScale.Crop,
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .clip(shape)
+                                    )
+                                } else {
+                                    Text(
+                                        text = cell.shortName,
+                                        style = MaterialTheme.typography.labelSmall.copy(fontSize = 8.sp),
+                                        color = cell.accentColor,
+                                        textAlign = TextAlign.Center,
+                                        maxLines = 2,
+                                        overflow = TextOverflow.Ellipsis,
+                                        modifier = Modifier.padding(1.dp)
+                                    )
+                                }
                             }
                         }
                     }
