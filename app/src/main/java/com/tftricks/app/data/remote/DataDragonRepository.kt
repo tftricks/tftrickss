@@ -56,11 +56,28 @@ class DataDragonRepository(
     private val _itemIconUrls = MutableStateFlow<Map<String, String>>(emptyMap())
     val itemIconUrls: StateFlow<Map<String, String>> = _itemIconUrls.asStateFlow()
 
+    /** Outcome of the last load attempt (cache read or network refresh) — for debug UI. */
+    private val _status = MutableStateFlow<DataDragonStatus>(DataDragonStatus.Loading)
+    val status: StateFlow<DataDragonStatus> = _status.asStateFlow()
+
     /** Loads the cached icon maps (if any), then refreshes from the network if online. */
     fun initialize() {
         scope.launch {
             loadFromDiskCache()
-            if (isOnline()) refreshFromNetwork()
+            if (isOnline()) {
+                refreshFromNetwork()
+            } else if (_status.value is DataDragonStatus.Loading) {
+                _status.value = DataDragonStatus.Error("No internet connection and no cached data")
+            }
+        }
+    }
+
+    /** Manual retry for debug UI: wipes the disk cache and forces a fresh network fetch. */
+    fun forceRefresh() {
+        scope.launch {
+            _status.value = DataDragonStatus.Loading
+            clearDiskCache()
+            refreshFromNetwork()
         }
     }
 
@@ -83,7 +100,10 @@ class DataDragonRepository(
             val championJson = championFile.readText()
             val itemJson = itemFile.readText()
             applyResponses(version, championJson, itemJson)
+        }.onSuccess { result ->
+            _status.value = DataDragonStatus.Success(result.setNumber, result.championCount, result.itemCount)
         }.onFailure {
+            // Leave status as Loading — a network refresh right after this may still succeed.
             Log.w(TAG, "Failed to load cached Data Dragon data", it)
         }
     }
@@ -93,14 +113,27 @@ class DataDragonRepository(
             val version = fetchLatestVersion()
             val championJson = fetchText(championUrl(version))
             val itemJson = fetchText(itemUrl(version))
-            applyResponses(version, championJson, itemJson)
+            val result = applyResponses(version, championJson, itemJson)
             writeToDiskCache(version, championJson, itemJson)
-        }.onFailure {
-            Log.w(TAG, "Data Dragon refresh failed, keeping cached/previous icon data", it)
+            result
+        }.onSuccess { result ->
+            _status.value = DataDragonStatus.Success(result.setNumber, result.championCount, result.itemCount)
+        }.onFailure { e ->
+            Log.w(TAG, "Data Dragon refresh failed, keeping cached/previous icon data", e)
+            _status.value = DataDragonStatus.Error(e.message ?: e.javaClass.simpleName ?: "Unknown error")
         }
     }
 
-    private suspend fun applyResponses(version: String, championJson: String, itemJson: String) {
+    private fun clearDiskCache() {
+        File(cacheDir, VERSION_FILE).delete()
+        File(cacheDir, CHAMPION_FILE).delete()
+        File(cacheDir, ITEM_FILE).delete()
+    }
+
+    /** Result of a successful parse: what we detected, for the [status] flow. */
+    private data class ApplyResult(val setNumber: Int?, val championCount: Int, val itemCount: Int)
+
+    private suspend fun applyResponses(version: String, championJson: String, itemJson: String): ApplyResult {
         val championResponse = json.decodeFromString(DDragonChampionResponse.serializer(), championJson)
         val itemResponse = json.decodeFromString(DDragonItemResponse.serializer(), itemJson)
 
@@ -167,6 +200,12 @@ class DataDragonRepository(
 
         _championIconUrls.value = championIcons
         _itemIconUrls.value = itemIcons
+
+        return ApplyResult(
+            setNumber = currentSet,
+            championCount = currentSetChampions.size,
+            itemCount = currentSetItems.size
+        )
     }
 
     /** Every champion name appearing anywhere in our local data: the roster plus every team comp. */
