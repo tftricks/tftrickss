@@ -88,7 +88,7 @@ fun TeamBuilderScreen(
                         BoardCellData(
                             shortName = champion.name,
                             accentColor = costColor(champion.cost),
-                            iconUrl = championIcons[champion.id]
+                            iconUrl = championIcons[champion.name]
                         )
                     }
                 },
@@ -159,7 +159,7 @@ fun TeamBuilderScreen(
                     val placed = champion.id in placedIds
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         GameIcon(
-                            url = championIcons[champion.id],
+                            url = championIcons[champion.name],
                             borderColor = costColor(champion.cost),
                             modifier = Modifier.size(22.dp)
                         )

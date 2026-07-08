@@ -116,7 +116,8 @@ fun OverlayPanel(
                     comp = comp,
                     panelState = panelState,
                     compact = compact,
-                    onBack = { selectedComp = null }
+                    onBack = { selectedComp = null },
+                    modifier = Modifier.weight(1f).fillMaxWidth()
                 )
             } else {
                 OverlaySearchField(
@@ -143,13 +144,14 @@ fun OverlayPanel(
                     }
                 }
 
-                Box(modifier = Modifier.weight(1f)) {
+                Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
                     OverlayTabContent(
                         tab = tab,
                         query = query,
                         panelState = panelState,
                         compact = compact,
-                        onOpenComp = { selectedComp = it }
+                        onOpenComp = { selectedComp = it },
+                        modifier = Modifier.fillMaxSize()
                     )
                 }
             }
@@ -199,7 +201,8 @@ private fun OverlayTabContent(
     query: String,
     panelState: OverlayPanelState,
     compact: Boolean,
-    onOpenComp: (TeamComp) -> Unit
+    onOpenComp: (TeamComp) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val comps by panelState.comps.collectAsState()
     val champions by panelState.champions.collectAsState()
@@ -220,6 +223,7 @@ private fun OverlayTabContent(
     fun String.matches() = query.isBlank() || contains(query, ignoreCase = true)
 
     LazyColumn(
+        modifier = modifier.fillMaxWidth(),
         contentPadding = PaddingValues(vertical = 6.dp),
         verticalArrangement = Arrangement.spacedBy(if (compact) 4.dp else 6.dp)
     ) {
@@ -284,7 +288,7 @@ private fun OverlayTabContent(
                 items(champions.filter { it.name.matches() }, key = { it.id }) { champion ->
                     OverlayRow(rowPadding) {
                         GameIcon(
-                            url = championIcons[champion.id],
+                            url = championIcons[champion.name],
                             borderColor = costColor(champion.cost),
                             modifier = Modifier.size(28.dp)
                         )
@@ -356,7 +360,7 @@ private fun OverlayTabContent(
                                     val champion = championsById[unit.championId]
                                     Row(verticalAlignment = Alignment.CenterVertically) {
                                         GameIcon(
-                                            url = championIcons[unit.championId],
+                                            url = champion?.name?.let { championIcons[it] },
                                             borderColor = costColor(champion?.cost ?: 1),
                                             modifier = Modifier.size(16.dp)
                                         )

@@ -64,7 +64,7 @@ fun ChampionDetailScreen(
             InfoCard {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     GameIcon(
-                        url = championIcons[champion.id],
+                        url = championIcons[champion.name],
                         borderColor = costColor(champion.cost),
                         modifier = Modifier.size(56.dp)
                     )

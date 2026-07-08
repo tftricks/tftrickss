@@ -48,7 +48,7 @@ class AppContainer(context: Context) {
     val patchNoteRepository: PatchNoteRepository = JsonPatchNoteRepository(dataSource)
 
     val dataDragonRepository: DataDragonRepository =
-        DataDragonRepository(appContext, championRepository, itemRepository, json)
+        DataDragonRepository(appContext, championRepository, itemRepository, teamCompRepository, json)
 
     val favoritesRepository: FavoritesRepository =
         DataStoreFavoritesRepository(appContext.userDataStore)

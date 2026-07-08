@@ -133,7 +133,7 @@ fun CompDetailScreen(
                             BoardCellData(
                                 shortName = unit.champion,
                                 accentColor = championColor(unit.champion),
-                                iconUrl = content.championsByName[unit.champion]?.id?.let { championIcons[it] }
+                                iconUrl = championIcons[unit.champion]
                             )
                         }
                     }

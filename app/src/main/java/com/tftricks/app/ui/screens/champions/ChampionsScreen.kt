@@ -88,7 +88,7 @@ fun ChampionsScreen(
                 items(content.champions, key = { it.id }) { champion ->
                     ChampionCard(
                         champion = champion,
-                        iconUrl = championIcons[champion.id],
+                        iconUrl = championIcons[champion.name],
                         isFavorite = champion.id in content.favoriteIds,
                         onClick = { onOpenChampion(champion.id) },
                         onToggleFavorite = { viewModel.toggleFavorite(champion.id) }
