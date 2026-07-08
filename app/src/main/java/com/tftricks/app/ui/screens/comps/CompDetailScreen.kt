@@ -19,17 +19,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.tftricks.app.BuildConfig
 import com.tftricks.app.TFTricksApplication
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tftricks.app.domain.model.BoardUnit
 import com.tftricks.app.ui.AppViewModelProvider
 import com.tftricks.app.ui.components.BoardCellData
 import com.tftricks.app.ui.components.BoardGrid
+import com.tftricks.app.ui.components.DataDragonDebugBanner
 import com.tftricks.app.ui.components.ExpandableSection
 import com.tftricks.app.ui.components.FavoriteButton
 import com.tftricks.app.ui.components.InfoCard
@@ -56,6 +61,8 @@ fun CompDetailScreen(
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val dataDragon = rememberDataDragonRepository()
     val championIcons by dataDragon.championIconUrls.collectAsStateWithLifecycle()
+    val dataDragonStatus by dataDragon.status.collectAsStateWithLifecycle()
+    var debugBannerDismissed by remember { mutableStateOf(false) }
 
     // Interstitial hook (no-op unless AdsConfig.INTERSTITIALS_ENABLED).
     val context = LocalContext.current
@@ -91,6 +98,13 @@ fun CompDetailScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
+            if (BuildConfig.DEBUG && !debugBannerDismissed) {
+                DataDragonDebugBanner(
+                    status = dataDragonStatus,
+                    onDismiss = { debugBannerDismissed = true }
+                )
+            }
+
             // Header
             InfoCard {
                 Row(verticalAlignment = Alignment.CenterVertically) {

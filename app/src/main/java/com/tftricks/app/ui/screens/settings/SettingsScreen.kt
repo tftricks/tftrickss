@@ -29,10 +29,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.tftricks.app.BuildConfig
+import com.tftricks.app.data.remote.DataDragonStatus
+import com.tftricks.app.data.remote.debugLabel
 import com.tftricks.app.overlay.OverlayService
 import com.tftricks.app.ui.AppViewModelProvider
 import com.tftricks.app.ui.components.InfoCard
 import com.tftricks.app.ui.components.SectionLabel
+import com.tftricks.app.ui.components.rememberDataDragonRepository
 import com.tftricks.app.ui.theme.BrandYellow
 import com.tftricks.app.ui.theme.DangerRed
 import com.tftricks.app.ui.theme.OutlineDark
@@ -52,6 +56,8 @@ fun SettingsScreen(
     val favoritesCount by viewModel.favoritesCount.collectAsStateWithLifecycle()
     val overlayRunning by OverlayService.isRunning.collectAsStateWithLifecycle()
     var showClearDialog by remember { mutableStateOf(false) }
+    val dataDragon = rememberDataDragonRepository()
+    val dataDragonStatus by dataDragon.status.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -225,6 +231,43 @@ fun SettingsScreen(
                 color = TextSecondary,
                 modifier = Modifier.padding(top = 10.dp)
             )
+        }
+
+        // Debug-only diagnostics for Data Dragon — never shown in release builds.
+        if (BuildConfig.DEBUG) {
+            InfoCard {
+                SectionLabel(text = "Debug Info")
+                Text(
+                    text = "Data Dragon: ${dataDragonStatus.debugLabel()}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = TextPrimary,
+                    modifier = Modifier.padding(top = 6.dp)
+                )
+                val successStatus = dataDragonStatus as? DataDragonStatus.Success
+                Text(
+                    text = "Detected set: ${successStatus?.setNumber?.toString() ?: "—"}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = TextSecondary,
+                    modifier = Modifier.padding(top = 2.dp)
+                )
+                Text(
+                    text = "Champions loaded: ${successStatus?.championCount?.toString() ?: "—"}   " +
+                        "Items loaded: ${successStatus?.itemCount?.toString() ?: "—"}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = TextSecondary,
+                    modifier = Modifier.padding(top = 2.dp)
+                )
+                Button(
+                    onClick = { dataDragon.forceRefresh() },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = SurfaceElevated,
+                        contentColor = BrandYellow
+                    ),
+                    modifier = Modifier.padding(top = 10.dp)
+                ) {
+                    Text("Force Refresh")
+                }
+            }
         }
     }
 
