@@ -60,6 +60,19 @@ class DataDragonRepository(
     private val _status = MutableStateFlow<DataDragonStatus>(DataDragonStatus.Loading)
     val status: StateFlow<DataDragonStatus> = _status.asStateFlow()
 
+    /**
+     * Debug-only trace of the matching step: local champion display name -> the Data Dragon
+     * champion id it matched (e.g. "TFT14_Aatrox"). Absent from this map means no match, for
+     * the same reason it's absent from [championIconUrls] — recorded here purely for on-screen
+     * diagnostics, it doesn't change what gets matched.
+     */
+    private val _championMatchDebug = MutableStateFlow<Map<String, String>>(emptyMap())
+    val championMatchDebug: StateFlow<Map<String, String>> = _championMatchDebug.asStateFlow()
+
+    /** Debug-only: every Data Dragon champion id kept after set-filtering, for on-screen comparison. */
+    private val _loadedChampionIds = MutableStateFlow<List<String>>(emptyList())
+    val loadedChampionIds: StateFlow<List<String>> = _loadedChampionIds.asStateFlow()
+
     /** Loads the cached icon maps (if any), then refreshes from the network if online. */
     fun initialize() {
         scope.launch {
@@ -171,11 +184,13 @@ class DataDragonRepository(
         // champions.json roster — so imported team comps get icons for champions outside it.
         val localChampionNames = collectLocalChampionNames()
         val championIcons = mutableMapOf<String, String>()
+        val championMatchDebug = mutableMapOf<String, String>()
         val unmatchedChampions = mutableListOf<String>()
         localChampionNames.forEach { name ->
             val match = championCandidates[normalize(name)]
             if (match != null) {
                 championIcons[name] = championIconUrl(version, match.image.full)
+                championMatchDebug[name] = match.id
             } else {
                 unmatchedChampions += name
             }
@@ -200,6 +215,8 @@ class DataDragonRepository(
 
         _championIconUrls.value = championIcons
         _itemIconUrls.value = itemIcons
+        _championMatchDebug.value = championMatchDebug
+        _loadedChampionIds.value = currentSetChampions.map { it.id }.sorted()
 
         return ApplyResult(
             setNumber = currentSet,
