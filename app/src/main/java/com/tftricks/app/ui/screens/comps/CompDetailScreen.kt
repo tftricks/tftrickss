@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -25,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tftricks.app.BuildConfig
@@ -62,6 +64,8 @@ fun CompDetailScreen(
     val dataDragon = rememberDataDragonRepository()
     val championIcons by dataDragon.championIconUrls.collectAsStateWithLifecycle()
     val dataDragonStatus by dataDragon.status.collectAsStateWithLifecycle()
+    val championMatchDebug by dataDragon.championMatchDebug.collectAsStateWithLifecycle()
+    val loadedChampionIds by dataDragon.loadedChampionIds.collectAsStateWithLifecycle()
     var debugBannerDismissed by remember { mutableStateOf(false) }
 
     // Interstitial hook (no-op unless AdsConfig.INTERSTITIALS_ENABLED).
@@ -170,6 +174,53 @@ fun CompDetailScreen(
                             style = MaterialTheme.typography.bodySmall,
                             color = TextSecondary
                         )
+                    }
+                }
+            }
+
+            if (BuildConfig.DEBUG) {
+                InfoCard {
+                    SectionLabel(text = "DEBUG: Champion match trace")
+                    Text(
+                        text = "This comp's ${comp.finalBoard.size} champions vs. the current matching logic:",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = TextSecondary,
+                        modifier = Modifier.padding(top = 6.dp)
+                    )
+                    comp.finalBoard.forEach { unit ->
+                        val matchedId = championMatchDebug[unit.champion]
+                        Text(
+                            text = if (matchedId != null) {
+                                "${unit.champion} → MATCHED: $matchedId"
+                            } else {
+                                "${unit.champion} → NO MATCH"
+                            },
+                            style = MaterialTheme.typography.bodySmall,
+                            color = if (matchedId != null) SuccessGreen else DangerRed,
+                            fontFamily = FontFamily.Monospace,
+                            modifier = Modifier.padding(top = 4.dp)
+                        )
+                    }
+
+                    SectionLabel(
+                        text = "DEBUG: All ${loadedChampionIds.size} loaded Data Dragon champion ids",
+                        modifier = Modifier.padding(top = 12.dp)
+                    )
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(240.dp)
+                            .padding(top = 6.dp)
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        loadedChampionIds.forEach { id ->
+                            Text(
+                                text = id,
+                                style = MaterialTheme.typography.labelSmall,
+                                color = TextSecondary,
+                                fontFamily = FontFamily.Monospace
+                            )
+                        }
                     }
                 }
             }
