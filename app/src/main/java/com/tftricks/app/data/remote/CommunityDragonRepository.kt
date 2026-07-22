@@ -102,6 +102,10 @@ class CommunityDragonRepository(
     private val _itemIconUrls = MutableStateFlow<Map<String, String>>(emptyMap())
     val itemIconUrls: StateFlow<Map<String, String>> = _itemIconUrls.asStateFlow()
 
+    /** Trait icon URLs keyed by exact local trait display name (e.g. "Bruiser"). */
+    private val _traitIconUrls = MutableStateFlow<Map<String, String>>(emptyMap())
+    val traitIconUrls: StateFlow<Map<String, String>> = _traitIconUrls.asStateFlow()
+
     /** Debug-only trace: local champion name -> matched CommunityDragon apiName. */
     private val _championMatchDebug = MutableStateFlow<Map<String, String>>(emptyMap())
     val championMatchDebug: StateFlow<Map<String, String>> = _championMatchDebug.asStateFlow()
@@ -258,7 +262,7 @@ class CommunityDragonRepository(
             Trait(id = apiName, name = name, description = t.desc ?: "", breakpoints = breakpoints, champions = champsWithTrait)
         }
 
-        applyIconMatching(rawChampions, rawItems, champions, items)
+        applyIconMatching(rawChampions, rawItems, rawTraits, champions, items, traits)
 
         cachedChampions = champions
         cachedItems = items
@@ -291,8 +295,10 @@ class CommunityDragonRepository(
     private suspend fun applyIconMatching(
         rawChampions: List<CDragonChampion>,
         rawItems: List<CDragonItem>,
+        rawTraits: List<CDragonTrait>,
         champions: List<Champion>,
-        items: List<Item>
+        items: List<Item>,
+        traits: List<Trait>
     ) {
         val rawChampionByNormalizedName: Map<String, CDragonChampion> = rawChampions
             .mapNotNull { c -> (c.name ?: c.apiName)?.let { normalize(it) to c } }
@@ -330,8 +336,21 @@ class CommunityDragonRepository(
             itemIcons[apiName] = assetUrl(icon)
         }
 
+        val rawTraitByNormalizedName: Map<String, CDragonTrait> = rawTraits
+            .mapNotNull { t -> (t.name ?: t.apiName)?.let { normalize(it) to t } }
+            .toMap()
+        val traitIcons = mutableMapOf<String, String>()
+        traits.forEach { trait ->
+            val match = rawTraitByNormalizedName[normalize(trait.name)]
+            val iconPath = match?.icon
+            if (match != null && iconPath != null) {
+                traitIcons[trait.name] = assetUrl(iconPath)
+            }
+        }
+
         _championIconUrls.value = championIcons
         _itemIconUrls.value = itemIcons
+        _traitIconUrls.value = traitIcons
         _championMatchDebug.value = championMatchDebug
         _loadedChampionIds.value = champions.map { it.id }.sorted()
     }

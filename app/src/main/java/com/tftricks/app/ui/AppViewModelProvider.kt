@@ -34,6 +34,8 @@ object AppViewModelProvider {
         initializer {
             TeamCompsViewModel(
                 app().container.teamCompRepository,
+                app().container.championRepository,
+                app().container.itemRepository,
                 app().container.favoritesRepository
             )
         }

@@ -13,7 +13,8 @@
           "Kraken's Fury",
           "Giant Slayer"
         ],
-        "starTarget": 3
+        "starTarget": 3,
+        "position": 6
       },
       {
         "champion": "Akali",
@@ -22,7 +23,8 @@
           "Deathblade",
           "Guardbreaker"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 0
       },
       {
         "champion": "Jax",
@@ -31,39 +33,46 @@
           "Gargoyle Stoneplate",
           "Gargoyle Stoneplate"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 24
       },
       {
         "champion": "Urgot",
         "items": [
           "N.O.V.A. Emblem"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 13
       },
       {
         "champion": "Fiora",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 26
       },
       {
         "champion": "Morgana",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 17
       },
       {
         "champion": "Maokai",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 25
       },
       {
         "champion": "Belveth",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 22
       },
       {
         "champion": "Aatrox",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 23
       }
     ],
     "earlyGameBoard": [
@@ -131,7 +140,8 @@
           "Nashor's Tooth",
           "Jeweled Gauntlet"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 5
       },
       {
         "champion": "Riven",
@@ -140,7 +150,8 @@
           "Edge of Night",
           "Bloodthirster"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 16
       },
       {
         "champion": "Blitzcrank",
@@ -149,7 +160,8 @@
           "Ionic Spark",
           "Morellonomicon"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 18
       },
       {
         "champion": "Ornn",
@@ -158,32 +170,38 @@
           "Gargoyle Stoneplate",
           "Warmog's Armor"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 24
       },
       {
         "champion": "Shen",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 23
       },
       {
         "champion": "Nunu",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 26
       },
       {
         "champion": "Tahm Kench",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 22
       },
       {
         "champion": "Gwen",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 15
       },
       {
         "champion": "Pantheon",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 25
       }
     ],
     "earlyGameBoard": [],
@@ -242,7 +260,8 @@
           "Last Whisper",
           "Deathblade"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 5
       },
       {
         "champion": "Ornn",
@@ -251,34 +270,40 @@
           "Spirit Visage",
           "Warmog's Armor"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 24
       },
       {
         "champion": "Blitzcrank",
         "items": [
           "Thief's Gloves"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 17
       },
       {
         "champion": "Jhin",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 1
       },
       {
         "champion": "Shen",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 23
       },
       {
         "champion": "Nami",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 11
       },
       {
         "champion": "Nasus",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 25
       }
     ],
     "earlyGameBoard": [],
@@ -329,7 +354,8 @@
           {
             "champion": "Jhin",
             "items": [],
-            "starTarget": 2
+            "starTarget": 2,
+            "position": 1
           },
           {
             "champion": "Gwen",
@@ -363,7 +389,8 @@
           "Dark Star Emblem",
           "Jeweled Gauntlet"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 6
       },
       {
         "champion": "Jhin",
@@ -372,7 +399,8 @@
           "Guardbreaker",
           "Infinity Edge"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 0
       },
       {
         "champion": "Karma",
@@ -381,7 +409,8 @@
           "Blue Buff",
           "Morellonomicon"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 12
       },
       {
         "champion": "Nunu",
@@ -390,32 +419,38 @@
           "Crownguard",
           "Fimbulwinter"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 24
       },
       {
         "champion": "Tahm Kench",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 23
       },
       {
         "champion": "The Mighty Mech",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 26
       },
       {
         "champion": "Kaisa",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 8
       },
       {
         "champion": "Mordekaiser",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 25
       },
       {
         "champion": "Cho'Gath",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 22
       }
     ],
     "earlyGameBoard": [],
@@ -474,7 +509,8 @@
           "Morellonomicon",
           "Spear of Shojin"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 4
       },
       {
         "champion": "Aurelion Sol",
@@ -483,7 +519,8 @@
           "Void Staff",
           "Jeweled Gauntlet"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 6
       },
       {
         "champion": "Karma",
@@ -492,7 +529,8 @@
           "Spear of Shojin",
           "Void Staff"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 2
       },
       {
         "champion": "The Mighty Mech",
@@ -501,27 +539,32 @@
           "Gargoyle Stoneplate",
           "Sterak's Gage"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 24
       },
       {
         "champion": "Blitzcrank",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 23
       },
       {
         "champion": "Morgana",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 17
       },
       {
         "champion": "Rhaast",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 25
       },
       {
         "champion": "Mordekaiser",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 22
       }
     ],
     "earlyGameBoard": [],
@@ -587,7 +630,8 @@
           "Deathblade",
           "Last Whisper"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 6
       },
       {
         "champion": "Bard",
@@ -596,7 +640,8 @@
           "Morellonomicon",
           "Void Staff"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 4
       },
       {
         "champion": "Rammus",
@@ -605,7 +650,8 @@
           "Bramble Vest",
           "Fimbulwinter"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 24
       },
       {
         "champion": "Riven",
@@ -614,32 +660,38 @@
           "Sterak's Gage",
           "Bloodthirster"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 15
       },
       {
         "champion": "Shen",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 23
       },
       {
         "champion": "The Mighty Mech",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 25
       },
       {
         "champion": "Fizz",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 12
       },
       {
         "champion": "Meepsie",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 2
       },
       {
         "champion": "Milio",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 3
       }
     ],
     "earlyGameBoard": [],
@@ -702,7 +754,8 @@
               "Deathblade",
               "Last Whisper"
             ],
-            "starTarget": 2
+            "starTarget": 2,
+            "position": 6
           },
           {
             "champion": "Rammus",
@@ -711,7 +764,8 @@
               "Bramble Vest",
               "Crownguard"
             ],
-            "starTarget": 2
+            "starTarget": 2,
+            "position": 24
           },
           {
             "champion": "Gnar",
@@ -725,22 +779,26 @@
           {
             "champion": "Bard",
             "items": [],
-            "starTarget": 2
+            "starTarget": 2,
+            "position": 4
           },
           {
             "champion": "The Mighty Mech",
             "items": [],
-            "starTarget": 2
+            "starTarget": 2,
+            "position": 25
           },
           {
             "champion": "Fizz",
             "items": [],
-            "starTarget": 2
+            "starTarget": 2,
+            "position": 12
           },
           {
             "champion": "Meepsie",
             "items": [],
-            "starTarget": 2
+            "starTarget": 2,
+            "position": 2
           },
           {
             "champion": "Poppy",
@@ -776,7 +834,8 @@
           "N.O.V.A. Emblem",
           "Giant Slayer"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 6
       },
       {
         "champion": "Kindred",
@@ -785,7 +844,8 @@
           "Giant Slayer",
           "Guinsoo's Rageblade"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 5
       },
       {
         "champion": "Morgana",
@@ -794,7 +854,8 @@
           "Steadfast Hammer",
           "Sunfire Cape"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 24
       },
       {
         "champion": "Akali",
@@ -803,32 +864,38 @@
           "Deathblade",
           "Guardbreaker"
         ],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 0
       },
       {
         "champion": "Shen",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 23
       },
       {
         "champion": "Tahm Kench",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 25
       },
       {
         "champion": "Maokai",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 22
       },
       {
         "champion": "Belveth",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 18
       },
       {
         "champion": "Aatrox",
         "items": [],
-        "starTarget": 2
+        "starTarget": 2,
+        "position": 26
       }
     ],
     "earlyGameBoard": [],
@@ -882,7 +949,8 @@
               "Deathblade",
               "Giant Slayer"
             ],
-            "starTarget": 2
+            "starTarget": 2,
+            "position": 6
           },
           {
             "champion": "Vex",
@@ -900,7 +968,8 @@
               "Warmog's Armor",
               "Spirit Visage"
             ],
-            "starTarget": 2
+            "starTarget": 2,
+            "position": 24
           },
           {
             "champion": "Nunu",
@@ -924,17 +993,20 @@
           {
             "champion": "Shen",
             "items": [],
-            "starTarget": 2
+            "starTarget": 2,
+            "position": 23
           },
           {
             "champion": "Akali",
             "items": [],
-            "starTarget": 2
+            "starTarget": 2,
+            "position": 0
           },
           {
             "champion": "Aatrox",
             "items": [],
-            "starTarget": 2
+            "starTarget": 2,
+            "position": 26
           }
         ],
         "carryChampions": [

@@ -2,10 +2,14 @@ package com.tftricks.app.ui.screens.comps
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tftricks.app.domain.model.Champion
 import com.tftricks.app.domain.model.FavoriteCategory
+import com.tftricks.app.domain.model.Item
 import com.tftricks.app.domain.model.TeamComp
 import com.tftricks.app.domain.model.Tier
+import com.tftricks.app.domain.repository.ChampionRepository
 import com.tftricks.app.domain.repository.FavoritesRepository
+import com.tftricks.app.domain.repository.ItemRepository
 import com.tftricks.app.domain.repository.TeamCompRepository
 import com.tftricks.app.ui.common.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,15 +25,27 @@ data class TeamCompsContent(
     val allTags: List<String>,
     val selectedTier: Tier?,
     val selectedTags: Set<String>,
-    val favoriteIds: Set<String>
+    val favoriteIds: Set<String>,
+    /** Champion lookup by display name, for roster row cost colors. */
+    val championsByName: Map<String, Champion>,
+    /** Item lookup by display name, for roster row item icons. */
+    val itemsByName: Map<String, Item>
+)
+
+private data class ReferenceData(
+    val championsByName: Map<String, Champion> = emptyMap(),
+    val itemsByName: Map<String, Item> = emptyMap()
 )
 
 class TeamCompsViewModel(
     private val repository: TeamCompRepository,
+    private val championRepository: ChampionRepository,
+    private val itemRepository: ItemRepository,
     private val favoritesRepository: FavoritesRepository
 ) : ViewModel() {
 
     private val allComps = MutableStateFlow<List<TeamComp>>(emptyList())
+    private val referenceData = MutableStateFlow(ReferenceData())
     private val error = MutableStateFlow<String?>(null)
     private val loaded = MutableStateFlow(false)
 
@@ -44,6 +60,9 @@ class TeamCompsViewModel(
     ) { comps, isLoaded, err, tier, tags ->
         Triple(comps to isLoaded, err, tier to tags)
     }.combine(favoritesRepository.favorites(FavoriteCategory.COMP)) { (compsLoaded, err, filters), favorites ->
+        Triple(compsLoaded, err, filters) to favorites
+    }.combine(referenceData) { (loadedErrFilters, favorites), reference ->
+        val (compsLoaded, err, filters) = loadedErrFilters
         val (comps, isLoaded) = compsLoaded
         val (tier, tags) = filters
         when {
@@ -58,7 +77,9 @@ class TeamCompsViewModel(
                     allTags = comps.flatMap { it.tags }.distinct().sorted(),
                     selectedTier = tier,
                     selectedTags = tags,
-                    favoriteIds = favorites
+                    favoriteIds = favorites,
+                    championsByName = reference.championsByName,
+                    itemsByName = reference.itemsByName
                 )
             )
         }
@@ -72,6 +93,14 @@ class TeamCompsViewModel(
             } catch (e: Exception) {
                 error.value = e.message ?: "Failed to load team comps"
             }
+            // Roster row icons/colors; bundled comps shouldn't be blocked by a failed
+            // live champion/item fetch, so this is best-effort and separate from the above.
+            val champions = runCatching { championRepository.getChampions() }.getOrDefault(emptyList())
+            val items = runCatching { itemRepository.getItems() }.getOrDefault(emptyList())
+            referenceData.value = ReferenceData(
+                championsByName = champions.associateBy { it.name },
+                itemsByName = items.associateBy { it.name }
+            )
         }
     }
 

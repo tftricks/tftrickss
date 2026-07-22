@@ -1,15 +1,18 @@
 package com.tftricks.app.ui.screens.comps
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.tftricks.app.domain.model.Champion
+import com.tftricks.app.domain.model.Item
 import com.tftricks.app.domain.model.TeamComp
 import com.tftricks.app.domain.model.Tier
 import com.tftricks.app.ui.AppViewModelProvider
@@ -28,7 +33,11 @@ import com.tftricks.app.ui.components.FilterChipRow
 import com.tftricks.app.ui.components.InfoCard
 import com.tftricks.app.ui.components.StateContent
 import com.tftricks.app.ui.components.TierBadge
+import com.tftricks.app.ui.components.UnitIconStack
+import com.tftricks.app.ui.components.rememberCommunityDragonRepository
+import com.tftricks.app.ui.theme.OutlineDark
 import com.tftricks.app.ui.theme.TextSecondary
+import com.tftricks.app.ui.theme.costColor
 
 @Composable
 fun TeamCompsScreen(
@@ -37,6 +46,9 @@ fun TeamCompsScreen(
     viewModel: TeamCompsViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val communityDragon = rememberCommunityDragonRepository()
+    val championIcons by communityDragon.championIconUrls.collectAsStateWithLifecycle()
+    val itemIcons by communityDragon.itemIconUrls.collectAsStateWithLifecycle()
 
     StateContent(state = state, modifier = Modifier.padding(contentPadding)) { content ->
         Column(
@@ -79,6 +91,10 @@ fun TeamCompsScreen(
                     TeamCompCard(
                         comp = comp,
                         isFavorite = comp.id in content.favoriteIds,
+                        championIcons = championIcons,
+                        itemIcons = itemIcons,
+                        championsByName = content.championsByName,
+                        itemsByName = content.itemsByName,
                         onClick = { onOpenComp(comp.id) },
                         onToggleFavorite = { viewModel.toggleFavorite(comp.id) }
                     )
@@ -93,6 +109,10 @@ fun TeamCompsScreen(
 private fun TeamCompCard(
     comp: TeamComp,
     isFavorite: Boolean,
+    championIcons: Map<String, String>,
+    itemIcons: Map<String, String>,
+    championsByName: Map<String, Champion>,
+    itemsByName: Map<String, Item>,
     onClick: () -> Unit,
     onToggleFavorite: () -> Unit
 ) {
@@ -119,6 +139,26 @@ private fun TeamCompCard(
                 )
             }
             FavoriteButton(isFavorite = isFavorite, onToggle = onToggleFavorite)
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp)
+                .horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            comp.finalBoard
+                .sortedBy { it.position ?: Int.MAX_VALUE }
+                .forEach { unit ->
+                    val champion = championsByName[unit.champion]
+                    UnitIconStack(
+                        championIconUrl = championIcons[unit.champion],
+                        accentColor = if (champion != null) costColor(champion.cost) else OutlineDark,
+                        starTarget = unit.starTarget,
+                        itemIconUrls = unit.items.mapNotNull { name -> itemsByName[name]?.id?.let { itemIcons[it] } },
+                        iconSize = 32.dp
+                    )
+                }
         }
     }
 }
