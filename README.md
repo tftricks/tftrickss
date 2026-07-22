@@ -203,6 +203,22 @@ Requirements: **Android Studio** (Ladybug or newer) with JDK 17+. First build do
    Release builds are minified + resource-shrunk (R8) with kotlinx.serialization keep rules already in `app/proguard-rules.pro`.
 4. Bump `versionCode`/`versionName` in `app/build.gradle.kts` for every release.
 
+### Release build (CI)
+
+`.github/workflows/release-aab.yml` builds a signed AAB on GitHub Actions instead of
+locally — trigger it manually from the Actions tab (`workflow_dispatch`). It needs
+these repository secrets set once (Settings → Secrets and variables → Actions):
+
+| Secret | Value |
+| --- | --- |
+| `RELEASE_KEYSTORE_BASE64` | `base64 -w0 tftricks-release.keystore` |
+| `RELEASE_KEYSTORE_PASSWORD` | the keystore's store password |
+| `RELEASE_KEY_ALIAS` | the key alias (e.g. `tftricks`) |
+| `RELEASE_KEY_PASSWORD` | the key password (same as store password for a PKCS12 keystore) |
+
+The signed `.aab` is uploaded as a workflow artifact (`tftricks-release-aab`) —
+download it from the run's summary page and upload that file to Play Console.
+
 ---
 
 ## Ads (AdMob)
