@@ -5,6 +5,7 @@ import com.tftricks.app.ads.AdsManager
 import com.tftricks.app.data.local.userDataStore
 import com.tftricks.app.data.repository.DataStoreFavoritesRepository
 import com.tftricks.app.data.repository.DataStoreOverlayPrefsRepository
+import com.tftricks.app.data.repository.DataStoreOverlaySessionRepository
 import com.tftricks.app.data.repository.DataStoreSavedTeamsRepository
 import com.tftricks.app.data.repository.JsonAugmentRepository
 import com.tftricks.app.data.repository.JsonPatchNoteRepository
@@ -16,6 +17,7 @@ import com.tftricks.app.domain.repository.ChampionRepository
 import com.tftricks.app.domain.repository.FavoritesRepository
 import com.tftricks.app.domain.repository.ItemRepository
 import com.tftricks.app.domain.repository.OverlayPrefsRepository
+import com.tftricks.app.domain.repository.OverlaySessionRepository
 import com.tftricks.app.domain.repository.PatchNoteRepository
 import com.tftricks.app.domain.repository.SavedTeamsRepository
 import com.tftricks.app.domain.repository.TeamCompRepository
@@ -59,6 +61,8 @@ class AppContainer(context: Context) {
         DataStoreSavedTeamsRepository(appContext.userDataStore, json)
     val overlayPrefsRepository: OverlayPrefsRepository =
         DataStoreOverlayPrefsRepository(appContext.userDataStore)
+    val overlaySessionRepository: OverlaySessionRepository =
+        DataStoreOverlaySessionRepository(appContext.userDataStore)
 
     val adsManager: AdsManager = AdsManager(appContext)
 }

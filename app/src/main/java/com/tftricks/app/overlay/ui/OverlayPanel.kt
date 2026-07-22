@@ -23,9 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
@@ -55,10 +53,9 @@ fun OverlayPanel(
     onOpacityChange: (Float) -> Unit,
     onCollapse: () -> Unit
 ) {
-    var query by remember { mutableStateOf("") }
-    var selection by remember { mutableStateOf<TeamComp?>(null) }
-
     val compact = settings.compactMode
+    val comps by panelState.comps.collectAsState()
+    val selectedComp = comps.find { it.id == panelState.selectedCompId }
 
     Box(modifier = Modifier.fillMaxSize().background(SurfaceDark)) {
         Row(modifier = Modifier.fillMaxSize()) {
@@ -74,7 +71,7 @@ fun OverlayPanel(
                     .fillMaxHeight()
                     .padding(12.dp)
             ) {
-                OverlayCenterColumn(selection = selection, panelState = panelState, compact = compact)
+                OverlayCenterColumn(selection = selectedComp, panelState = panelState, compact = compact)
             }
             RailDivider()
             Column(
@@ -83,14 +80,18 @@ fun OverlayPanel(
                     .fillMaxHeight()
                     .padding(10.dp)
             ) {
-                OverlaySearchField(query = query, onQueryChange = { query = it }, compact = compact)
+                OverlaySearchField(
+                    query = panelState.searchQuery,
+                    onQueryChange = { panelState.searchQuery = it },
+                    compact = compact
+                )
                 Spacer(modifier = Modifier.height(6.dp))
                 OverlayRightColumn(
-                    query = query,
+                    query = panelState.searchQuery,
                     panelState = panelState,
                     compact = compact,
-                    selectedCompId = selection?.id,
-                    onSelect = { selection = it },
+                    selectedCompId = panelState.selectedCompId,
+                    onSelect = { panelState.selectComp(it.id) },
                     modifier = Modifier.weight(1f).fillMaxWidth()
                 )
             }
@@ -190,6 +191,7 @@ private fun OverlayRightColumn(
     }
 
     LazyColumn(
+        state = panelState.rightListState,
         modifier = modifier.fillMaxWidth(),
         contentPadding = PaddingValues(vertical = 6.dp),
         verticalArrangement = Arrangement.spacedBy(if (compact) 4.dp else 6.dp)

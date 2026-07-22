@@ -33,7 +33,9 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 /**
  * Foreground service hosting the in-game overlay.
@@ -107,7 +109,12 @@ class OverlayService : Service() {
             }
         }
         scope.launch {
-            expanded.collect { if (overlayView != null) applyWindowLayout() }
+            // Skip the initial (startup) value: collapsing is a real state transition,
+            // not the service just having come up already collapsed.
+            expanded.drop(1).collect { isExpanded ->
+                if (overlayView != null) applyWindowLayout()
+                if (!isExpanded) panelState.persistSession()
+            }
         }
     }
 
@@ -125,6 +132,12 @@ class OverlayService : Service() {
         }
         overlayView = null
         lifecycleOwner.destroy()
+        // A full stop (vs. a system-initiated process kill that skips onDestroy and
+        // just restarts the service) means the user is done — forget the saved screen.
+        // Blocking (not scope.launch) so the write lands before scope.cancel() below.
+        if (::panelState.isInitialized) {
+            runBlocking { runCatching { container.overlaySessionRepository.clear() } }
+        }
         scope.cancel()
         _isRunning.value = false
         super.onDestroy()
