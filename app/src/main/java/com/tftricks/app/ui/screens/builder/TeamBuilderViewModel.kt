@@ -81,7 +81,12 @@ class TeamBuilderViewModel(
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), UiState.Loading)
 
     init {
+        load()
+    }
+
+    private fun load() {
         viewModelScope.launch {
+            error.value = null
             try {
                 data.value = championRepository.getChampions() to traitRepository.getTraits()
             } catch (e: Exception) {
@@ -89,6 +94,8 @@ class TeamBuilderViewModel(
             }
         }
     }
+
+    fun retry() = load()
 
     private fun computeTraits(units: Collection<Champion>, traits: List<Trait>): List<TraitStatus> {
         val counts = units.flatMap { it.traits }.groupingBy { it }.eachCount()

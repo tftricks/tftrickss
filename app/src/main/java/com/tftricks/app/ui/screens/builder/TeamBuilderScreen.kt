@@ -39,7 +39,7 @@ import com.tftricks.app.ui.components.InfoCard
 import com.tftricks.app.ui.components.PillChip
 import com.tftricks.app.ui.components.SectionLabel
 import com.tftricks.app.ui.components.StateContent
-import com.tftricks.app.ui.components.rememberDataDragonRepository
+import com.tftricks.app.ui.components.rememberCommunityDragonRepository
 import com.tftricks.app.ui.theme.BrandYellow
 import com.tftricks.app.ui.theme.OutlineDark
 import com.tftricks.app.ui.theme.PureBlack
@@ -56,10 +56,10 @@ fun TeamBuilderScreen(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     var teamName by rememberSaveable { mutableStateOf("") }
-    val dataDragon = rememberDataDragonRepository()
-    val championIcons by dataDragon.championIconUrls.collectAsStateWithLifecycle()
+    val communityDragon = rememberCommunityDragonRepository()
+    val championIcons by communityDragon.championIconUrls.collectAsStateWithLifecycle()
 
-    StateContent(state = state, modifier = Modifier.padding(contentPadding)) { content ->
+    StateContent(state = state, modifier = Modifier.padding(contentPadding), onRetry = viewModel::retry) { content ->
         Column(
             modifier = Modifier
                 .fillMaxSize()

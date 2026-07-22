@@ -16,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.tftricks.app.data.remote.DataDragonStatus
+import com.tftricks.app.data.remote.CommunityDragonStatus
 import com.tftricks.app.data.remote.debugLabel
 import com.tftricks.app.ui.theme.BrandYellow
 import com.tftricks.app.ui.theme.DangerRed
@@ -24,19 +24,19 @@ import com.tftricks.app.ui.theme.PureBlack
 import com.tftricks.app.ui.theme.SuccessGreen
 
 /**
- * Debug-build-only banner showing the live [DataDragonStatus]. Meant to make Data Dragon
- * fetch/parse failures visible on-device without a computer or Logcat.
+ * Debug-build-only banner showing the live [CommunityDragonStatus]. Meant to make
+ * CommunityDragon fetch/parse failures visible on-device without a computer or Logcat.
  */
 @Composable
-fun DataDragonDebugBanner(
-    status: DataDragonStatus,
+fun CommunityDragonDebugBanner(
+    status: CommunityDragonStatus,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val background = when (status) {
-        is DataDragonStatus.Loading -> BrandYellow
-        is DataDragonStatus.Success -> SuccessGreen
-        is DataDragonStatus.Error -> DangerRed
+        is CommunityDragonStatus.Loading -> BrandYellow
+        is CommunityDragonStatus.Success -> SuccessGreen
+        is CommunityDragonStatus.Error -> DangerRed
     }
     val shape = RoundedCornerShape(8.dp)
     Row(
@@ -48,7 +48,7 @@ fun DataDragonDebugBanner(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "DEBUG · Data Dragon: ${status.debugLabel()}",
+            text = "DEBUG · CommunityDragon: ${status.debugLabel()}",
             style = MaterialTheme.typography.labelSmall,
             color = PureBlack,
             modifier = Modifier.weight(1f)

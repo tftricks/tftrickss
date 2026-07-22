@@ -33,10 +33,11 @@ import com.tftricks.app.BuildConfig
 import com.tftricks.app.TFTricksApplication
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tftricks.app.domain.model.BoardUnit
+import com.tftricks.app.domain.model.CompVariant
 import com.tftricks.app.ui.AppViewModelProvider
 import com.tftricks.app.ui.components.BoardCellData
 import com.tftricks.app.ui.components.BoardGrid
-import com.tftricks.app.ui.components.DataDragonDebugBanner
+import com.tftricks.app.ui.components.CommunityDragonDebugBanner
 import com.tftricks.app.ui.components.ExpandableSection
 import com.tftricks.app.ui.components.FavoriteButton
 import com.tftricks.app.ui.components.InfoCard
@@ -44,7 +45,7 @@ import com.tftricks.app.ui.components.PillChip
 import com.tftricks.app.ui.components.SectionLabel
 import com.tftricks.app.ui.components.StateContent
 import com.tftricks.app.ui.components.TierBadge
-import com.tftricks.app.ui.components.rememberDataDragonRepository
+import com.tftricks.app.ui.components.rememberCommunityDragonRepository
 import com.tftricks.app.ui.theme.BrandYellow
 import com.tftricks.app.ui.theme.DangerRed
 import com.tftricks.app.ui.theme.SuccessGreen
@@ -61,11 +62,11 @@ fun CompDetailScreen(
     viewModel: CompDetailViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    val dataDragon = rememberDataDragonRepository()
-    val championIcons by dataDragon.championIconUrls.collectAsStateWithLifecycle()
-    val dataDragonStatus by dataDragon.status.collectAsStateWithLifecycle()
-    val championMatchDebug by dataDragon.championMatchDebug.collectAsStateWithLifecycle()
-    val loadedChampionIds by dataDragon.loadedChampionIds.collectAsStateWithLifecycle()
+    val communityDragon = rememberCommunityDragonRepository()
+    val championIcons by communityDragon.championIconUrls.collectAsStateWithLifecycle()
+    val communityDragonStatus by communityDragon.status.collectAsStateWithLifecycle()
+    val championMatchDebug by communityDragon.championMatchDebug.collectAsStateWithLifecycle()
+    val loadedChampionIds by communityDragon.loadedChampionIds.collectAsStateWithLifecycle()
     var debugBannerDismissed by remember { mutableStateOf(false) }
 
     // Interstitial hook (no-op unless AdsConfig.INTERSTITIALS_ENABLED).
@@ -103,8 +104,8 @@ fun CompDetailScreen(
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             if (BuildConfig.DEBUG && !debugBannerDismissed) {
-                DataDragonDebugBanner(
-                    status = dataDragonStatus,
+                CommunityDragonDebugBanner(
+                    status = communityDragonStatus,
                     onDismiss = { debugBannerDismissed = true }
                 )
             }
@@ -178,6 +179,17 @@ fun CompDetailScreen(
                 }
             }
 
+            if (comp.variants.isNotEmpty()) {
+                ExpandableSection(title = "Variants") {
+                    comp.variants.forEachIndexed { index, variant ->
+                        VariantCard(variant, championChip)
+                        if (index != comp.variants.lastIndex) {
+                            Spacer(modifier = Modifier.height(10.dp))
+                        }
+                    }
+                }
+            }
+
             if (BuildConfig.DEBUG) {
                 InfoCard {
                     SectionLabel(text = "DEBUG: Champion match trace")
@@ -203,7 +215,7 @@ fun CompDetailScreen(
                     }
 
                     SectionLabel(
-                        text = "DEBUG: All ${loadedChampionIds.size} loaded Data Dragon champion ids",
+                        text = "DEBUG: All ${loadedChampionIds.size} loaded CommunityDragon champion ids",
                         modifier = Modifier.padding(top = 12.dp)
                     )
                     Column(
@@ -305,6 +317,66 @@ private fun ChipFlow(names: List<String>, chip: @Composable (String) -> Unit) {
 @Composable
 private fun UnitChipRow(units: List<BoardUnit>, chip: @Composable (String) -> Unit) {
     ChipFlow(units.map { it.champion }, chip)
+}
+
+/** An alternative setup of the parent comp — same core idea, different roster/itemization. */
+@Composable
+private fun VariantCard(
+    variant: CompVariant,
+    championChip: @Composable (String) -> Unit
+) {
+    InfoCard {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            TierBadge(variant.tier)
+            Spacer(modifier = Modifier.width(10.dp))
+            Text(
+                text = variant.name,
+                style = MaterialTheme.typography.titleSmall,
+                color = TextPrimary
+            )
+        }
+        if (variant.carryChampions.isNotEmpty()) {
+            SectionLabel(text = "Carries", modifier = Modifier.padding(top = 8.dp))
+            ChipFlow(variant.carryChampions, championChip)
+        }
+        if (variant.tankChampions.isNotEmpty()) {
+            SectionLabel(text = "Tanks", modifier = Modifier.padding(top = 8.dp))
+            ChipFlow(variant.tankChampions, championChip)
+        }
+        if (variant.finalBoard.any { it.items.isNotEmpty() }) {
+            SectionLabel(text = "Itemized units", modifier = Modifier.padding(top = 8.dp))
+            variant.finalBoard.filter { it.items.isNotEmpty() }.forEach { unit ->
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(top = 6.dp)
+                ) {
+                    championChip(unit.champion)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = unit.items.joinToString(", "),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = TextSecondary
+                    )
+                }
+            }
+        }
+        if (variant.notes.isNotBlank()) {
+            Text(
+                text = variant.notes,
+                style = MaterialTheme.typography.bodyMedium,
+                color = TextSecondary,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+        }
+        if (variant.statsNote.isNotBlank()) {
+            Text(
+                text = variant.statsNote,
+                style = MaterialTheme.typography.labelSmall,
+                color = BrandYellow,
+                modifier = Modifier.padding(top = 6.dp)
+            )
+        }
+    }
 }
 
 @Composable

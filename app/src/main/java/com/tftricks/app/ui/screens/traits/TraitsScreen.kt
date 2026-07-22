@@ -38,7 +38,7 @@ fun TraitsScreen(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-    StateContent(state = state, modifier = Modifier.padding(contentPadding)) { content ->
+    StateContent(state = state, modifier = Modifier.padding(contentPadding), onRetry = viewModel::retry) { content ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(

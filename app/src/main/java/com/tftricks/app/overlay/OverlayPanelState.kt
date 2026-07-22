@@ -18,8 +18,9 @@ import kotlinx.coroutines.launch
 
 /**
  * Data for the overlay panel. Deliberately not a ViewModel — the overlay lives in a
- * Service. Reads go through the same in-memory-cached repositories the app uses,
- * so opening the overlay after browsing the app costs no extra parsing.
+ * Service. Reads go through the same in-memory-cached repositories the app uses
+ * (team comps bundled locally; champions/items/traits live from CommunityDragon), so
+ * opening the overlay after browsing the app costs no extra fetch.
  */
 class OverlayPanelState(
     container: AppContainer,
@@ -44,8 +45,8 @@ class OverlayPanelState(
         container.favoritesRepository.favorites(FavoriteCategory.COMP)
             .stateIn(scope, SharingStarted.Eagerly, emptySet())
 
-    val championIconUrls: StateFlow<Map<String, String>> = container.dataDragonRepository.championIconUrls
-    val itemIconUrls: StateFlow<Map<String, String>> = container.dataDragonRepository.itemIconUrls
+    val championIconUrls: StateFlow<Map<String, String>> = container.communityDragonRepository.championIconUrls
+    val itemIconUrls: StateFlow<Map<String, String>> = container.communityDragonRepository.itemIconUrls
 
     val savedTeams: StateFlow<List<SavedTeam>> =
         container.savedTeamsRepository.savedTeams
@@ -62,7 +63,7 @@ class OverlayPanelState(
                 _augments.value = container.augmentRepository.getAugments()
                     .sortedByDescending { it.priorityRating }
             }
-            // Asset data is bundled; a failure here would also break the main app.
+            // Champion/item/trait fetches can fail offline; comps stay bundled and unaffected.
         }
     }
 }

@@ -59,8 +59,12 @@ class CompDetailViewModel(
                 if (comp == null) {
                     error.value = "Comp not found"
                 } else {
-                    val champions = container.championRepository.getChampions()
-                    val items = container.itemRepository.getItems()
+                    // This comp guide is bundled locally, so it shouldn't be blocked by a
+                    // failed live champion/item fetch — fall back to empty lookups instead.
+                    val champions = runCatching { container.championRepository.getChampions() }
+                        .getOrDefault(emptyList())
+                    val items = runCatching { container.itemRepository.getItems() }
+                        .getOrDefault(emptyList())
                     data.value = Triple(
                         comp,
                         champions.associateBy { it.name },

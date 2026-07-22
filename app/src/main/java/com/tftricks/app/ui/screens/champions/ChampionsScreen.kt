@@ -32,7 +32,7 @@ import com.tftricks.app.ui.components.FilterChipRow
 import com.tftricks.app.ui.components.GameIcon
 import com.tftricks.app.ui.components.InfoCard
 import com.tftricks.app.ui.components.StateContent
-import com.tftricks.app.ui.components.rememberDataDragonRepository
+import com.tftricks.app.ui.components.rememberCommunityDragonRepository
 import com.tftricks.app.ui.theme.TextSecondary
 import com.tftricks.app.ui.theme.costColor
 
@@ -43,10 +43,10 @@ fun ChampionsScreen(
     viewModel: ChampionsViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    val dataDragon = rememberDataDragonRepository()
-    val championIcons by dataDragon.championIconUrls.collectAsStateWithLifecycle()
+    val communityDragon = rememberCommunityDragonRepository()
+    val championIcons by communityDragon.championIconUrls.collectAsStateWithLifecycle()
 
-    StateContent(state = state, modifier = Modifier.padding(contentPadding)) { content ->
+    StateContent(state = state, modifier = Modifier.padding(contentPadding), onRetry = viewModel::retry) { content ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -134,11 +134,6 @@ private fun ChampionCard(
                 }
                 Text(
                     text = champion.traits.joinToString(" • "),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = TextSecondary
-                )
-                Text(
-                    text = champion.role,
                     style = MaterialTheme.typography.bodySmall,
                     color = TextSecondary
                 )

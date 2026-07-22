@@ -49,8 +49,12 @@ class SavedCompsViewModel(private val container: AppContainer) : ViewModel() {
     init {
         viewModelScope.launch {
             try {
-                data.value = container.teamCompRepository.getTeamComps() to
-                    container.championRepository.getChampions().associateBy { it.id }
+                // Saved/favorited comps are bundled locally, so they shouldn't be blocked by
+                // a failed live champion fetch — fall back to an empty lookup instead.
+                val comps = container.teamCompRepository.getTeamComps()
+                val champions = runCatching { container.championRepository.getChampions() }
+                    .getOrDefault(emptyList())
+                data.value = comps to champions.associateBy { it.id }
             } catch (e: Exception) {
                 error.value = e.message ?: "Failed to load saved comps"
             }

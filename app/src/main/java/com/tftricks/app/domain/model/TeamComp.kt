@@ -36,7 +36,25 @@ data class TeamComp(
     /** Suggested roster swaps keyed by level (as a string, e.g. "7"). */
     val levelAlternatives: Map<String, List<String>> = emptyMap(),
     /** Champion names in priority order for god-offering carousel picks. */
-    val godOfferingPriority: List<String> = emptyList()
+    val godOfferingPriority: List<String> = emptyList(),
+    /** Alternative setups of this same comp (different roster/items, same core idea). */
+    val variants: List<CompVariant> = emptyList()
+)
+
+/**
+ * An alternative setup of a [TeamComp] — a different roster/itemization on the same
+ * core idea, rather than a fully separate comp entry.
+ */
+@Serializable
+data class CompVariant(
+    val name: String,
+    val tier: Tier,
+    val finalBoard: List<BoardUnit>,
+    val carryChampions: List<String> = emptyList(),
+    val tankChampions: List<String> = emptyList(),
+    val notes: String = "",
+    /** Recorded match stats as free text, e.g. "Avg 4.04 • Win 14.8% • Top-4 58.5%". */
+    val statsNote: String = ""
 )
 
 /**

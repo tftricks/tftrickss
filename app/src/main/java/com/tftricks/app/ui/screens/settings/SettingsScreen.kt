@@ -30,13 +30,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tftricks.app.BuildConfig
-import com.tftricks.app.data.remote.DataDragonStatus
+import com.tftricks.app.data.remote.CommunityDragonStatus
 import com.tftricks.app.data.remote.debugLabel
 import com.tftricks.app.overlay.OverlayService
 import com.tftricks.app.ui.AppViewModelProvider
 import com.tftricks.app.ui.components.InfoCard
 import com.tftricks.app.ui.components.SectionLabel
-import com.tftricks.app.ui.components.rememberDataDragonRepository
+import com.tftricks.app.ui.components.rememberCommunityDragonRepository
 import com.tftricks.app.ui.theme.BrandYellow
 import com.tftricks.app.ui.theme.DangerRed
 import com.tftricks.app.ui.theme.OutlineDark
@@ -56,8 +56,8 @@ fun SettingsScreen(
     val favoritesCount by viewModel.favoritesCount.collectAsStateWithLifecycle()
     val overlayRunning by OverlayService.isRunning.collectAsStateWithLifecycle()
     var showClearDialog by remember { mutableStateOf(false) }
-    val dataDragon = rememberDataDragonRepository()
-    val dataDragonStatus by dataDragon.status.collectAsStateWithLifecycle()
+    val communityDragon = rememberCommunityDragonRepository()
+    val communityDragonStatus by communityDragon.status.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -217,9 +217,10 @@ fun SettingsScreen(
                 modifier = Modifier.padding(top = 6.dp)
             )
             Text(
-                text = "Offline-first Teamfight Tactics companion. Comp, champion, and item data " +
-                    "is bundled with the app; champion and item icons are fetched from Riot's " +
-                    "Data Dragon CDN and cached for offline use afterward. No accounts, no tracking.",
+                text = "Teamfight Tactics companion. Team comp guides are original TFTricks " +
+                    "content, bundled with the app. Champion, item, and trait data is fetched " +
+                    "live from Riot's public CommunityDragon feed each session, so it stays " +
+                    "current through patches automatically. No accounts, no tracking.",
                 style = MaterialTheme.typography.bodySmall,
                 color = TextSecondary,
                 modifier = Modifier.padding(top = 2.dp)
@@ -233,17 +234,17 @@ fun SettingsScreen(
             )
         }
 
-        // Debug-only diagnostics for Data Dragon — never shown in release builds.
+        // Debug-only diagnostics for CommunityDragon — never shown in release builds.
         if (BuildConfig.DEBUG) {
             InfoCard {
                 SectionLabel(text = "Debug Info")
                 Text(
-                    text = "Data Dragon: ${dataDragonStatus.debugLabel()}",
+                    text = "CommunityDragon: ${communityDragonStatus.debugLabel()}",
                     style = MaterialTheme.typography.bodySmall,
                     color = TextPrimary,
                     modifier = Modifier.padding(top = 6.dp)
                 )
-                val successStatus = dataDragonStatus as? DataDragonStatus.Success
+                val successStatus = communityDragonStatus as? CommunityDragonStatus.Success
                 Text(
                     text = "Detected set: ${successStatus?.setNumber?.toString() ?: "—"}",
                     style = MaterialTheme.typography.bodySmall,
@@ -258,7 +259,7 @@ fun SettingsScreen(
                     modifier = Modifier.padding(top = 2.dp)
                 )
                 Button(
-                    onClick = { dataDragon.forceRefresh() },
+                    onClick = { communityDragon.forceRefresh() },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = SurfaceElevated,
                         contentColor = BrandYellow

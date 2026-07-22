@@ -37,7 +37,7 @@ import com.tftricks.app.ui.theme.SurfaceCard
 data class BoardCellData(
     val shortName: String,
     val accentColor: Color,
-    /** Data Dragon champion portrait URL; falls back to [shortName] text when null. */
+    /** CommunityDragon champion portrait URL; falls back to [shortName] text when null. */
     val iconUrl: String? = null
 )
 

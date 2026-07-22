@@ -55,7 +55,12 @@ class ChampionsViewModel(
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), UiState.Loading)
 
     init {
+        load()
+    }
+
+    private fun load() {
         viewModelScope.launch {
+            error.value = null
             try {
                 allChampions.value = repository.getChampions()
             } catch (e: Exception) {
@@ -63,6 +68,8 @@ class ChampionsViewModel(
             }
         }
     }
+
+    fun retry() = load()
 
     fun selectCost(cost: Int?) {
         selectedCost.value = if (selectedCost.value == cost) null else cost

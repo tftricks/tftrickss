@@ -31,7 +31,7 @@ import com.tftricks.app.ui.components.PillChip
 import com.tftricks.app.ui.components.SectionLabel
 import com.tftricks.app.ui.components.StateContent
 import com.tftricks.app.ui.components.TierBadge
-import com.tftricks.app.ui.components.rememberDataDragonRepository
+import com.tftricks.app.ui.components.rememberCommunityDragonRepository
 import com.tftricks.app.ui.theme.BrandYellow
 import com.tftricks.app.ui.theme.TextPrimary
 import com.tftricks.app.ui.theme.TextSecondary
@@ -46,10 +46,10 @@ fun ChampionDetailScreen(
     viewModel: ChampionDetailViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    val dataDragon = rememberDataDragonRepository()
-    val championIcons by dataDragon.championIconUrls.collectAsStateWithLifecycle()
+    val communityDragon = rememberCommunityDragonRepository()
+    val championIcons by communityDragon.championIconUrls.collectAsStateWithLifecycle()
 
-    StateContent(state = state, modifier = Modifier.padding(contentPadding)) { content ->
+    StateContent(state = state, modifier = Modifier.padding(contentPadding), onRetry = viewModel::retry) { content ->
         val champion = content.champion
 
         Column(
@@ -80,11 +80,6 @@ fun ChampionDetailScreen(
                             text = champion.name,
                             style = MaterialTheme.typography.titleMedium,
                             color = TextPrimary
-                        )
-                        Text(
-                            text = champion.role,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = TextSecondary
                         )
                     }
                     FavoriteButton(
@@ -126,32 +121,23 @@ fun ChampionDetailScreen(
                 }
             }
 
-            // Recommended items
-            InfoCard {
-                SectionLabel(text = "Recommended items")
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    verticalArrangement = Arrangement.spacedBy(6.dp),
-                    modifier = Modifier.padding(top = 6.dp)
-                ) {
-                    champion.recommendedItems.forEach { itemName ->
-                        PillChip(
-                            text = itemName,
-                            onClick = content.itemIdsByName[itemName]?.let { { onOpenItem(it) } }
-                        )
+            // Best items (derived from the bundled comps that use this champion)
+            if (content.bestItems.isNotEmpty()) {
+                InfoCard {
+                    SectionLabel(text = "Best items")
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalArrangement = Arrangement.spacedBy(6.dp),
+                        modifier = Modifier.padding(top = 6.dp)
+                    ) {
+                        content.bestItems.forEach { itemName ->
+                            PillChip(
+                                text = itemName,
+                                onClick = content.itemIdsByName[itemName]?.let { { onOpenItem(it) } }
+                            )
+                        }
                     }
                 }
-            }
-
-            // Positioning
-            InfoCard {
-                SectionLabel(text = "Positioning")
-                Text(
-                    text = champion.positioningNotes,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = TextSecondary,
-                    modifier = Modifier.padding(top = 4.dp)
-                )
             }
 
             // Best comps

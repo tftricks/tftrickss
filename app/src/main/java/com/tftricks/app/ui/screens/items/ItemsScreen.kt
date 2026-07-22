@@ -36,7 +36,7 @@ import com.tftricks.app.ui.components.FilterChipRow
 import com.tftricks.app.ui.components.GameIcon
 import com.tftricks.app.ui.components.InfoCard
 import com.tftricks.app.ui.components.StateContent
-import com.tftricks.app.ui.components.rememberDataDragonRepository
+import com.tftricks.app.ui.components.rememberCommunityDragonRepository
 import com.tftricks.app.ui.theme.BrandYellow
 import com.tftricks.app.ui.theme.PureBlack
 import com.tftricks.app.ui.theme.TextSecondary
@@ -48,6 +48,7 @@ fun ItemCategory.displayName(): String = when (this) {
     ItemCategory.UTILITY -> "Utility"
     ItemCategory.ATTACK_SPEED -> "Attack Speed"
     ItemCategory.MANA -> "Mana"
+    ItemCategory.OTHER -> "Other"
 }
 
 @Composable
@@ -58,10 +59,10 @@ fun ItemsScreen(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     var tab by rememberSaveable { mutableIntStateOf(0) }
-    val dataDragon = rememberDataDragonRepository()
-    val itemIcons by dataDragon.itemIconUrls.collectAsStateWithLifecycle()
+    val communityDragon = rememberCommunityDragonRepository()
+    val itemIcons by communityDragon.itemIconUrls.collectAsStateWithLifecycle()
 
-    StateContent(state = state, modifier = Modifier.padding(contentPadding)) { content ->
+    StateContent(state = state, modifier = Modifier.padding(contentPadding), onRetry = viewModel::retry) { content ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
