@@ -14,13 +14,15 @@ fun OverlayContent(
     onBubbleTap: () -> Unit,
     onBubbleDrag: (dx: Float, dy: Float) -> Unit,
     onBubbleDragEnd: () -> Unit,
-    onCollapse: () -> Unit
+    onCollapse: () -> Unit,
+    onOpacityChange: (Float) -> Unit
 ) {
     TFTricksTheme {
         if (expanded) {
             OverlayPanel(
                 panelState = panelState,
                 settings = settings,
+                onOpacityChange = onOpacityChange,
                 onCollapse = onCollapse
             )
         } else {

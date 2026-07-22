@@ -7,9 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.core.stringPreferencesKey
 import com.tftricks.app.domain.model.OverlaySettings
-import com.tftricks.app.domain.model.PanelSize
 import com.tftricks.app.domain.repository.OverlayPrefsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -21,8 +19,6 @@ class DataStoreOverlayPrefsRepository(
 ) : OverlayPrefsRepository {
 
     private val opacityKey = floatPreferencesKey("overlay_opacity")
-    private val panelSizeKey = stringPreferencesKey("overlay_panel_size")
-    private val transparentKey = booleanPreferencesKey("overlay_transparent_bg")
     private val compactKey = booleanPreferencesKey("overlay_compact_mode")
     private val buttonXKey = intPreferencesKey("overlay_button_x")
     private val buttonYKey = intPreferencesKey("overlay_button_y")
@@ -36,11 +32,7 @@ class DataStoreOverlayPrefsRepository(
             .catch { emit(emptyPreferences()) }
             .map { prefs ->
                 OverlaySettings(
-                    opacity = (prefs[opacityKey] ?: defaults.opacity).coerceIn(0.4f, 1.0f),
-                    panelSize = prefs[panelSizeKey]
-                        ?.let { raw -> PanelSize.entries.find { it.name == raw } }
-                        ?: defaults.panelSize,
-                    transparentBackground = prefs[transparentKey] ?: defaults.transparentBackground,
+                    opacity = (prefs[opacityKey] ?: defaults.opacity).coerceIn(0.15f, 1.0f),
                     compactMode = prefs[compactKey] ?: defaults.compactMode,
                     buttonX = prefs[buttonXKey] ?: defaults.buttonX,
                     buttonY = prefs[buttonYKey] ?: defaults.buttonY
@@ -49,15 +41,7 @@ class DataStoreOverlayPrefsRepository(
             .distinctUntilChanged()
 
     override suspend fun setOpacity(opacity: Float) {
-        dataStore.edit { it[opacityKey] = opacity.coerceIn(0.4f, 1.0f) }
-    }
-
-    override suspend fun setPanelSize(size: PanelSize) {
-        dataStore.edit { it[panelSizeKey] = size.name }
-    }
-
-    override suspend fun setTransparentBackground(enabled: Boolean) {
-        dataStore.edit { it[transparentKey] = enabled }
+        dataStore.edit { it[opacityKey] = opacity.coerceIn(0.15f, 1.0f) }
     }
 
     override suspend fun setCompactMode(enabled: Boolean) {

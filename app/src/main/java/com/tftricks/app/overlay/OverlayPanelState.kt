@@ -47,6 +47,7 @@ class OverlayPanelState(
 
     val championIconUrls: StateFlow<Map<String, String>> = container.communityDragonRepository.championIconUrls
     val itemIconUrls: StateFlow<Map<String, String>> = container.communityDragonRepository.itemIconUrls
+    val traitIconUrls: StateFlow<Map<String, String>> = container.communityDragonRepository.traitIconUrls
 
     val savedTeams: StateFlow<List<SavedTeam>> =
         container.savedTeamsRepository.savedTeams
