@@ -124,7 +124,51 @@
     ],
     "levelAlternatives": {},
     "godOfferingPriority": [],
-    "variants": []
+    "variants": [],
+    "levelingStages": [
+      "Lv3 @ 2-1 (minimum XP buys)",
+      "Lv4 @ 2-3",
+      "Lv5 @ 3-1",
+      "Lv6 @ 3-2 (slow-roll here for 3-star Jax & Akali, spend gold above 50)",
+      "Lv7 @ 4-7",
+      "Lv8 @ 5-7",
+      "Lv9 @ 6-5"
+    ],
+    "earlyGameNotes": [
+      "Akali, Jax, Aatrox, Caitlyn (3 N.O.V.A. / 2 Bastion)",
+      "Early items: Hand of Justice + Guardbreaker on Akali"
+    ],
+    "augmentGuide": {
+      "tier1": [
+        "Kickstart",
+        "Silver Spoon I",
+        "Branching Out I"
+      ],
+      "tier2": [
+        "Solo Plate",
+        "Portable Forge",
+        "Spreading Roots"
+      ],
+      "tier3": [
+        "The Baron's Lair",
+        "Golden Ticket"
+      ]
+    },
+    "carouselItemPriority": [
+      "Giant's Belt",
+      "Sparring Gloves",
+      "Chain Vest",
+      "BF Sword",
+      "Recurve Bow"
+    ],
+    "tips": [
+      "Jax -> Tahm Kench is a comparable-quality swap",
+      "The N.O.V.A. Strike buff goes to Akali",
+      "Solo-frontline Jax — he's the tankiest unit, don't split items off him",
+      "This comp has built-in anti-heal and shred/sunder",
+      "Prioritize augments/orbs that grant a Spatula or a trait Emblem",
+      "Artifact priority: Prowler's Claw for Akali"
+    ]
   },
   {
     "id": "comp_disco_inferno",
@@ -244,7 +288,48 @@
     "earlyGameChampions": [],
     "levelAlternatives": {},
     "godOfferingPriority": [],
-    "variants": []
+    "variants": [],
+    "levelingStages": [
+      "Lv4 @ 2-1",
+      "Lv5 @ 2-5",
+      "Lv6 @ 3-2",
+      "Lv7 @ 4-1 (gold above 50)",
+      "Lv8 @ 4-2 (roll down for carries)",
+      "Lv9 @ 5-5"
+    ],
+    "earlyGameNotes": [
+      "Teemo, Ornn, Nasus, Poppy (3 Space Groove / 2 Bastion)",
+      "Early items: Nashor's Tooth + Jeweled Gauntlet (for Nami later)",
+      "If Nami shows up early, slot her in immediately; otherwise bridge through Milio, Gwen, Pantheon, Ezreal (3 Timebreaker) for free rerolls"
+    ],
+    "augmentGuide": {
+      "tier1": [
+        "Climb the Ladder I",
+        "One Two Five I",
+        "Small Grab Bag"
+      ],
+      "tier2": [
+        "Duo Queue",
+        "Slammin'"
+      ],
+      "tier3": [
+        "Buried Treasures III",
+        "Jeweled Lotus III",
+        "Upward Mobility"
+      ]
+    },
+    "carouselItemPriority": [
+      "Giant's Belt",
+      "Sparring Gloves",
+      "Recurve Bow",
+      "Needlessly Large Rod",
+      "Chain Vest"
+    ],
+    "tips": [
+      "This positioning only works with the Bulwark trait (Shen) present",
+      "Give leftover items to the upgraded Shen",
+      "Weak opener? Play into Timebreaker for free rerolls"
+    ]
   },
   {
     "id": "comp_wall_and_blade",
@@ -373,7 +458,24 @@
         "notes": "Sparse source data — only the roster shift (Jhin, Gwen, Teemo) is confirmed; items and stats need verification.",
         "statsNote": ""
       }
-    ]
+    ],
+    "levelingStages": [
+      "Lv4 @ 2-1",
+      "Lv5 @ 2-5",
+      "Lv6 @ 3-2",
+      "Lv7 @ 4-1 (slow-roll gold above 30 for 3-star Samira & Ornn)",
+      "Push levels once locked"
+    ],
+    "earlyGameNotes": [
+      "Strong early Space Groove opener: Nasus, Ornn, Samira — get to 5 Space Groove online as fast as possible",
+      "Early items: itemize Samira first"
+    ],
+    "carouselItemPriority": [
+      "BF Sword",
+      "Recurve Bow",
+      "Sparring Gloves"
+    ],
+    "tips": []
   },
   {
     "id": "comp_starfall",
@@ -493,7 +595,22 @@
     "earlyGameChampions": [],
     "levelAlternatives": {},
     "godOfferingPriority": [],
-    "variants": []
+    "variants": [],
+    "levelingStages": [
+      "Lv4 @ 2-1",
+      "Lv5 @ 2-5",
+      "Lv6 @ 3-2",
+      "Lv7 @ 4-1",
+      "Lv8 @ 4-2 (roll down for carries)"
+    ],
+    "carouselItemPriority": [
+      "Needlessly Large Rod",
+      "Tear of the Goddess",
+      "Recurve Bow"
+    ],
+    "tips": [
+      "Prioritize Rod/Tear components for Aurelion Sol & Karma, Bow components for Jhin"
+    ]
   },
   {
     "id": "comp_mech_overdrive",
@@ -614,7 +731,17 @@
     "earlyGameChampions": [],
     "levelAlternatives": {},
     "godOfferingPriority": [],
-    "variants": []
+    "variants": [],
+    "levelingStages": [
+      "Lv4 @ 2-1",
+      "Lv5 @ 2-5",
+      "Lv6 @ 3-2",
+      "Lv7 @ 4-1",
+      "Lv8 @ 4-2 (roll down for carries)"
+    ],
+    "tips": [
+      "Give tank items exclusively to Mighty Mech — he's the comp's entire frontline"
+    ]
   },
   {
     "id": "comp_meep_show",
@@ -818,6 +945,16 @@
         "notes": "Trades the Riven flex slot for Gnar and a stronger Meeple vertical — pivot to this when Gnar shows up before Riven.",
         "statsNote": "Avg placement 4.04 • Win rate 14.8% • Top-4 58.5%"
       }
+    ],
+    "levelingStages": [
+      "Lv4 @ 2-1",
+      "Lv5 @ 2-5",
+      "Lv6 @ 3-2",
+      "Lv7 @ 4-1",
+      "Lv8 @ 4-2 (roll down for carries)"
+    ],
+    "tips": [
+      "Rammus wants armor components early for the mid-game"
     ]
   },
   {
@@ -1020,6 +1157,19 @@
         "notes": "Pivot to Vex as a second carry with a double-tank frontline (Morgana, Nunu). Most popular comp of the patch — expect contest on its units.",
         "statsNote": "Avg placement 4.07 • Win rate 22.2% • Top-4 56.4% • Pick rate 0.69"
       }
+    ],
+    "levelingStages": [
+      "Lv4 @ 2-1",
+      "Lv5 @ 2-5",
+      "Lv6 @ 3-2",
+      "Lv7 @ 4-1",
+      "Lv8 @ 4-2 (roll down for carries)"
+    ],
+    "tips": [
+      "Built-in Sunder, Shred, and Precision",
+      "Graves is flexible — slot in any 5-cost depending on itemization",
+      "Give the Strike Selector to Akali once you hit 5 N.O.V.A.",
+      "If Morgana doesn't upgrade, Tahm Kench becomes the main tank"
     ]
   }
 ]

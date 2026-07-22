@@ -32,12 +32,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tftricks.app.BuildConfig
 import com.tftricks.app.TFTricksApplication
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tftricks.app.domain.model.BoardUnit
+import com.tftricks.app.domain.model.ComponentRequirement
 import com.tftricks.app.domain.model.CompVariant
 import com.tftricks.app.domain.model.TeamComp
 import com.tftricks.app.ui.AppViewModelProvider
@@ -150,6 +152,7 @@ fun CompDetailScreen(
                         comp = comp,
                         championChip = championChip,
                         itemChip = itemChip,
+                        requiredComponents = content.requiredComponents,
                         championMatchDebug = championMatchDebug,
                         loadedChampionIds = loadedChampionIds
                     )
@@ -182,6 +185,7 @@ fun CompDetailScreen(
                     comp = comp,
                     championChip = championChip,
                     itemChip = itemChip,
+                    requiredComponents = content.requiredComponents,
                     championMatchDebug = championMatchDebug,
                     loadedChampionIds = loadedChampionIds
                 )
@@ -278,6 +282,7 @@ private fun DetailSections(
     comp: TeamComp,
     championChip: @Composable (String) -> Unit,
     itemChip: @Composable (String) -> Unit,
+    requiredComponents: List<ComponentRequirement>,
     championMatchDebug: Map<String, String>,
     loadedChampionIds: List<String>
 ) {
@@ -339,8 +344,34 @@ private fun DetailSections(
         }
     }
 
-    ExpandableSection(title = "Early & Mid Game") {
-        SectionLabel(text = "Early game")
+    if (comp.levelingStages.isNotEmpty()) {
+        ExpandableSection(title = "Leveling") {
+            comp.levelingStages.forEachIndexed { index, stage ->
+                Row(modifier = Modifier.padding(vertical = 2.dp)) {
+                    Text(
+                        text = "${index + 1}.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = BrandYellow
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = stage,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = TextSecondary
+                    )
+                }
+            }
+        }
+    }
+
+    ExpandableSection(title = "Early Game") {
+        if (comp.earlyGameNotes.isNotEmpty()) {
+            comp.earlyGameNotes.forEach {
+                BulletLine(text = it, bullet = "•", color = TextSecondary)
+            }
+            Spacer(modifier = Modifier.height(6.dp))
+        }
+        SectionLabel(text = "Early game roster")
         UnitChipRow(comp.earlyGameBoard, championChip)
         SectionLabel(text = "Mid game", modifier = Modifier.padding(top = 10.dp))
         UnitChipRow(comp.midGameBoard, championChip)
@@ -385,10 +416,61 @@ private fun DetailSections(
 
     ExpandableSection(title = "Game Plan") {
         LabeledParagraph("Positioning", comp.positioningNotes)
-        LabeledParagraph("Leveling", comp.levelingGuide)
+        LabeledParagraph("Leveling curve", comp.levelingGuide)
         LabeledParagraph("Economy", comp.economyGuide)
         LabeledParagraph("Roll timing", comp.rollTiming)
         LabeledParagraph("When to play", comp.whenToPlay)
+    }
+
+    if (comp.augmentGuide != null) {
+        ExpandableSection(title = "Augments") {
+            AugmentTierList("First pick", comp.augmentGuide.tier1)
+            AugmentTierList("Second pick", comp.augmentGuide.tier2, topPadding = 10.dp)
+            AugmentTierList("Third pick", comp.augmentGuide.tier3, topPadding = 10.dp)
+        }
+    }
+
+    if (comp.carouselItemPriority.isNotEmpty()) {
+        ExpandableSection(title = "Carousel Priority") {
+            comp.carouselItemPriority.forEachIndexed { index, name ->
+                Row(modifier = Modifier.padding(vertical = 2.dp)) {
+                    Text(
+                        text = "${index + 1}.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = BrandYellow
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = name,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = TextSecondary
+                    )
+                }
+            }
+        }
+    }
+
+    if (requiredComponents.isNotEmpty()) {
+        ExpandableSection(title = "Component Items Required") {
+            requiredComponents.forEach { req ->
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(vertical = 3.dp)
+                ) {
+                    Text(
+                        text = "×${req.count}",
+                        style = MaterialTheme.typography.titleSmall,
+                        color = BrandYellow
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Text(
+                        text = req.componentName,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = TextPrimary
+                    )
+                }
+            }
+        }
     }
 
     ExpandableSection(title = "Strengths & Weaknesses") {
@@ -399,6 +481,28 @@ private fun DetailSections(
         comp.weaknesses.forEach {
             BulletLine(text = it, bullet = "–", color = DangerRed)
         }
+    }
+
+    if (comp.tips.isNotEmpty()) {
+        ExpandableSection(title = "Tips") {
+            comp.tips.forEach {
+                BulletLine(text = it, bullet = "•", color = TextSecondary)
+            }
+        }
+    }
+}
+
+@Composable
+private fun AugmentTierList(label: String, augments: List<String>, topPadding: Dp = 0.dp) {
+    if (augments.isEmpty()) return
+    SectionLabel(text = label, modifier = Modifier.padding(top = topPadding))
+    augments.forEach {
+        Text(
+            text = it,
+            style = MaterialTheme.typography.bodyMedium,
+            color = TextSecondary,
+            modifier = Modifier.padding(top = 2.dp)
+        )
     }
 }
 

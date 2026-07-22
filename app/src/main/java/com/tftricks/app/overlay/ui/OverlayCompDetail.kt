@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.tftricks.app.domain.model.TeamComp
+import com.tftricks.app.domain.model.requiredComponents
 import com.tftricks.app.overlay.OverlayPanelState
 import com.tftricks.app.ui.components.BoardCellData
 import com.tftricks.app.ui.components.BoardGrid
@@ -46,6 +47,9 @@ fun OverlayCompDetail(
     val costByName = remember(champions) { champions.associate { it.name to it.cost } }
     val itemIconUrlByName = remember(items, itemIcons) {
         items.mapNotNull { i -> itemIcons[i.id]?.let { i.name to it } }.toMap()
+    }
+    val requiredComponents = remember(comp, items) {
+        comp.requiredComponents(items.associateBy { it.name })
     }
     val championColor = { name: String -> costColor(costByName[name] ?: 1) }
 
@@ -95,12 +99,58 @@ fun OverlayCompDetail(
             }
         }
 
+        if (requiredComponents.isNotEmpty()) {
+            SectionLabel(text = "Component items")
+            Text(
+                text = requiredComponents.joinToString(", ") { "${it.componentName} ×${it.count}" },
+                style = bodyStyle,
+                color = TextSecondary
+            )
+        }
+
+        if (comp.levelingStages.isNotEmpty()) {
+            SectionLabel(text = "Leveling")
+            comp.levelingStages.forEach { stage ->
+                Text(text = "• $stage", style = bodyStyle, color = TextSecondary)
+            }
+        }
+
+        if (comp.earlyGameNotes.isNotEmpty()) {
+            SectionLabel(text = "Early game")
+            comp.earlyGameNotes.forEach { note ->
+                Text(text = "• $note", style = bodyStyle, color = TextSecondary)
+            }
+        }
+
+        if (comp.augmentGuide != null) {
+            SectionLabel(text = "Augments")
+            OverlayAugmentTier("1st", comp.augmentGuide.tier1, bodyStyle)
+            OverlayAugmentTier("2nd", comp.augmentGuide.tier2, bodyStyle)
+            OverlayAugmentTier("3rd", comp.augmentGuide.tier3, bodyStyle)
+        }
+
+        if (comp.carouselItemPriority.isNotEmpty()) {
+            SectionLabel(text = "Carousel priority")
+            Text(
+                text = comp.carouselItemPriority.joinToString(" > "),
+                style = bodyStyle,
+                color = TextSecondary
+            )
+        }
+
         SectionLabel(text = "Game plan")
         LabeledLine("Positioning", comp.positioningNotes, bodyStyle)
-        LabeledLine("Leveling", comp.levelingGuide, bodyStyle)
+        LabeledLine("Leveling curve", comp.levelingGuide, bodyStyle)
         LabeledLine("Economy", comp.economyGuide, bodyStyle)
         LabeledLine("Roll timing", comp.rollTiming, bodyStyle)
         LabeledLine("When to play", comp.whenToPlay, bodyStyle)
+
+        if (comp.tips.isNotEmpty()) {
+            SectionLabel(text = "Tips")
+            comp.tips.forEach { tip ->
+                Text(text = "• $tip", style = bodyStyle, color = TextSecondary)
+            }
+        }
 
         if (comp.variants.isNotEmpty()) {
             SectionLabel(text = "Variants")
@@ -119,6 +169,16 @@ fun OverlayCompDetail(
             }
         }
     }
+}
+
+@Composable
+private fun OverlayAugmentTier(label: String, augments: List<String>, bodyStyle: TextStyle) {
+    if (augments.isEmpty()) return
+    Text(
+        text = "$label: ${augments.joinToString(", ")}",
+        style = bodyStyle,
+        color = TextSecondary
+    )
 }
 
 @Composable
