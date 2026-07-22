@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.tftricks.app.domain.model.Ability
 import com.tftricks.app.domain.model.Champion
 import com.tftricks.app.domain.model.Item
@@ -31,7 +32,6 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.kotlinx.serialization.asConverterFactory
 
 /**
  * Champions, traits, and items are fetched live from Riot's public CommunityDragon CDN
