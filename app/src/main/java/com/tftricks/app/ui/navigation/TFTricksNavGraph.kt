@@ -18,6 +18,7 @@ import com.tftricks.app.ui.screens.champions.ChampionDetailScreen
 import com.tftricks.app.ui.screens.champions.ChampionsScreen
 import com.tftricks.app.ui.screens.comps.CompDetailScreen
 import com.tftricks.app.ui.screens.comps.TeamCompsScreen
+import com.tftricks.app.ui.screens.crashlog.CrashLogScreen
 import com.tftricks.app.ui.screens.home.HomeScreen
 import com.tftricks.app.ui.screens.items.ItemDetailScreen
 import com.tftricks.app.ui.screens.items.ItemsScreen
@@ -119,6 +120,7 @@ fun TFTricksNavGraph(
             )
         }
         composable(Destination.OverlaySettings.route) { OverlaySettingsScreen(contentPadding) }
+        composable(Destination.CrashLog.route) { CrashLogScreen(contentPadding) }
 
         composable(
             route = DetailRoutes.COMP_PATTERN,

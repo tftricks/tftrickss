@@ -5,6 +5,7 @@ import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
+import com.tftricks.app.crash.CrashHandler
 import com.tftricks.app.di.AppContainer
 
 class TFTricksApplication : Application(), ImageLoaderFactory {
@@ -14,6 +15,9 @@ class TFTricksApplication : Application(), ImageLoaderFactory {
 
     override fun onCreate() {
         super.onCreate()
+        // Installed first so it can catch a crash from anything below, including
+        // AppContainer construction itself.
+        CrashHandler.install(this)
         container = AppContainer(this)
         container.adsManager.initialize()
         container.communityDragonRepository.initialize()

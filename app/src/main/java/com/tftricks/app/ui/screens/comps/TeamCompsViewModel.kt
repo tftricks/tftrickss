@@ -65,24 +65,28 @@ class TeamCompsViewModel(
         val (compsLoaded, err, filters) = loadedErrFilters
         val (comps, isLoaded) = compsLoaded
         val (tier, tags) = filters
-        when {
-            err != null -> UiState.Error(err)
-            !isLoaded -> UiState.Loading
-            else -> UiState.Success(
-                TeamCompsContent(
-                    comps = comps
-                        .filter { tier == null || it.tier == tier }
-                        .filter { tags.isEmpty() || it.tags.any { tag -> tag in tags } }
-                        .sortedBy { it.tier },
-                    allTags = comps.flatMap { it.tags }.distinct().sorted(),
-                    selectedTier = tier,
-                    selectedTags = tags,
-                    favoriteIds = favorites,
-                    championsByName = reference.championsByName,
-                    itemsByName = reference.itemsByName
+        // Never let an unexpected exception here (e.g. from a future data edge case)
+        // propagate out of the flow and crash the app — degrade to an error screen.
+        runCatching {
+            when {
+                err != null -> UiState.Error(err)
+                !isLoaded -> UiState.Loading
+                else -> UiState.Success(
+                    TeamCompsContent(
+                        comps = comps
+                            .filter { tier == null || it.tier == tier }
+                            .filter { tags.isEmpty() || it.tags.any { tag -> tag in tags } }
+                            .sortedBy { it.tier },
+                        allTags = comps.flatMap { it.tags }.distinct().sorted(),
+                        selectedTier = tier,
+                        selectedTags = tags,
+                        favoriteIds = favorites,
+                        championsByName = reference.championsByName,
+                        itemsByName = reference.itemsByName
+                    )
                 )
-            )
-        }
+            }
+        }.getOrElse { e -> UiState.Error(e.message ?: "Failed to display team comps") }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), UiState.Loading)
 
     init {

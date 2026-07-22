@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -140,7 +141,7 @@ private fun BoardHex(
                         color = BrandYellow,
                         modifier = Modifier
                             .align(Alignment.TopEnd)
-                            .padding(top = (-3).dp, end = (-3).dp)
+                            .offset(x = 3.dp, y = (-3).dp)
                     )
                 }
             }
