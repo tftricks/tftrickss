@@ -48,7 +48,9 @@ data class TeamComp(
     /** Component items to prioritize off carousels, in priority order. */
     val carouselItemPriority: List<String> = emptyList(),
     /** Misc guide notes: roster alternatives, execution tips. */
-    val tips: List<String> = emptyList()
+    val tips: List<String> = emptyList(),
+    /** Recorded Top-4 rate as a percentage (0-100), when real match data is curated for this comp. */
+    val top4Rate: Double? = null
 )
 
 /** Augment recommendations for a [TeamComp], grouped by the round they're offered. */

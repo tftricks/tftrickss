@@ -3,6 +3,7 @@ package com.tftricks.app.overlay
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.tftricks.app.di.AppContainer
@@ -52,12 +53,21 @@ class OverlayPanelState(
     /** The comp shown in the center column, or null when the list hasn't been tapped yet. */
     var selectedCompId: String? by mutableStateOf(null)
     var searchQuery: String by mutableStateOf("")
+    var selectedTab: OverlayTab by mutableStateOf(OverlayTab.COMPS)
 
     /** Scroll position of the center column's comp detail. */
     val centerScrollState = ScrollState(initial = 0)
 
     /** Scroll position of the right-hand comp list. */
     val rightListState = LazyListState()
+
+    /**
+     * One assigned comp id per opponent slot (7 total, index 0..6), null meaning
+     * "Unknown". In-memory only — scouting reads are a per-game thing, not something
+     * to restore across a full restart, so unlike [selectedCompId] this never touches
+     * DataStore. Cleared explicitly via [resetScout] at the start of a new game.
+     */
+    val scoutAssignments = mutableStateListOf<String?>(null, null, null, null, null, null, null)
 
     private val sessionRepository: OverlaySessionRepository = container.overlaySessionRepository
 
@@ -84,6 +94,16 @@ class OverlayPanelState(
     fun selectComp(compId: String) {
         selectedCompId = compId
         scope.launch { centerScrollState.scrollTo(0) }
+    }
+
+    /** Assign (or clear, with null) which of our comps an opponent slot is scouted as. */
+    fun assignScout(slotIndex: Int, compId: String?) {
+        if (slotIndex in scoutAssignments.indices) scoutAssignments[slotIndex] = compId
+    }
+
+    /** Clear every opponent slot back to "Unknown". Call at the start of a new game. */
+    fun resetScout() {
+        for (i in scoutAssignments.indices) scoutAssignments[i] = null
     }
 
     /** Snapshot the current screen to DataStore. Call when the panel collapses. */

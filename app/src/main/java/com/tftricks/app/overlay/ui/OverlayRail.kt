@@ -36,6 +36,7 @@ import androidx.compose.ui.layout.layout
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import com.tftricks.app.overlay.OverlayTab
 import com.tftricks.app.ui.theme.BrandYellow
 import com.tftricks.app.ui.theme.OutlineDark
 import com.tftricks.app.ui.theme.SurfaceDark
@@ -43,13 +44,15 @@ import com.tftricks.app.ui.theme.SurfaceElevated
 import com.tftricks.app.ui.theme.TextSecondary
 
 /**
- * Thin left rail: collapse (X) at the top, an opacity badge pinned to the bottom. The
- * badge opens a flyout with the vertical slider — kept out of the rail's own layout
- * flow so it's never clipped by the rail's height, which shrinks a lot in landscape.
- * The overlay only browses comps now, so there's no category navigation here.
+ * Thin left rail: collapse (X) at the top, then the category tabs, then an opacity
+ * badge pinned to the bottom. The badge opens a flyout with the vertical slider — kept
+ * out of the rail's own layout flow so it's never clipped by the rail's height, which
+ * shrinks a lot in landscape.
  */
 @Composable
 fun OverlayRail(
+    selectedTab: OverlayTab,
+    onSelectTab: (OverlayTab) -> Unit,
     opacity: Float,
     onOpacityChange: (Float) -> Unit,
     onCollapse: () -> Unit,
@@ -69,6 +72,22 @@ fun OverlayRail(
                 contentDescription = "Collapse overlay",
                 tint = TextSecondary
             )
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OverlayTab.entries.forEach { tab ->
+            val selected = tab == selectedTab
+            IconButton(
+                onClick = { onSelectTab(tab) },
+                modifier = Modifier.padding(vertical = 4.dp)
+            ) {
+                Icon(
+                    imageVector = tab.icon,
+                    contentDescription = tab.label,
+                    tint = if (selected) BrandYellow else TextSecondary
+                )
+            }
         }
 
         Spacer(modifier = Modifier.weight(1f))

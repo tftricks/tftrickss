@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.tftricks.app.domain.model.OverlaySettings
 import com.tftricks.app.domain.model.TeamComp
 import com.tftricks.app.overlay.OverlayPanelState
+import com.tftricks.app.overlay.OverlayTab
 import com.tftricks.app.ui.theme.BrandYellow
 import com.tftricks.app.ui.theme.OutlineDark
 import com.tftricks.app.ui.theme.SurfaceCard
@@ -41,10 +42,10 @@ import com.tftricks.app.ui.theme.TextSecondary
 
 /**
  * The expanded overlay: a full-screen, two-column Lolchess-style layout — a thin rail
- * on the left (collapse + opacity only; the overlay browses comps exclusively, so
- * there's no category navigation), the selected comp's detail in the center, and the
- * comp list on the right. Everything reads from [OverlayPanelState]'s pre-loaded
- * flows, so recompositions only touch small filtered lists.
+ * on the left (collapse, tabs, and opacity), then either the Comps tab (selected comp's
+ * detail in the center, comp list on the right) or the Scout tab (spans the full width).
+ * Everything reads from [OverlayPanelState]'s pre-loaded flows, so recompositions only
+ * touch small filtered lists.
  */
 @Composable
 fun OverlayPanel(
@@ -60,40 +61,55 @@ fun OverlayPanel(
     Box(modifier = Modifier.fillMaxSize().background(SurfaceDark)) {
         Row(modifier = Modifier.fillMaxSize()) {
             OverlayRail(
+                selectedTab = panelState.selectedTab,
+                onSelectTab = { panelState.selectedTab = it },
                 opacity = settings.opacity,
                 onOpacityChange = onOpacityChange,
                 onCollapse = onCollapse
             )
             RailDivider()
-            Box(
-                modifier = Modifier
-                    .weight(0.6f)
-                    .fillMaxHeight()
-                    .padding(12.dp)
-            ) {
-                OverlayCenterColumn(selection = selectedComp, panelState = panelState, compact = compact)
-            }
-            RailDivider()
-            Column(
-                modifier = Modifier
-                    .weight(0.4f)
-                    .fillMaxHeight()
-                    .padding(10.dp)
-            ) {
-                OverlaySearchField(
-                    query = panelState.searchQuery,
-                    onQueryChange = { panelState.searchQuery = it },
-                    compact = compact
-                )
-                Spacer(modifier = Modifier.height(6.dp))
-                OverlayRightColumn(
-                    query = panelState.searchQuery,
-                    panelState = panelState,
-                    compact = compact,
-                    selectedCompId = panelState.selectedCompId,
-                    onSelect = { panelState.selectComp(it.id) },
-                    modifier = Modifier.weight(1f).fillMaxWidth()
-                )
+            when (panelState.selectedTab) {
+                OverlayTab.COMPS -> {
+                    Box(
+                        modifier = Modifier
+                            .weight(0.6f)
+                            .fillMaxHeight()
+                            .padding(12.dp)
+                    ) {
+                        OverlayCenterColumn(selection = selectedComp, panelState = panelState, compact = compact)
+                    }
+                    RailDivider()
+                    Column(
+                        modifier = Modifier
+                            .weight(0.4f)
+                            .fillMaxHeight()
+                            .padding(10.dp)
+                    ) {
+                        OverlaySearchField(
+                            query = panelState.searchQuery,
+                            onQueryChange = { panelState.searchQuery = it },
+                            compact = compact
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        OverlayRightColumn(
+                            query = panelState.searchQuery,
+                            panelState = panelState,
+                            compact = compact,
+                            selectedCompId = panelState.selectedCompId,
+                            onSelect = { panelState.selectComp(it.id) },
+                            modifier = Modifier.weight(1f).fillMaxWidth()
+                        )
+                    }
+                }
+                OverlayTab.SCOUT -> {
+                    OverlayScoutScreen(
+                        panelState = panelState,
+                        compact = compact,
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                    )
+                }
             }
         }
     }
