@@ -19,8 +19,21 @@ android {
         versionName = "1.0.1"
     }
 
+    signingConfigs {
+        // Never commit a real keystore or its passwords — these come from env vars
+        // (locally, export them; in CI, from repo/workflow secrets). A debug build
+        // never touches this config, so it's safe to leave unset for local dev.
+        create("release") {
+            storeFile = file(System.getenv("TFTRICKS_KEYSTORE_PATH") ?: "../tftricks-release.keystore")
+            storePassword = System.getenv("TFTRICKS_STORE_PW")
+            keyAlias = System.getenv("TFTRICKS_KEY_ALIAS") ?: "tftricks"
+            keyPassword = System.getenv("TFTRICKS_KEY_PW")
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
