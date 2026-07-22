@@ -3,34 +3,23 @@ package com.tftricks.app.data.remote
 import kotlinx.serialization.Serializable
 
 /**
- * Raw shape of https://raw.communitydragon.org/latest/cdragon/tft/en_us.json.
+ * Leaf shapes decoded out of https://raw.communitydragon.org/latest/cdragon/tft/en_us.json.
  *
- * Every field here is nullable/defaulted on purpose: this DTO layer was written from
- * CommunityDragon's publicly documented schema without a live fetch to verify against
- * (this environment's network policy blocks raw.communitydragon.org), so a wrong field
- * name should degrade to a missing value instead of crashing the whole parse.
+ * The response is walked manually as raw [kotlinx.serialization.json.JsonObject]/[kotlinx.serialization.json.JsonArray]
+ * (see [CommunityDragonRepository]) rather than decoded as one big object graph, so a single
+ * malformed champion/item/trait entry can be skipped and logged instead of failing the whole
+ * fetch. Every field below is nullable/defaulted on purpose — this DTO layer was written from
+ * CommunityDragon's publicly documented schema without a live fetch to verify against (this
+ * environment's network policy blocks raw.communitydragon.org), and in practice CommunityDragon
+ * sends explicit `null` (not just omission) for fields an entry has no data for, e.g. an item
+ * with no recipe.
  */
-@Serializable
-data class CDragonRoot(
-    val setData: List<CDragonSet> = emptyList(),
-    val items: List<CDragonItem> = emptyList()
-)
-
-@Serializable
-data class CDragonSet(
-    /** Set number, e.g. 17. This is how the current set is detected — never hardcoded. */
-    val number: Int? = null,
-    val name: String? = null,
-    val champions: List<CDragonChampion> = emptyList(),
-    val traits: List<CDragonTrait> = emptyList()
-)
-
 @Serializable
 data class CDragonChampion(
     val apiName: String? = null,
     val name: String? = null,
     val cost: Int? = null,
-    val traits: List<String> = emptyList(),
+    val traits: List<String>? = null,
     val ability: CDragonAbility? = null,
     /** Candidate icon asset paths; whichever is present first gets used. */
     val squareIcon: String? = null,
@@ -50,7 +39,7 @@ data class CDragonTrait(
     val name: String? = null,
     val desc: String? = null,
     val icon: String? = null,
-    val effects: List<CDragonTraitEffect> = emptyList()
+    val effects: List<CDragonTraitEffect>? = null
 )
 
 @Serializable
@@ -65,10 +54,9 @@ data class CDragonItem(
     val name: String? = null,
     val desc: String? = null,
     val icon: String? = null,
-    /** Component item apiNames this is built from; field name is unconfirmed, so both
-     *  common candidates are read and whichever is non-empty is used. */
-    val from: List<String> = emptyList(),
-    val composition: List<String> = emptyList()
+    /** Component item apiNames this is built from; null/absent for base components. */
+    val from: List<String>? = null,
+    val composition: List<String>? = null
 )
 
 /** Observable outcome of the last CommunityDragon fetch attempt. */

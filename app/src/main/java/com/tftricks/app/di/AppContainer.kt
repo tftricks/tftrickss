@@ -33,6 +33,10 @@ class AppContainer(context: Context) {
     private val json = Json {
         ignoreUnknownKeys = true
         isLenient = true
+        // CommunityDragon sends null for fields it has no data for on some entries
+        // (e.g. an item with no "from" recipe); coerce those to their declared
+        // defaults instead of failing the whole parse.
+        coerceInputValues = true
     }
 
     private val dataSource = AssetJsonDataSource(appContext, json)

@@ -29,6 +29,12 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.decodeFromJsonElement
+import kotlinx.serialization.json.intOrNull
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -48,9 +54,15 @@ import retrofit2.Retrofit
  * Caveat: this DTO layer (see [CommunityDragonModels]) was written from CommunityDragon's
  * publicly documented schema without a live fetch to verify field names against, because
  * this development environment's network policy blocks raw.communitydragon.org. Every
- * field is nullable/defaulted so a wrong guess degrades a value to blank/missing instead
- * of crashing; the [status] flow and the champion-match debug data below surface exactly
- * what did/didn't come through, for verification on a real device.
+ * leaf field is nullable/defaulted so a wrong guess degrades a value to blank/missing
+ * instead of crashing; the [status] flow and the champion-match debug data below surface
+ * exactly what did/didn't come through, for verification on a real device.
+ *
+ * The response is decoded as a raw [JsonObject]/[JsonArray] rather than one big typed
+ * object graph, and each champion/item/trait entry is decoded individually (see
+ * [decodeEachLenient]) so a single malformed entry — e.g. CommunityDragon sending an
+ * explicit `null` for an item's `from` recipe instead of omitting the field — is skipped
+ * and logged instead of failing the whole fetch.
  */
 class CommunityDragonRepository(
     private val context: Context,
@@ -183,28 +195,33 @@ class CommunityDragonRepository(
         val traitCount: Int
     )
 
-    private suspend fun applyRoot(root: CDragonRoot): ApplyResult = withContext(ioDispatcher) {
-        val set = root.setData.maxByOrNull { it.number ?: Int.MIN_VALUE }
+    private suspend fun applyRoot(root: JsonObject): ApplyResult = withContext(ioDispatcher) {
+        val setObjects = (root["setData"] as? JsonArray).orEmpty().filterIsInstance<JsonObject>()
+        val chosenSet = setObjects.maxByOrNull { setNumberOf(it) ?: Int.MIN_VALUE }
             ?: throw IOException("CommunityDragon response had no set data")
-        val currentSet = set.number
+        val currentSet = setNumberOf(chosenSet)
         if (currentSet != null) {
             Log.i(TAG, "Detected current TFT set: $currentSet")
         } else {
             Log.w(TAG, "Could not detect a TFT set number; using the only set entry available")
         }
 
-        val traitNameByApi: Map<String, String> = set.traits
+        val rawChampions = decodeEachLenient<CDragonChampion>(chosenSet["champions"], "champion")
+        val rawTraits = decodeEachLenient<CDragonTrait>(chosenSet["traits"], "trait")
+        val rawItems = decodeEachLenient<CDragonItem>(root["items"], "item")
+
+        val traitNameByApi: Map<String, String> = rawTraits
             .mapNotNull { t -> t.apiName?.let { it to (t.name ?: it) } }
             .toMap()
 
-        val champions = set.champions.mapNotNull { c ->
+        val champions = rawChampions.mapNotNull { c ->
             val apiName = c.apiName ?: return@mapNotNull null
             val name = c.name ?: apiName
             Champion(
                 id = apiName,
                 name = name,
                 cost = c.cost ?: 1,
-                traits = c.traits.map { raw -> traitNameByApi[raw] ?: raw },
+                traits = (c.traits ?: emptyList()).map { raw -> traitNameByApi[raw] ?: raw },
                 ability = Ability(
                     name = c.ability?.name ?: "",
                     description = c.ability?.desc ?: "",
@@ -214,13 +231,13 @@ class CommunityDragonRepository(
             )
         }
 
-        val itemNameByApi: Map<String, String> = root.items
+        val itemNameByApi: Map<String, String> = rawItems
             .mapNotNull { i -> i.apiName?.let { it to (i.name ?: it) } }
             .toMap()
 
-        val items = root.items.mapNotNull { i ->
+        val items = rawItems.mapNotNull { i ->
             val apiName = i.apiName ?: return@mapNotNull null
-            val rawComponents = i.from.ifEmpty { i.composition }
+            val rawComponents = i.from?.ifEmpty { null } ?: i.composition.orEmpty()
             Item(
                 id = apiName,
                 name = i.name ?: apiName,
@@ -230,10 +247,10 @@ class CommunityDragonRepository(
             )
         }
 
-        val traits = set.traits.mapNotNull { t ->
+        val traits = rawTraits.mapNotNull { t ->
             val apiName = t.apiName ?: return@mapNotNull null
             val name = t.name ?: apiName
-            val breakpoints = t.effects
+            val breakpoints = (t.effects ?: emptyList())
                 .mapNotNull { effect -> effect.minUnits?.let { TraitBreakpoint(count = it, effect = "") } }
                 .distinctBy { it.count }
                 .sortedBy { it.count }
@@ -241,7 +258,7 @@ class CommunityDragonRepository(
             Trait(id = apiName, name = name, description = t.desc ?: "", breakpoints = breakpoints, champions = champsWithTrait)
         }
 
-        applyIconMatching(set, root, champions, items)
+        applyIconMatching(rawChampions, rawItems, champions, items)
 
         cachedChampions = champions
         cachedItems = items
@@ -255,13 +272,29 @@ class CommunityDragonRepository(
         )
     }
 
+    private fun setNumberOf(set: JsonObject): Int? = (set["number"] as? JsonPrimitive)?.intOrNull
+
+    /** Decodes every element of [arrayElement] into [T] individually, skipping (and logging)
+     *  any entry that fails to decode instead of failing the whole [kind] list. */
+    private inline fun <reified T> decodeEachLenient(arrayElement: JsonElement?, kind: String): List<T> {
+        val array = arrayElement as? JsonArray ?: return emptyList()
+        return array.mapNotNull { element ->
+            try {
+                json.decodeFromJsonElement<T>(element)
+            } catch (e: Exception) {
+                Log.w(TAG, "Skipping malformed $kind entry: ${e.message}")
+                null
+            }
+        }
+    }
+
     private suspend fun applyIconMatching(
-        set: CDragonSet,
-        root: CDragonRoot,
+        rawChampions: List<CDragonChampion>,
+        rawItems: List<CDragonItem>,
         champions: List<Champion>,
         items: List<Item>
     ) {
-        val rawChampionByNormalizedName: Map<String, CDragonChampion> = set.champions
+        val rawChampionByNormalizedName: Map<String, CDragonChampion> = rawChampions
             .mapNotNull { c -> (c.name ?: c.apiName)?.let { normalize(it) to c } }
             .toMap()
 
@@ -283,7 +316,7 @@ class CommunityDragonRepository(
             }
         }
         if (unmatchedChampions.isNotEmpty()) {
-            val candidateNames = set.champions.mapNotNull { it.name }
+            val candidateNames = rawChampions.mapNotNull { it.name }
             unmatchedChampions.sorted().forEach { name ->
                 val closest = closestCandidates(name, candidateNames)
                 Log.w(TAG, "No CommunityDragon match for champion '$name'. Closest candidates: $closest")
@@ -291,7 +324,7 @@ class CommunityDragonRepository(
         }
 
         val itemIcons = mutableMapOf<String, String>()
-        root.items.forEach { i ->
+        rawItems.forEach { i ->
             val apiName = i.apiName ?: return@forEach
             val icon = i.icon ?: return@forEach
             itemIcons[apiName] = assetUrl(icon)
