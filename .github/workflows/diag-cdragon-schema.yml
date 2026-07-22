@@ -1,6 +1,8 @@
 name: Diagnostic - CommunityDragon schema check
 
 on:
+  push:
+    branches: [diag/cdragon-schema-check]
   workflow_dispatch:
 
 jobs:
