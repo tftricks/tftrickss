@@ -1010,36 +1010,42 @@
     "name": "Meeple Voyagers",
     "tier": "A",
     "difficulty": "Medium",
-    "patchVersion": "26.2",
+    "patchVersion": "17.7",
     "finalBoard": [
       {
-        "champion": "Poppy",
-        "items": [],
+        "champion": "Jhin",
+        "items": [
+          "Red Buff",
+          "Infinity Edge",
+          "Last Whisper"
+        ],
         "starTarget": 2
       },
       {
-        "champion": "Gnar",
-        "items": [],
-        "starTarget": 3
-      },
-      {
-        "champion": "Meepsie",
-        "items": [],
-        "starTarget": 2
-      },
-      {
-        "champion": "Karma",
-        "items": [],
+        "champion": "Corki",
+        "items": [
+          "Red Buff",
+          "Deathblade",
+          "Last Whisper"
+        ],
         "starTarget": 2
       },
       {
         "champion": "Rammus",
-        "items": [],
-        "starTarget": 3
+        "items": [
+          "Gargoyle Stoneplate",
+          "Bramble Vest",
+          "Crownguard"
+        ],
+        "starTarget": 2
       },
       {
-        "champion": "The Machine Herald",
-        "items": [],
+        "champion": "Gnar",
+        "items": [
+          "Guinsoo's Rageblade",
+          "Infinity Edge",
+          "Deathblade"
+        ],
         "starTarget": 2
       },
       {
@@ -1048,55 +1054,65 @@
         "starTarget": 2
       },
       {
-        "champion": "Jhin",
+        "champion": "The Machine Herald",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Fizz",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Meepsie",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Poppy",
         "items": [],
         "starTarget": 2
       }
     ],
-    "earlyGameBoard": [
-      {
-        "champion": "Gnar"
-      },
-      {
-        "champion": "Rammus"
-      }
-    ],
+    "earlyGameBoard": [],
     "midGameBoard": [],
     "carryChampions": [
-      "Gnar",
-      "Rammus"
+      "Jhin",
+      "Corki",
+      "Gnar"
     ],
     "tankChampions": [
       "Poppy",
-      "Gnar",
       "Rammus"
     ],
-    "bestItems": [],
-    "_todo_bestItems": "TODO: verify exact items — not reliably readable from source screenshots",
+    "bestItems": [
+      "Red Buff",
+      "Infinity Edge",
+      "Last Whisper",
+      "Deathblade",
+      "Guinsoo's Rageblade"
+    ],
     "alternativeItems": [],
     "traitsActive": [],
     "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
-    "positioningNotes": "Full positioning TBD — anchor Poppy, Gnar, Rammus center-front and keep Gnar, Rammus on the back row away from dive threats.",
-    "levelingGuide": "Hold at level 6 once you arrive and slow-roll there; only push further after Gnar, Rammus hit their target star level.",
-    "economyGuide": "Keep gold above 50 while slow-rolling at level 6 to maximize hit odds without losing interest.",
-    "rollTiming": "Slow-roll at level 6, spending only gold above 50 each round until Gnar, Rammus are 3-starred.",
-    "whenToPlay": "Take this line when you find early copies of Gnar, Rammus or see them go uncontested.",
+    "positioningNotes": "Keep Jhin and Corki protected behind Poppy and Rammus's frontline.",
+    "levelingGuide": "Fast 8 around the Meeple vertical, following the same curve as the Meep Show core.",
+    "economyGuide": "Push economy toward level 8 rather than holding.",
+    "rollTiming": "Roll down once you hit level 8 with the Meeple core online.",
+    "whenToPlay": "Take this line out of Meep Show when you find Gnar before Riven — it trades the Riven flex slot for a stronger Meeple vertical.",
     "strengths": [
-      "Reliable payoff once carries are 3-starred",
-      "Cheap to hit and easy to rebuild after a loss streak"
+      "Recorded stats: 14.8% win rate, 58.5% top-4 at Diamond+",
+      "Three itemized carries (Jhin, Corki, Gnar) give flexible carry options"
     ],
     "weaknesses": [
-      "Weak mid-game if the roll is contested",
-      "Vulnerable before carries reach their target star level"
+      "Lower average placement (4.04) than the main Meep Show line",
+      "Needs Gnar specifically to make the pivot worthwhile"
     ],
     "tags": [
-      "Slow Roll 6"
+      "Fast 8"
     ],
-    "slowRollLevel": 6,
-    "earlyGameChampions": [
-      "Gnar",
-      "Rammus"
-    ],
+    "slowRollLevel": null,
+    "earlyGameChampions": [],
     "levelAlternatives": {},
     "godOfferingPriority": []
   },
@@ -1774,6 +1790,877 @@
       "Illaoi",
       "Lissandra"
     ],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_hunters_rhythm",
+    "name": "Hunter's Rhythm",
+    "tier": "S",
+    "difficulty": "Easy",
+    "patchVersion": "17.7",
+    "finalBoard": [
+      {
+        "champion": "Kindred",
+        "items": [
+          "Guinsoo's Rageblade",
+          "Kraken's Fury",
+          "Giant Slayer"
+        ],
+        "starTarget": 3
+      },
+      {
+        "champion": "Akali",
+        "items": [
+          "Hextech Gunblade",
+          "Deathblade",
+          "Guardbreaker"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Jax",
+        "items": [
+          "Crownguard",
+          "Gargoyle Stoneplate",
+          "Gargoyle Stoneplate"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Urgot",
+        "items": [
+          "N.O.V.A. Emblem"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Fiora",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Morgana",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Maokai",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Belveth",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Aatrox",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [
+      {
+        "champion": "Kindred"
+      },
+      {
+        "champion": "Akali"
+      }
+    ],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Kindred",
+      "Akali"
+    ],
+    "tankChampions": [
+      "Jax"
+    ],
+    "bestItems": [
+      "Guinsoo's Rageblade",
+      "Kraken's Fury",
+      "Giant Slayer",
+      "Hextech Gunblade",
+      "Deathblade"
+    ],
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Kindred in the back corner, Jax front-center, Akali on the opposite side from the enemy carry.",
+    "levelingGuide": "Stay at level 6 and hold there; don't push to level 7 until Kindred is 3-starred.",
+    "economyGuide": "Slow-roll at level 6, spending only gold above 50 each round to protect your win streak and roll odds.",
+    "rollTiming": "Slow-roll at level 6 until Kindred hits 3-star; only level to 7 after locking that star level.",
+    "whenToPlay": "Take this line when you find early copies of Kindred and Akali, or want a low-difficulty slow roll into the N.O.V.A. trait.",
+    "strengths": [
+      "Cheap, low-difficulty slow roll with strong hit-rate odds",
+      "Kindred's Guinsoo's Rageblade scaling snowballs hard once 3-starred"
+    ],
+    "weaknesses": [
+      "Weak board before Kindred reaches 3-star",
+      "Contested 1-cost slow rolls can stall the plan"
+    ],
+    "tags": [
+      "Slow Roll 6"
+    ],
+    "slowRollLevel": 6,
+    "earlyGameChampions": [
+      "Kindred",
+      "Akali"
+    ],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_disco_inferno",
+    "name": "Disco Inferno",
+    "tier": "S",
+    "difficulty": "Medium",
+    "patchVersion": "17.7",
+    "finalBoard": [
+      {
+        "champion": "Nami",
+        "items": [
+          "Nashor's Tooth",
+          "Nashor's Tooth",
+          "Jeweled Gauntlet"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Riven",
+        "items": [
+          "Space Groove Emblem",
+          "Edge of Night",
+          "Bloodthirster"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Blitzcrank",
+        "items": [
+          "Bloodthirster",
+          "Ionic Spark",
+          "Morellonomicon"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Ornn",
+        "items": [
+          "Spirit Visage",
+          "Gargoyle Stoneplate",
+          "Warmog's Armor"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Shen",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Nunu",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Tahm Kench",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Gwen",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Pantheon",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Nami",
+      "Riven"
+    ],
+    "tankChampions": [
+      "Ornn"
+    ],
+    "bestItems": [
+      "Nashor's Tooth",
+      "Jeweled Gauntlet",
+      "Space Groove Emblem",
+      "Edge of Night",
+      "Bloodthirster"
+    ],
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Nami protected in the second row.",
+    "levelingGuide": "Level to 8 on 4-1 or 4-2.",
+    "economyGuide": "Keep economy around 50 gold while leveling, then roll down for 4-costs at level 8.",
+    "rollTiming": "Roll down at level 8 (4-1 to 4-2) for your 4-cost carries.",
+    "whenToPlay": "Take this line when Space Groove bodies are open and you can find Nami or Riven early; without an early Space Groove Emblem, keep Riven's third item slot flexible.",
+    "strengths": [
+      "Strong Fast 8 payoff with two scaling carries",
+      "Flexible itemization on Riven if the Emblem doesn't show up"
+    ],
+    "weaknesses": [
+      "Needs bodies to fill out Space Groove, which can get contested",
+      "Vulnerable during the level 7-to-8 push if the board isn't ready"
+    ],
+    "tags": [
+      "Fast 8",
+      "Emblem comp"
+    ],
+    "slowRollLevel": null,
+    "earlyGameChampions": [],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_wall_and_blade",
+    "name": "Wall & Blade",
+    "tier": "S",
+    "difficulty": "Medium",
+    "patchVersion": "17.7",
+    "finalBoard": [
+      {
+        "champion": "Samira",
+        "items": [
+          "Spear of Shojin",
+          "Last Whisper",
+          "Deathblade"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Ornn",
+        "items": [
+          "Gargoyle Stoneplate",
+          "Spirit Visage",
+          "Warmog's Armor"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Blitzcrank",
+        "items": [
+          "Thief's Gloves"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Jhin",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Shen",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Nami",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Nasus",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Samira"
+    ],
+    "tankChampions": [
+      "Ornn"
+    ],
+    "bestItems": [
+      "Spear of Shojin",
+      "Last Whisper",
+      "Deathblade"
+    ],
+    "alternativeItems": [
+      "Giant Slayer",
+      "Red Buff",
+      "Spear of Shojin"
+    ],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Double frontline wall — every damage source runs through Samira, so prioritize her items ahead of any defensive item on someone else.",
+    "levelingGuide": "Slow-roll at level 7 for Samira and your core tanks.",
+    "economyGuide": "Hold economy while slow-rolling at 7 until Samira and the tank line hit their target star levels.",
+    "rollTiming": "Slow-roll at level 7 for Samira and the core tanks.",
+    "whenToPlay": "Take this line when you can commit to a Samira slow roll with a strong double-tank frontline; the Space Groove Sniper variant (Jhin, Gwen, Teemo) is an option if that trait opens up instead.",
+    "strengths": [
+      "Very strong recorded stats — 23.1% win rate and 67.2% top-4 at Diamond+",
+      "Double frontline tank wall protects a single hypercarry very reliably"
+    ],
+    "weaknesses": [
+      "Entire comp's damage depends on one carry, so losing Samira early is costly",
+      "Slow roll at 7 is a higher commitment than earlier-level rolls"
+    ],
+    "tags": [
+      "Slow Roll 7"
+    ],
+    "slowRollLevel": 7,
+    "earlyGameChampions": [],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_starfall",
+    "name": "Starfall",
+    "tier": "S",
+    "difficulty": "Medium",
+    "patchVersion": "17.7",
+    "finalBoard": [
+      {
+        "champion": "Aurelion Sol",
+        "items": [
+          "Rabadon's Deathcap",
+          "Dark Star Emblem",
+          "Jeweled Gauntlet"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Jhin",
+        "items": [
+          "Last Whisper",
+          "Guardbreaker",
+          "Infinity Edge"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Karma",
+        "items": [
+          "Void Staff",
+          "Blue Buff",
+          "Morellonomicon"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Nunu",
+        "items": [
+          "Adaptive Helm",
+          "Crownguard",
+          "Fimbulwinter"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Tahm Kench",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "The Mighty Mech",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Kaisa",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Mordekaiser",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Cho'Gath",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Aurelion Sol",
+      "Jhin"
+    ],
+    "tankChampions": [
+      "Nunu"
+    ],
+    "bestItems": [
+      "Rabadon's Deathcap",
+      "Dark Star Emblem",
+      "Jeweled Gauntlet",
+      "Last Whisper",
+      "Infinity Edge"
+    ],
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Keep Aurelion Sol and Jhin in opposite corners so enemy assassins can't blow up both carries at once.",
+    "levelingGuide": "Fast 8, rolling down on 4-2.",
+    "economyGuide": "Push economy toward level 8 for the 4-2 roll-down rather than holding gold.",
+    "rollTiming": "Roll down at 4-2 once you hit level 8.",
+    "whenToPlay": "Take this line when you can find the Dark Star Emblem for Aurelion Sol; without it, pivot to Karma as your main caster instead.",
+    "strengths": [
+      "Aurelion Sol with the Dark Star Emblem scales into one of the strongest single-carry boards",
+      "Flexible fallback onto Karma if the Emblem doesn't show"
+    ],
+    "weaknesses": [
+      "Comp's ceiling depends heavily on finding the Dark Star Emblem",
+      "Two squishy backline carries are vulnerable without careful positioning"
+    ],
+    "tags": [
+      "Fast 8",
+      "Emblem comp"
+    ],
+    "slowRollLevel": null,
+    "earlyGameChampions": [],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_mech_overdrive",
+    "name": "Mech Overdrive",
+    "tier": "S",
+    "difficulty": "Medium",
+    "patchVersion": "17.7",
+    "finalBoard": [
+      {
+        "champion": "Bard",
+        "items": [
+          "Void Staff",
+          "Morellonomicon",
+          "Spear of Shojin"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Aurelion Sol",
+        "items": [
+          "Rabadon's Deathcap",
+          "Void Staff",
+          "Jeweled Gauntlet"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Karma",
+        "items": [
+          "Morellonomicon",
+          "Spear of Shojin",
+          "Void Staff"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "The Mighty Mech",
+        "items": [
+          "Gargoyle Stoneplate",
+          "Gargoyle Stoneplate",
+          "Sterak's Gage"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Blitzcrank",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Morgana",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Rhaast",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Mordekaiser",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Bard",
+      "Aurelion Sol"
+    ],
+    "tankChampions": [
+      "The Mighty Mech"
+    ],
+    "bestItems": [
+      "Void Staff",
+      "Morellonomicon",
+      "Spear of Shojin",
+      "Rabadon's Deathcap",
+      "Jeweled Gauntlet"
+    ],
+    "alternativeItems": [],
+    "traitsActive": [
+      {
+        "trait": "Mecha",
+        "count": 4
+      },
+      {
+        "trait": "Conduit",
+        "count": 3
+      }
+    ],
+    "positioningNotes": "The Mighty Mech carries the whole frontline — put all tank items on it exclusively. Keep the three casters in a back triangle so they share Conduit mana.",
+    "levelingGuide": "Fast 8 into the Mecha 4 / Conduit 3 core.",
+    "economyGuide": "Push economy toward level 8 rather than holding, then fill out Mecha 4 and Conduit 3.",
+    "rollTiming": "Roll down once you hit level 8 with the Mecha 4 / Conduit 3 core in place.",
+    "whenToPlay": "Take this line when Mecha and Conduit are both open — it's the strongest comp on the patch by the numbers, but low pick rate means it's rarely contested.",
+    "strengths": [
+      "Best recorded stats of the patch — 27.1% win rate and 70.5% top-4 at Diamond+",
+      "Low pick rate means the trait is rarely contested"
+    ],
+    "weaknesses": [
+      "Needs both Mecha 4 and Conduit 3 online to fully function",
+      "Single frontline unit (The Mighty Mech) carrying all tank items is a single point of failure"
+    ],
+    "tags": [
+      "Fast 8"
+    ],
+    "slowRollLevel": null,
+    "earlyGameChampions": [],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_meep_show",
+    "name": "Meep Show",
+    "tier": "S",
+    "difficulty": "Medium",
+    "patchVersion": "17.7",
+    "finalBoard": [
+      {
+        "champion": "Corki",
+        "items": [
+          "Guardbreaker",
+          "Deathblade",
+          "Last Whisper"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Bard",
+        "items": [
+          "Spear of Shojin",
+          "Morellonomicon",
+          "Void Staff"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Rammus",
+        "items": [
+          "Steadfast Hammer",
+          "Bramble Vest",
+          "Fimbulwinter"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Riven",
+        "items": [
+          "Edge of Night",
+          "Sterak's Gage",
+          "Bloodthirster"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Shen",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "The Mighty Mech",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Fizz",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Meepsie",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Milio",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Corki",
+      "Bard"
+    ],
+    "tankChampions": [
+      "Rammus"
+    ],
+    "bestItems": [
+      "Guardbreaker",
+      "Deathblade",
+      "Last Whisper",
+      "Spear of Shojin",
+      "Morellonomicon"
+    ],
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Keep Corki and Bard protected behind Rammus and The Mighty Mech's frontline.",
+    "levelingGuide": "Fast 8 around the Meeple vertical.",
+    "economyGuide": "Push economy toward level 8 rather than holding, prioritizing Rammus's armor items early.",
+    "rollTiming": "Roll down once you hit level 8 with the Meeple core online.",
+    "whenToPlay": "Take this line into open Meeple lobbies; if you find Gnar before Riven, pivot into the Meeple Voyager variant instead.",
+    "strengths": [
+      "Strong Fast 8 Meeple payoff with two scaling carries",
+      "Rammus holds the mid-game well if armor items come online early"
+    ],
+    "weaknesses": [
+      "Riven is a flexible slot rather than a core requirement — don't force it if the items aren't there",
+      "Mid-game is shaky if Rammus doesn't get early armor"
+    ],
+    "tags": [
+      "Fast 8"
+    ],
+    "slowRollLevel": null,
+    "earlyGameChampions": [],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_nova_strike",
+    "name": "Nova Strike",
+    "tier": "S",
+    "difficulty": "Medium",
+    "patchVersion": "17.7",
+    "finalBoard": [
+      {
+        "champion": "Graves",
+        "items": [
+          "Quicksilver",
+          "N.O.V.A. Emblem",
+          "Giant Slayer"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Kindred",
+        "items": [
+          "Kraken's Fury",
+          "Giant Slayer",
+          "Guinsoo's Rageblade"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Morgana",
+        "items": [
+          "Warmog's Armor",
+          "Steadfast Hammer",
+          "Sunfire Cape"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Akali",
+        "items": [
+          "Hextech Gunblade",
+          "Deathblade",
+          "Guardbreaker"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Shen",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Tahm Kench",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Maokai",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Belveth",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Aatrox",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Graves",
+      "Kindred"
+    ],
+    "tankChampions": [
+      "Morgana"
+    ],
+    "bestItems": [
+      "Quicksilver",
+      "N.O.V.A. Emblem",
+      "Giant Slayer",
+      "Kraken's Fury",
+      "Guinsoo's Rageblade"
+    ],
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Full positioning depends on lobby matchups — keep Graves protected with a clean line of sight.",
+    "levelingGuide": "Fast 8, maintaining a steady win streak along the way.",
+    "economyGuide": "Push economy toward level 8 rather than holding, prioritizing Quicksilver on Graves first.",
+    "rollTiming": "Roll down once you hit level 8.",
+    "whenToPlay": "Take this line into open lobbies where you can maintain a streak; if the mid-game is going poorly, fall back onto a Hunter's Rhythm-style board until your level 8 roll-down.",
+    "strengths": [
+      "Graves with early Quicksilver is very resilient in CC-heavy lobbies",
+      "Falls back cleanly onto a Hunter's Rhythm board if the mid-game is rough"
+    ],
+    "weaknesses": [
+      "Graves is highly reliant on finding Quicksilver early",
+      "Akali's flex slot competes for the same AD items as Graves and Kindred"
+    ],
+    "tags": [
+      "Fast 8"
+    ],
+    "slowRollLevel": null,
+    "earlyGameChampions": [],
+    "levelAlternatives": {},
+    "godOfferingPriority": []
+  },
+  {
+    "id": "comp_nova_marauder",
+    "name": "N.O.V.A. Marauder",
+    "tier": "A",
+    "difficulty": "Medium",
+    "patchVersion": "17.7",
+    "finalBoard": [
+      {
+        "champion": "Graves",
+        "items": [
+          "Quicksilver",
+          "Deathblade",
+          "Giant Slayer"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Vex",
+        "items": [
+          "Guinsoo's Rageblade",
+          "Giant Slayer",
+          "Jeweled Gauntlet"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Morgana",
+        "items": [
+          "Gargoyle Stoneplate",
+          "Warmog's Armor",
+          "Spirit Visage"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Nunu",
+        "items": [
+          "Adaptive Helm",
+          "Fimbulwinter",
+          "Fimbulwinter"
+        ],
+        "starTarget": 2
+      },
+      {
+        "champion": "Blitzcrank",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Fiora",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Shen",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Akali",
+        "items": [],
+        "starTarget": 2
+      },
+      {
+        "champion": "Aatrox",
+        "items": [],
+        "starTarget": 2
+      }
+    ],
+    "earlyGameBoard": [],
+    "midGameBoard": [],
+    "carryChampions": [
+      "Graves",
+      "Vex"
+    ],
+    "tankChampions": [
+      "Morgana",
+      "Nunu"
+    ],
+    "bestItems": [
+      "Quicksilver",
+      "Deathblade",
+      "Giant Slayer",
+      "Guinsoo's Rageblade",
+      "Jeweled Gauntlet"
+    ],
+    "alternativeItems": [],
+    "traitsActive": [],
+    "_todo_traitsActive": "TODO: compute once Set 17 Classes/Origins trait data is populated",
+    "positioningNotes": "Double tank frontline (Morgana, Nunu) protects both Graves and Vex in the back line.",
+    "levelingGuide": "Fast 8, the same curve as the main Nova Strike line.",
+    "economyGuide": "Push economy toward level 8 rather than holding.",
+    "rollTiming": "Roll down once you hit level 8.",
+    "whenToPlay": "Take this line as a Nova Strike pivot when Vex is open; it's the most popular comp of the patch, so expect contest on its units.",
+    "strengths": [
+      "Recorded stats: 22.2% win rate, 56.4% top-4 at Diamond+",
+      "Double tank frontline (Morgana, Nunu) gives strong protection to both carries"
+    ],
+    "weaknesses": [
+      "Highest pick rate of the patch means heavy contest on its core units",
+      "Lower average placement (4.07) than some less-popular alternatives"
+    ],
+    "tags": [
+      "Fast 8"
+    ],
+    "slowRollLevel": null,
+    "earlyGameChampions": [],
     "levelAlternatives": {},
     "godOfferingPriority": []
   }
