@@ -41,3 +41,22 @@ jobs:
               hit = target in names or any(target.lower() in (n or '').lower() for n in names)
               print(f'{target}: {\"MATCH\" if hit else \"NO MATCH\"}')
           "
+
+      - name: Inspect whether items[] mixes augments with real equipment, and composition field
+        run: |
+          python3 -c "
+          import json
+          data = json.load(open('/tmp/en_us.json'))
+          items = data.get('items', [])
+          augments = [i for i in items if 'augment' in (i.get('apiName') or '').lower()]
+          equipment = [i for i in items if 'augment' not in (i.get('apiName') or '').lower()]
+          print('total:', len(items), 'augment-like:', len(augments), 'equipment-like:', len(equipment))
+          bf = next((i for i in equipment if 'bfsword' in (i.get('apiName') or '').lower()), None)
+          print('BF Sword sample:', json.dumps(bf, indent=2)[:600] if bf else 'NOT FOUND')
+          bt = next((i for i in equipment if 'bloodthirster' in (i.get('apiName') or '').lower()), None)
+          print('Bloodthirster composition:', bt.get('composition') if bt else 'NOT FOUND')
+          print('Bloodthirster apiName:', bt.get('apiName') if bt else 'NOT FOUND')
+          set17_like = [i for i in equipment if 'tft17' in (i.get('apiName') or '').lower() or 'tft_item' in (i.get('apiName') or '').lower()]
+          print('equipment matching tft17/tft_item prefix:', len(set17_like))
+          print('sample equipment apiNames:', [i.get('apiName') for i in equipment[:10]])
+          "
