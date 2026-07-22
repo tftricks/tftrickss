@@ -286,64 +286,6 @@ private fun DetailSections(
     championMatchDebug: Map<String, String>,
     loadedChampionIds: List<String>
 ) {
-    if (comp.variants.isNotEmpty()) {
-        ExpandableSection(title = "Variants") {
-            comp.variants.forEachIndexed { index, variant ->
-                VariantCard(variant, championChip)
-                if (index != comp.variants.lastIndex) {
-                    Spacer(modifier = Modifier.height(10.dp))
-                }
-            }
-        }
-    }
-
-    if (BuildConfig.DEBUG) {
-        InfoCard {
-            SectionLabel(text = "DEBUG: Champion match trace")
-            Text(
-                text = "This comp's ${comp.finalBoard.size} champions vs. the current matching logic:",
-                style = MaterialTheme.typography.bodySmall,
-                color = TextSecondary,
-                modifier = Modifier.padding(top = 6.dp)
-            )
-            comp.finalBoard.forEach { unit ->
-                val matchedId = championMatchDebug[unit.champion]
-                Text(
-                    text = if (matchedId != null) {
-                        "${unit.champion} → MATCHED: $matchedId"
-                    } else {
-                        "${unit.champion} → NO MATCH"
-                    },
-                    style = MaterialTheme.typography.bodySmall,
-                    color = if (matchedId != null) SuccessGreen else DangerRed,
-                    fontFamily = FontFamily.Monospace,
-                    modifier = Modifier.padding(top = 4.dp)
-                )
-            }
-
-            SectionLabel(
-                text = "DEBUG: All ${loadedChampionIds.size} loaded CommunityDragon champion ids",
-                modifier = Modifier.padding(top = 12.dp)
-            )
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(240.dp)
-                    .padding(top = 6.dp)
-                    .verticalScroll(rememberScrollState())
-            ) {
-                loadedChampionIds.forEach { id ->
-                    Text(
-                        text = id,
-                        style = MaterialTheme.typography.labelSmall,
-                        color = TextSecondary,
-                        fontFamily = FontFamily.Monospace
-                    )
-                }
-            }
-        }
-    }
-
     if (comp.levelingStages.isNotEmpty()) {
         ExpandableSection(title = "Leveling") {
             comp.levelingStages.forEachIndexed { index, stage ->
@@ -422,6 +364,16 @@ private fun DetailSections(
         LabeledParagraph("When to play", comp.whenToPlay)
     }
 
+    ExpandableSection(title = "Strengths & Weaknesses") {
+        comp.strengths.forEach {
+            BulletLine(text = it, bullet = "+", color = SuccessGreen)
+        }
+        Spacer(modifier = Modifier.height(6.dp))
+        comp.weaknesses.forEach {
+            BulletLine(text = it, bullet = "–", color = DangerRed)
+        }
+    }
+
     if (comp.augmentGuide != null) {
         ExpandableSection(title = "Augments") {
             AugmentTierList("First pick", comp.augmentGuide.tier1)
@@ -473,20 +425,68 @@ private fun DetailSections(
         }
     }
 
-    ExpandableSection(title = "Strengths & Weaknesses") {
-        comp.strengths.forEach {
-            BulletLine(text = it, bullet = "+", color = SuccessGreen)
-        }
-        Spacer(modifier = Modifier.height(6.dp))
-        comp.weaknesses.forEach {
-            BulletLine(text = it, bullet = "–", color = DangerRed)
-        }
-    }
-
     if (comp.tips.isNotEmpty()) {
         ExpandableSection(title = "Tips") {
             comp.tips.forEach {
                 BulletLine(text = it, bullet = "•", color = TextSecondary)
+            }
+        }
+    }
+
+    if (comp.variants.isNotEmpty()) {
+        ExpandableSection(title = "Variants") {
+            comp.variants.forEachIndexed { index, variant ->
+                VariantCard(variant, championChip)
+                if (index != comp.variants.lastIndex) {
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
+            }
+        }
+    }
+
+    if (BuildConfig.DEBUG) {
+        InfoCard {
+            SectionLabel(text = "DEBUG: Champion match trace")
+            Text(
+                text = "This comp's ${comp.finalBoard.size} champions vs. the current matching logic:",
+                style = MaterialTheme.typography.bodySmall,
+                color = TextSecondary,
+                modifier = Modifier.padding(top = 6.dp)
+            )
+            comp.finalBoard.forEach { unit ->
+                val matchedId = championMatchDebug[unit.champion]
+                Text(
+                    text = if (matchedId != null) {
+                        "${unit.champion} → MATCHED: $matchedId"
+                    } else {
+                        "${unit.champion} → NO MATCH"
+                    },
+                    style = MaterialTheme.typography.bodySmall,
+                    color = if (matchedId != null) SuccessGreen else DangerRed,
+                    fontFamily = FontFamily.Monospace,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
+            }
+
+            SectionLabel(
+                text = "DEBUG: All ${loadedChampionIds.size} loaded CommunityDragon champion ids",
+                modifier = Modifier.padding(top = 12.dp)
+            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(240.dp)
+                    .padding(top = 6.dp)
+                    .verticalScroll(rememberScrollState())
+            ) {
+                loadedChampionIds.forEach { id ->
+                    Text(
+                        text = id,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = TextSecondary,
+                        fontFamily = FontFamily.Monospace
+                    )
+                }
             }
         }
     }

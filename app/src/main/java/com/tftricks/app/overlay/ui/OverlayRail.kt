@@ -13,12 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.List
-import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -37,7 +32,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.DpOffset
@@ -48,28 +42,17 @@ import com.tftricks.app.ui.theme.SurfaceDark
 import com.tftricks.app.ui.theme.SurfaceElevated
 import com.tftricks.app.ui.theme.TextSecondary
 
-/** Categories reachable from the overlay's left rail. */
-enum class OverlayTab(val label: String, val icon: ImageVector) {
-    COMPS("Comps", Icons.AutoMirrored.Filled.List),
-    ITEMS("Items", Icons.Filled.Build),
-    TRAITS("Traits", Icons.Filled.Star),
-    CHAMPIONS("Champs", Icons.Filled.Person),
-    AUGMENTS("Augs", Icons.Filled.AddCircle),
-    FAVORITES("Favs", Icons.Filled.Favorite)
-}
-
 /**
- * Thin left navigation rail: category icons on top, an opacity badge pinned to the
- * bottom. The badge shows the current opacity and, on tap, opens a small flyout
- * containing the vertical slider — kept out of the rail's own layout flow so it's
- * never clipped by the rail's height, which shrinks a lot in landscape.
+ * Thin left rail: collapse (X) at the top, an opacity badge pinned to the bottom. The
+ * badge opens a flyout with the vertical slider — kept out of the rail's own layout
+ * flow so it's never clipped by the rail's height, which shrinks a lot in landscape.
+ * The overlay only browses comps now, so there's no category navigation here.
  */
 @Composable
 fun OverlayRail(
-    selectedTab: OverlayTab,
-    onSelectTab: (OverlayTab) -> Unit,
     opacity: Float,
     onOpacityChange: (Float) -> Unit,
+    onCollapse: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -80,18 +63,12 @@ fun OverlayRail(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(12.dp))
-        OverlayTab.entries.forEach { tab ->
-            val selected = tab == selectedTab
-            IconButton(
-                onClick = { onSelectTab(tab) },
-                modifier = Modifier.padding(vertical = 4.dp)
-            ) {
-                Icon(
-                    imageVector = tab.icon,
-                    contentDescription = tab.label,
-                    tint = if (selected) BrandYellow else TextSecondary
-                )
-            }
+        IconButton(onClick = onCollapse) {
+            Icon(
+                imageVector = Icons.Filled.Close,
+                contentDescription = "Collapse overlay",
+                tint = TextSecondary
+            )
         }
 
         Spacer(modifier = Modifier.weight(1f))

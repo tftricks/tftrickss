@@ -99,14 +99,12 @@ fun OverlayCompDetail(
             }
         }
 
-        if (requiredComponents.isNotEmpty()) {
-            SectionLabel(text = "Component items")
-            Text(
-                text = requiredComponents.joinToString(", ") { "${it.componentName} ×${it.count}" },
-                style = bodyStyle,
-                color = TextSecondary
-            )
-        }
+        SectionLabel(text = "Game plan")
+        LabeledLine("Positioning", comp.positioningNotes, bodyStyle)
+        LabeledLine("Leveling curve", comp.levelingGuide, bodyStyle)
+        LabeledLine("Economy", comp.economyGuide, bodyStyle)
+        LabeledLine("Roll timing", comp.rollTiming, bodyStyle)
+        LabeledLine("When to play", comp.whenToPlay, bodyStyle)
 
         if (comp.levelingStages.isNotEmpty()) {
             SectionLabel(text = "Leveling")
@@ -138,12 +136,14 @@ fun OverlayCompDetail(
             )
         }
 
-        SectionLabel(text = "Game plan")
-        LabeledLine("Positioning", comp.positioningNotes, bodyStyle)
-        LabeledLine("Leveling curve", comp.levelingGuide, bodyStyle)
-        LabeledLine("Economy", comp.economyGuide, bodyStyle)
-        LabeledLine("Roll timing", comp.rollTiming, bodyStyle)
-        LabeledLine("When to play", comp.whenToPlay, bodyStyle)
+        if (requiredComponents.isNotEmpty()) {
+            SectionLabel(text = "Component items required")
+            Text(
+                text = requiredComponents.joinToString(", ") { "${it.componentName} ×${it.count}" },
+                style = bodyStyle,
+                color = TextSecondary
+            )
+        }
 
         if (comp.tips.isNotEmpty()) {
             SectionLabel(text = "Tips")

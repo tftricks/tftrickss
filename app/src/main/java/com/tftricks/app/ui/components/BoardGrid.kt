@@ -49,9 +49,12 @@ data class BoardCellData(
 )
 
 /**
- * The 4x7 TFT board (positions 0..27, row-major from the back row),
- * with odd rows offset half a cell to suggest hexes. Item mini-icons render
- * under each occupied hex. Read-only when [onCellClick] is null; interactive otherwise.
+ * The 4x7 TFT board, matching the in-game layout: row R1 (frontline, nearest the
+ * opponent) renders at the top, R4 (backline) at the bottom, columns C1..C7 left to
+ * right, with R2 and R4 offset half a cell to the right to suggest hexes. Position
+ * indices follow [com.tftricks.app.domain.model.BoardUnit.position]'s
+ * `(4-R)*7 + (C-1)` convention. Item mini-icons render under each occupied hex.
+ * Read-only when [onCellClick] is null; interactive otherwise.
  */
 @Composable
 fun BoardGrid(
@@ -67,13 +70,13 @@ fun BoardGrid(
         val itemRowHeight = cellSize * 0.32f
 
         Column(verticalArrangement = Arrangement.spacedBy(gap)) {
-            for (row in 0 until 4) {
+            for (r in 1..4) {
                 Row(horizontalArrangement = Arrangement.spacedBy(gap)) {
-                    if (row % 2 == 1) {
+                    if (r == 2 || r == 4) {
                         Spacer(modifier = Modifier.width(cellSize / 2))
                     }
-                    for (col in 0 until 7) {
-                        val position = row * 7 + col
+                    for (c in 1..7) {
+                        val position = (4 - r) * 7 + (c - 1)
                         val cell = cellFor(position)
                         val isSelected = position == selectedPosition
                         BoardHex(
