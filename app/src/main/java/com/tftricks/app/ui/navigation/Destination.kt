@@ -4,7 +4,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
@@ -15,6 +14,7 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.tftricks.app.BuildConfig
 
@@ -44,7 +44,7 @@ enum class Destination(
     Search("search", "Search", "Search", Icons.Filled.Search),
     Settings("settings", "Settings", "Settings", Icons.Filled.Settings),
     OverlaySettings("overlay_settings", "Overlay Settings", "Overlay", Icons.Filled.Notifications),
-    CrashLog("crash_log", "Crash Log", "Crash Log", Icons.Filled.BugReport);
+    CrashLog("crash_log", "Crash Log", "Crash Log", Icons.Filled.Warning);
 
     companion object {
         /** Top-level tabs shown in the bottom navigation bar. */
