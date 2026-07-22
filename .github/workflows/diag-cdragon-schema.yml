@@ -1,0 +1,41 @@
+name: Diagnostic - CommunityDragon schema check
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: Fetch and inspect real en_us.json
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch latest en_us.json
+        run: curl -sS -o /tmp/en_us.json "https://raw.communitydragon.org/latest/cdragon/tft/en_us.json"
+
+      - name: Inspect items[].from nullability (the reported bug)
+        run: |
+          python3 -c "
+          import json
+          data = json.load(open('/tmp/en_us.json'))
+          items = data.get('items', [])
+          print('total items:', len(items))
+          null_from = [i.get('apiName') for i in items if 'from' in i and i.get('from') is None]
+          print('items with explicit null from:', len(null_from))
+          print('sample:', null_from[:5])
+          print('items[0]:', json.dumps(items[0], indent=2)[:500] if items else 'NONE')
+          "
+
+      - name: Detect current set and confirm champion name matches
+        run: |
+          python3 -c "
+          import json
+          data = json.load(open('/tmp/en_us.json'))
+          sets = data.get('setData', [])
+          current = max(sets, key=lambda s: s.get('number') or -999)
+          print('current set number:', current.get('number'))
+          champs = current.get('champions', [])
+          print('champion count:', len(champs))
+          names = {c.get('name') for c in champs if c.get('name')}
+          for target in ['Kindred', 'Akali', 'Jax']:
+              hit = target in names or any(target.lower() in (n or '').lower() for n in names)
+              print(f'{target}: {\"MATCH\" if hit else \"NO MATCH\"}')
+          "
