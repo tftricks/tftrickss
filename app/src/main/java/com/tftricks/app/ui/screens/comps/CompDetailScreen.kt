@@ -175,7 +175,7 @@ fun CompDetailScreen(
                         onDismiss = { debugBannerDismissed = true }
                     )
                 }
-                CompHeader(comp, content.isFavorite, traitIcons, viewModel::toggleFavorite)
+                CompHeader(comp, content.isFavorite, traitIcons, communityDragon, viewModel::toggleFavorite)
                 FinalBoardSection(
                     comp = comp,
                     championIcons = championIcons,
