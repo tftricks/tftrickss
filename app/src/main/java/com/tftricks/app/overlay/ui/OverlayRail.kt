@@ -1,0 +1,202 @@
+package com.tftricks.app.overlay.ui
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.dp
+import com.tftricks.app.overlay.OverlayTab
+import com.tftricks.app.ui.theme.BrandYellow
+import com.tftricks.app.ui.theme.OutlineDark
+import com.tftricks.app.ui.theme.SurfaceDark
+import com.tftricks.app.ui.theme.SurfaceElevated
+import com.tftricks.app.ui.theme.TextSecondary
+
+/**
+ * Thin left rail: collapse (X) at the top, then the category tabs, then an opacity
+ * badge pinned to the bottom. The badge opens a flyout with the vertical slider — kept
+ * out of the rail's own layout flow so it's never clipped by the rail's height, which
+ * shrinks a lot in landscape.
+ */
+@Composable
+fun OverlayRail(
+    selectedTab: OverlayTab,
+    onSelectTab: (OverlayTab) -> Unit,
+    opacity: Float,
+    onOpacityChange: (Float) -> Unit,
+    onCollapse: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxHeight()
+            .width(64.dp)
+            .background(SurfaceDark),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(modifier = Modifier.height(12.dp))
+        IconButton(onClick = onCollapse) {
+            Icon(
+                imageVector = Icons.Filled.Close,
+                contentDescription = "Collapse overlay",
+                tint = TextSecondary
+            )
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OverlayTab.entries.forEach { tab ->
+            val selected = tab == selectedTab
+            IconButton(
+                onClick = { onSelectTab(tab) },
+                modifier = Modifier.padding(vertical = 4.dp)
+            ) {
+                Icon(
+                    imageVector = tab.icon,
+                    contentDescription = tab.label,
+                    tint = if (selected) BrandYellow else TextSecondary
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        OpacityControl(
+            opacity = opacity,
+            onOpacityChange = onOpacityChange,
+            modifier = Modifier.padding(bottom = 12.dp)
+        )
+    }
+}
+
+/** Opacity badge + tap-to-open flyout slider, decoupled from the rail's own height. */
+@Composable
+private fun OpacityControl(
+    opacity: Float,
+    onOpacityChange: (Float) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Box(modifier = modifier) {
+        Box(
+            modifier = Modifier
+                .size(40.dp)
+                .clip(CircleShape)
+                .background(SurfaceElevated)
+                .border(1.dp, if (expanded) BrandYellow else OutlineDark, CircleShape)
+                .clickable { expanded = true },
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "${(opacity * 100).toInt()}%",
+                style = MaterialTheme.typography.labelSmall,
+                color = BrandYellow
+            )
+        }
+
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            offset = DpOffset(x = 8.dp, y = (-170).dp)
+        ) {
+            var sliderValue by remember(opacity) { mutableFloatStateOf(opacity) }
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+            ) {
+                Text(
+                    text = "Opacity",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = TextSecondary
+                )
+                Text(
+                    text = "${(sliderValue * 100).toInt()}%",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = BrandYellow
+                )
+                VerticalSlider(
+                    value = sliderValue,
+                    onValueChange = { sliderValue = it },
+                    onValueChangeFinished = { onOpacityChange(sliderValue) },
+                    valueRange = 0.15f..1f,
+                    modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .height(160.dp)
+                        .width(32.dp)
+                )
+            }
+        }
+    }
+}
+
+/** A [Slider] rotated to run bottom-to-top, sized to fit a narrow flyout. */
+@Composable
+private fun VerticalSlider(
+    value: Float,
+    onValueChange: (Float) -> Unit,
+    onValueChangeFinished: () -> Unit,
+    valueRange: ClosedFloatingPointRange<Float>,
+    modifier: Modifier = Modifier
+) {
+    Slider(
+        value = value,
+        onValueChange = onValueChange,
+        onValueChangeFinished = onValueChangeFinished,
+        valueRange = valueRange,
+        colors = SliderDefaults.colors(
+            thumbColor = BrandYellow,
+            activeTrackColor = BrandYellow,
+            inactiveTrackColor = OutlineDark
+        ),
+        modifier = modifier
+            .graphicsLayer {
+                rotationZ = -90f
+                transformOrigin = TransformOrigin(0f, 0f)
+            }
+            .layout { measurable, constraints ->
+                val placeable = measurable.measure(
+                    Constraints(
+                        minWidth = constraints.minHeight,
+                        maxWidth = constraints.maxHeight,
+                        minHeight = constraints.minWidth,
+                        maxHeight = constraints.maxWidth
+                    )
+                )
+                layout(placeable.height, placeable.width) {
+                    placeable.place(-placeable.width, 0)
+                }
+            }
+    )
+}

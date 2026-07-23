@@ -1,0 +1,65 @@
+name: Build signed release AAB + APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build & sign release AAB + APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Set up Gradle (with caching)
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
+      # Requires these repository secrets (Settings -> Secrets and variables -> Actions):
+      #   RELEASE_KEYSTORE_BASE64   - base64 of the release .keystore file
+      #   RELEASE_KEYSTORE_PASSWORD - keystore/store password
+      #   RELEASE_KEY_ALIAS         - key alias (e.g. "tftricks")
+      #   RELEASE_KEY_PASSWORD      - key password (same as store password for PKCS12)
+      - name: Decode release keystore
+        run: echo "${{ secrets.RELEASE_KEYSTORE_BASE64 }}" | base64 -d > "${{ github.workspace }}/tftricks-release.keystore"
+
+      - name: Build signed AAB + APK
+        env:
+          TFTRICKS_KEYSTORE_PATH: ${{ github.workspace }}/tftricks-release.keystore
+          TFTRICKS_STORE_PW: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
+          TFTRICKS_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
+          TFTRICKS_KEY_PW: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: ./gradlew bundleRelease assembleRelease --stacktrace
+
+      - name: Remove decoded keystore
+        if: always()
+        run: rm -f "${{ github.workspace }}/tftricks-release.keystore"
+
+      - name: Rename APK to tftricks.apk
+        run: |
+          mkdir -p app/build/outputs/apk/release-renamed
+          cp app/build/outputs/apk/release/*.apk app/build/outputs/apk/release-renamed/tftricks.apk
+
+      - name: Upload signed AAB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tftricks-release-aab
+          path: app/build/outputs/bundle/release/*.aab
+          if-no-files-found: error
+
+      - name: Upload signed APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tftricks-release-apk
+          path: app/build/outputs/apk/release-renamed/tftricks.apk
+          if-no-files-found: error

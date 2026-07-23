@@ -61,18 +61,31 @@ class HomeViewModel(private val container: AppContainer) : ViewModel() {
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), UiState.Loading)
 
     init {
+        load()
+    }
+
+    private fun load() {
         viewModelScope.launch {
+            error.value = null
             try {
+                // Patch notes and comps are bundled locally; champions/items are fetched
+                // live and shouldn't block the dashboard's bundled content if that fails.
+                val champions = runCatching { container.championRepository.getChampions() }
+                    .getOrDefault(emptyList())
+                val items = runCatching { container.itemRepository.getItems() }
+                    .getOrDefault(emptyList())
                 data.value = HomeData(
                     patch = container.patchNoteRepository.getPatchNotes()
                         .maxByOrNull { it.date }?.version ?: "—",
                     comps = container.teamCompRepository.getTeamComps(),
-                    champions = container.championRepository.getChampions(),
-                    items = container.itemRepository.getItems()
+                    champions = champions,
+                    items = items
                 )
             } catch (e: Exception) {
                 error.value = e.message ?: "Failed to load data"
             }
         }
     }
+
+    fun retry() = load()
 }

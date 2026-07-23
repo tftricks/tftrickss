@@ -5,6 +5,7 @@ import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
+import com.tftricks.app.crash.CrashHandler
 import com.tftricks.app.di.AppContainer
 
 class TFTricksApplication : Application(), ImageLoaderFactory {
@@ -14,17 +15,17 @@ class TFTricksApplication : Application(), ImageLoaderFactory {
 
     override fun onCreate() {
         super.onCreate()
+        // Installed first so it can catch a crash from anything below, including
+        // AppContainer construction itself.
+        CrashHandler.install(this)
         container = AppContainer(this)
         container.adsManager.initialize()
-        container.dataDragonRepository.initialize()
+        container.communityDragonRepository.initialize()
     }
 
-    /**
-     * Ignores server cache-control headers so champion/item icons persist to disk on first
-     * load and keep working with the overlay/app fully offline afterward.
-     */
+    /** Icons are loaded live from CommunityDragon each session; Coil's default in-memory
+     *  + disk cache is enough here since there's no offline data behind them to protect. */
     override fun newImageLoader(): ImageLoader = ImageLoader.Builder(this)
-        .respectCacheHeaders(false)
         .memoryCache { MemoryCache.Builder(this).maxSizePercent(0.25).build() }
         .diskCache {
             DiskCache.Builder()

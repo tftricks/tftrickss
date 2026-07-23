@@ -17,9 +17,9 @@ import com.tftricks.app.ui.theme.OutlineDark
 import com.tftricks.app.ui.theme.SurfaceElevated
 
 /**
- * A champion/item portrait loaded from Data Dragon. Renders an empty tinted tile
+ * A champion/item portrait loaded from CommunityDragon. Renders an empty tinted tile
  * (no crash, no broken-image icon) when [url] is null — e.g. before the first
- * successful Data Dragon fetch, or when a local entry has no name match.
+ * successful CommunityDragon fetch, or when a local entry has no name match.
  */
 @Composable
 fun GameIcon(

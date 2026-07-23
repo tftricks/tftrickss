@@ -41,9 +41,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.tftricks.app.domain.model.PanelSize
 import com.tftricks.app.ui.AppViewModelProvider
-import com.tftricks.app.ui.components.FilterChipRow
 import com.tftricks.app.ui.components.InfoCard
 import com.tftricks.app.ui.components.SectionLabel
 import com.tftricks.app.ui.theme.BrandYellow
@@ -201,11 +199,18 @@ fun OverlaySettingsScreen(
             var sliderValue by remember(settings.opacity) {
                 mutableFloatStateOf(settings.opacity)
             }
+            Text(
+                text = "Applies to the whole panel — background and content together — " +
+                    "so you can see the game through it while it's expanded.",
+                style = MaterialTheme.typography.bodySmall,
+                color = TextSecondary,
+                modifier = Modifier.padding(top = 2.dp)
+            )
             Slider(
                 value = sliderValue,
                 onValueChange = { sliderValue = it },
                 onValueChangeFinished = { viewModel.setOpacity(sliderValue) },
-                valueRange = 0.4f..1f,
+                valueRange = 0.15f..1f,
                 colors = SliderDefaults.colors(
                     thumbColor = BrandYellow,
                     activeTrackColor = BrandYellow,
@@ -215,27 +220,6 @@ fun OverlaySettingsScreen(
         }
 
         InfoCard {
-            Text(
-                text = "Panel size",
-                style = MaterialTheme.typography.titleSmall,
-                color = TextPrimary
-            )
-            FilterChipRow(
-                options = PanelSize.entries,
-                isSelected = { it == settings.panelSize },
-                onToggle = viewModel::setPanelSize,
-                label = { it.name.lowercase().replaceFirstChar { c -> c.uppercase() } },
-                modifier = Modifier.padding(top = 8.dp)
-            )
-        }
-
-        InfoCard {
-            SettingSwitchRow(
-                title = "Transparent background",
-                description = "See the game through the panel.",
-                checked = settings.transparentBackground,
-                onCheckedChange = viewModel::setTransparentBackground
-            )
             SettingSwitchRow(
                 title = "Compact mode",
                 description = "Denser lists and smaller text.",

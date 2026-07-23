@@ -56,7 +56,7 @@ fun HomeScreen(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-    StateContent(state = state, modifier = Modifier.padding(contentPadding)) { content ->
+    StateContent(state = state, modifier = Modifier.padding(contentPadding), onRetry = viewModel::retry) { content ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -76,7 +76,7 @@ fun HomeScreen(
             ) {
                 TFTricksLogo(markSize = 64.dp)
                 Text(
-                    text = "Patch ${content.currentPatch} • offline data",
+                    text = "Patch ${content.currentPatch}",
                     style = MaterialTheme.typography.labelMedium,
                     color = TextSecondary,
                     modifier = Modifier.padding(top = 6.dp)

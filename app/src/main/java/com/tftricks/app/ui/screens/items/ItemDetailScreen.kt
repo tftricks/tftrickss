@@ -29,7 +29,7 @@ import com.tftricks.app.ui.components.InfoCard
 import com.tftricks.app.ui.components.PillChip
 import com.tftricks.app.ui.components.SectionLabel
 import com.tftricks.app.ui.components.StateContent
-import com.tftricks.app.ui.components.rememberDataDragonRepository
+import com.tftricks.app.ui.components.rememberCommunityDragonRepository
 import com.tftricks.app.ui.theme.BrandYellow
 import com.tftricks.app.ui.theme.TextPrimary
 import com.tftricks.app.ui.theme.TextSecondary
@@ -43,10 +43,10 @@ fun ItemDetailScreen(
     viewModel: ItemDetailViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    val dataDragon = rememberDataDragonRepository()
-    val itemIcons by dataDragon.itemIconUrls.collectAsStateWithLifecycle()
+    val communityDragon = rememberCommunityDragonRepository()
+    val itemIcons by communityDragon.itemIconUrls.collectAsStateWithLifecycle()
 
-    StateContent(state = state, modifier = Modifier.padding(contentPadding)) { content ->
+    StateContent(state = state, modifier = Modifier.padding(contentPadding), onRetry = viewModel::retry) { content ->
         val item = content.item
 
         Column(
@@ -101,7 +101,7 @@ fun ItemDetailScreen(
                 )
             }
 
-            if (item.bestUsers.isNotEmpty()) {
+            if (content.bestUsers.isNotEmpty()) {
                 InfoCard {
                     SectionLabel(text = "Best users")
                     FlowRow(
@@ -109,28 +109,10 @@ fun ItemDetailScreen(
                         verticalArrangement = Arrangement.spacedBy(6.dp),
                         modifier = Modifier.padding(top = 6.dp)
                     ) {
-                        item.bestUsers.forEach { name ->
+                        content.bestUsers.forEach { name ->
                             PillChip(
                                 text = name,
                                 onClick = content.championIdsByName[name]?.let { { onOpenChampion(it) } }
-                            )
-                        }
-                    }
-                }
-            }
-
-            if (item.goodAlternatives.isNotEmpty()) {
-                InfoCard {
-                    SectionLabel(text = "Good alternatives")
-                    FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(6.dp),
-                        verticalArrangement = Arrangement.spacedBy(6.dp),
-                        modifier = Modifier.padding(top = 6.dp)
-                    ) {
-                        item.goodAlternatives.forEach { name ->
-                            PillChip(
-                                text = name,
-                                onClick = content.itemIdsByName[name]?.let { { onOpenItem(it) } }
                             )
                         }
                     }

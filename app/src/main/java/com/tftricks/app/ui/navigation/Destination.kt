@@ -14,7 +14,9 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.tftricks.app.BuildConfig
 
 /**
  * Every navigable screen in the app.
@@ -41,15 +43,17 @@ enum class Destination(
     PatchNotes("patch_notes", "Patch Notes", "Patches", Icons.Filled.Info),
     Search("search", "Search", "Search", Icons.Filled.Search),
     Settings("settings", "Settings", "Settings", Icons.Filled.Settings),
-    OverlaySettings("overlay_settings", "Overlay Settings", "Overlay", Icons.Filled.Notifications);
+    OverlaySettings("overlay_settings", "Overlay Settings", "Overlay", Icons.Filled.Notifications),
+    CrashLog("crash_log", "Crash Log", "Crash Log", Icons.Filled.Warning);
 
     companion object {
         /** Top-level tabs shown in the bottom navigation bar. */
         val bottomBarDestinations = listOf(Home, TeamComps, Champions, TeamBuilder, More)
 
-        /** Secondary screens reachable from the More hub. */
-        val moreDestinations = listOf(
-            Traits, Items, Augments, SavedComps, PatchNotes, Search, Settings, OverlaySettings
+        /** Secondary screens reachable from the More hub. Crash Log only shows in debug builds. */
+        val moreDestinations = listOfNotNull(
+            Traits, Items, Augments, SavedComps, PatchNotes, Search, Settings, OverlaySettings,
+            CrashLog.takeIf { BuildConfig.DEBUG }
         )
 
         fun fromRoute(route: String?): Destination? = entries.find { it.route == route }

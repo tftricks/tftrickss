@@ -71,7 +71,12 @@ class ItemsViewModel(
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), UiState.Loading)
 
     init {
+        load()
+    }
+
+    private fun load() {
         viewModelScope.launch {
+            error.value = null
             try {
                 allItems.value = repository.getItems()
             } catch (e: Exception) {
@@ -79,6 +84,8 @@ class ItemsViewModel(
             }
         }
     }
+
+    fun retry() = load()
 
     fun selectCategory(category: ItemCategory?) {
         selectedCategory.value = if (selectedCategory.value == category) null else category

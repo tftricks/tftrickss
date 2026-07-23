@@ -36,7 +36,64 @@ data class TeamComp(
     /** Suggested roster swaps keyed by level (as a string, e.g. "7"). */
     val levelAlternatives: Map<String, List<String>> = emptyMap(),
     /** Champion names in priority order for god-offering carousel picks. */
-    val godOfferingPriority: List<String> = emptyList()
+    val godOfferingPriority: List<String> = emptyList(),
+    /** Alternative setups of this same comp (different roster/items, same core idea). */
+    val variants: List<CompVariant> = emptyList(),
+    /** Staged leveling breakdown, e.g. "Lv6 @ 3-2 (slow-roll here)", in play order. */
+    val levelingStages: List<String> = emptyList(),
+    /** Freeform early-game notes: opener, itemization priority, trait counts. */
+    val earlyGameNotes: List<String> = emptyList(),
+    /** Augment picks by tier. Null when this comp has no curated augment data yet. */
+    val augmentGuide: AugmentGuide? = null,
+    /** Component items to prioritize off carousels, in priority order. */
+    val carouselItemPriority: List<String> = emptyList(),
+    /** Misc guide notes: roster alternatives, execution tips. */
+    val tips: List<String> = emptyList(),
+    /** Recorded Top-4 rate as a percentage (0-100), when real match data is curated for this comp. */
+    val top4Rate: Double? = null
+)
+
+/** Augment recommendations for a [TeamComp], grouped by the round they're offered. */
+@Serializable
+data class AugmentGuide(
+    val tier1: List<String> = emptyList(),
+    val tier2: List<String> = emptyList(),
+    val tier3: List<String> = emptyList()
+)
+
+/** A base component item required to build a comp's full itemization, with how many copies. */
+data class ComponentRequirement(val componentName: String, val count: Int)
+
+/**
+ * Tallies the base components needed to build every completed item on [TeamComp.finalBoard],
+ * computed from live [Item.components] recipe data rather than curated per-comp.
+ */
+fun TeamComp.requiredComponents(itemsByName: Map<String, Item>): List<ComponentRequirement> {
+    val counts = LinkedHashMap<String, Int>()
+    finalBoard.flatMap { it.items }.forEach { itemName ->
+        itemsByName[itemName]?.components?.forEach { component ->
+            counts[component] = (counts[component] ?: 0) + 1
+        }
+    }
+    return counts.entries
+        .sortedWith(compareByDescending<Map.Entry<String, Int>> { it.value }.thenBy { it.key })
+        .map { ComponentRequirement(it.key, it.value) }
+}
+
+/**
+ * An alternative setup of a [TeamComp] — a different roster/itemization on the same
+ * core idea, rather than a fully separate comp entry.
+ */
+@Serializable
+data class CompVariant(
+    val name: String,
+    val tier: Tier,
+    val finalBoard: List<BoardUnit>,
+    val carryChampions: List<String> = emptyList(),
+    val tankChampions: List<String> = emptyList(),
+    val notes: String = "",
+    /** Recorded match stats as free text, e.g. "Avg 4.04 • Win 14.8% • Top-4 58.5%". */
+    val statsNote: String = ""
 )
 
 /**

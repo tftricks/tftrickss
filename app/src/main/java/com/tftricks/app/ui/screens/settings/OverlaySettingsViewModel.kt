@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tftricks.app.TFTricksApplication
 import com.tftricks.app.domain.model.OverlaySettings
-import com.tftricks.app.domain.model.PanelSize
 import com.tftricks.app.overlay.OverlayService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -42,14 +41,6 @@ class OverlaySettingsViewModel(private val app: TFTricksApplication) : ViewModel
 
     fun setOpacity(opacity: Float) {
         viewModelScope.launch { repository.setOpacity(opacity) }
-    }
-
-    fun setPanelSize(size: PanelSize) {
-        viewModelScope.launch { repository.setPanelSize(size) }
-    }
-
-    fun setTransparentBackground(enabled: Boolean) {
-        viewModelScope.launch { repository.setTransparentBackground(enabled) }
     }
 
     fun setCompactMode(enabled: Boolean) {

@@ -15,12 +15,25 @@ android {
         applicationId = "com.tftricks.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 2
-        versionName = "1.0.1"
+        versionCode = 1
+        versionName = "1.0"
+    }
+
+    signingConfigs {
+        // Never commit a real keystore or its passwords — these come from env vars
+        // (locally, export them; in CI, from repo/workflow secrets). A debug build
+        // never touches this config, so it's safe to leave unset for local dev.
+        create("release") {
+            storeFile = file(System.getenv("TFTRICKS_KEYSTORE_PATH") ?: "../tftricks-release.keystore")
+            storePassword = System.getenv("TFTRICKS_STORE_PW")
+            keyAlias = System.getenv("TFTRICKS_KEY_ALIAS") ?: "tftricks"
+            keyPassword = System.getenv("TFTRICKS_KEY_PW")
+        }
     }
 
     buildTypes {
         release {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -66,6 +79,9 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.play.services.ads)
     implementation(libs.coil.compose)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.kotlinx.serialization)
+    implementation(libs.okhttp)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
 }

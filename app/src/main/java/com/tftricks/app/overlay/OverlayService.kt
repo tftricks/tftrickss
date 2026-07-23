@@ -33,7 +33,9 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 /**
  * Foreground service hosting the in-game overlay.
@@ -42,8 +44,9 @@ import kotlinx.coroutines.launch
  * with [OverlayLifecycleOwner] providing the lifecycle/savedstate/viewmodel owners a
  * ComposeView needs outside an Activity. A single window is reused for both states:
  * its LayoutParams morph between the small draggable bubble (wrap-content, not
- * focusable, positioned at the saved edge) and the expanded panel (sized from the
- * user's panel-size setting, focusable so the search field can use the keyboard).
+ * focusable/touch-modal, positioned at the saved edge, always fully opaque) and the
+ * expanded panel (full screen/edge-to-edge, focusable, touch-modal so nothing leaks
+ * through to the game underneath, window alpha driven by the user's opacity setting).
  */
 class OverlayService : Service() {
 
@@ -106,7 +109,12 @@ class OverlayService : Service() {
             }
         }
         scope.launch {
-            expanded.collect { if (overlayView != null) applyWindowLayout() }
+            // Skip the initial (startup) value: collapsing is a real state transition,
+            // not the service just having come up already collapsed.
+            expanded.drop(1).collect { isExpanded ->
+                if (overlayView != null) applyWindowLayout()
+                if (!isExpanded) panelState.persistSession()
+            }
         }
     }
 
@@ -124,6 +132,12 @@ class OverlayService : Service() {
         }
         overlayView = null
         lifecycleOwner.destroy()
+        // A full stop (vs. a system-initiated process kill that skips onDestroy and
+        // just restarts the service) means the user is done — forget the saved screen.
+        // Blocking (not scope.launch) so the write lands before scope.cancel() below.
+        if (::panelState.isInitialized) {
+            runBlocking { runCatching { container.overlaySessionRepository.clear() } }
+        }
         scope.cancel()
         _isRunning.value = false
         super.onDestroy()
@@ -155,7 +169,10 @@ class OverlayService : Service() {
                     onBubbleTap = { expanded.value = true },
                     onBubbleDrag = ::moveBubbleBy,
                     onBubbleDragEnd = ::snapBubbleToEdge,
-                    onCollapse = { expanded.value = false }
+                    onCollapse = { expanded.value = false },
+                    onOpacityChange = { opacity ->
+                        scope.launch { container.overlayPrefsRepository.setOpacity(opacity) }
+                    }
                 )
             }
         }
@@ -168,16 +185,22 @@ class OverlayService : Service() {
     private fun configureLayoutParams() {
         val current = settings.value
         val metrics = resources.displayMetrics
-        layoutParams.alpha = current.opacity
         if (expanded.value) {
-            layoutParams.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+            // Full screen, edge-to-edge: the panel itself is the only thing on screen while
+            // expanded, so every touch should land on it — never pass through to the game
+            // underneath, regardless of how low the opacity is set.
+            layoutParams.alpha = current.opacity
+            layoutParams.gravity = Gravity.TOP or Gravity.START
             layoutParams.x = 0
-            layoutParams.y = (metrics.heightPixels * 0.05f).toInt()
-            layoutParams.width = (metrics.widthPixels * 0.94f).toInt()
-            layoutParams.height = (metrics.heightPixels * current.panelSize.heightFraction).toInt()
-            // Focusable (no NOT_FOCUSABLE flag) so the search field can open the keyboard.
-            layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+            layoutParams.y = 0
+            layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+            layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT
+            // Focusable (no NOT_FOCUSABLE flag); touch-modal (no NOT_TOUCH_MODAL flag) so
+            // taps can't leak through to TFT while the panel is up.
+            layoutParams.flags = 0
         } else {
+            // The collapsed bubble is always fully opaque so it's never hard to find.
+            layoutParams.alpha = 1f
             layoutParams.gravity = Gravity.TOP or Gravity.START
             layoutParams.x = current.buttonX.coerceIn(0, metrics.widthPixels)
             layoutParams.y = current.buttonY.coerceIn(0, metrics.heightPixels)

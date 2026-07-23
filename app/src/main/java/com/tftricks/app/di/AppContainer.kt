@@ -5,23 +5,23 @@ import com.tftricks.app.ads.AdsManager
 import com.tftricks.app.data.local.userDataStore
 import com.tftricks.app.data.repository.DataStoreFavoritesRepository
 import com.tftricks.app.data.repository.DataStoreOverlayPrefsRepository
+import com.tftricks.app.data.repository.DataStoreOverlaySessionRepository
 import com.tftricks.app.data.repository.DataStoreSavedTeamsRepository
 import com.tftricks.app.data.repository.JsonAugmentRepository
-import com.tftricks.app.data.repository.JsonChampionRepository
-import com.tftricks.app.data.repository.JsonItemRepository
 import com.tftricks.app.data.repository.JsonPatchNoteRepository
 import com.tftricks.app.data.repository.JsonTeamCompRepository
-import com.tftricks.app.data.repository.JsonTraitRepository
-import com.tftricks.app.data.remote.DataDragonRepository
+import com.tftricks.app.data.remote.CommunityDragonRepository
 import com.tftricks.app.data.source.AssetJsonDataSource
 import com.tftricks.app.domain.repository.AugmentRepository
 import com.tftricks.app.domain.repository.ChampionRepository
 import com.tftricks.app.domain.repository.FavoritesRepository
 import com.tftricks.app.domain.repository.ItemRepository
 import com.tftricks.app.domain.repository.OverlayPrefsRepository
+import com.tftricks.app.domain.repository.OverlaySessionRepository
 import com.tftricks.app.domain.repository.PatchNoteRepository
 import com.tftricks.app.domain.repository.SavedTeamsRepository
 import com.tftricks.app.domain.repository.TeamCompRepository
+import com.tftricks.app.domain.repository.TeamPlannerRepository
 import com.tftricks.app.domain.repository.TraitRepository
 import kotlinx.serialization.json.Json
 
@@ -36,19 +36,26 @@ class AppContainer(context: Context) {
     private val json = Json {
         ignoreUnknownKeys = true
         isLenient = true
+        // CommunityDragon sends null for fields it has no data for on some entries
+        // (e.g. an item with no "from" recipe); coerce those to their declared
+        // defaults instead of failing the whole parse.
+        coerceInputValues = true
     }
 
     private val dataSource = AssetJsonDataSource(appContext, json)
 
+    // Team comps (and their curated guides) stay bundled locally; champions/items/traits
+    // are fetched live from CommunityDragon by the same repository instance below.
     val teamCompRepository: TeamCompRepository = JsonTeamCompRepository(dataSource)
-    val championRepository: ChampionRepository = JsonChampionRepository(dataSource)
-    val itemRepository: ItemRepository = JsonItemRepository(dataSource)
-    val traitRepository: TraitRepository = JsonTraitRepository(dataSource)
     val augmentRepository: AugmentRepository = JsonAugmentRepository(dataSource)
     val patchNoteRepository: PatchNoteRepository = JsonPatchNoteRepository(dataSource)
 
-    val dataDragonRepository: DataDragonRepository =
-        DataDragonRepository(appContext, championRepository, itemRepository, teamCompRepository, json)
+    val communityDragonRepository: CommunityDragonRepository =
+        CommunityDragonRepository(appContext, teamCompRepository, json)
+    val championRepository: ChampionRepository = communityDragonRepository
+    val itemRepository: ItemRepository = communityDragonRepository
+    val traitRepository: TraitRepository = communityDragonRepository
+    val teamPlannerRepository: TeamPlannerRepository = communityDragonRepository
 
     val favoritesRepository: FavoritesRepository =
         DataStoreFavoritesRepository(appContext.userDataStore)
@@ -56,6 +63,8 @@ class AppContainer(context: Context) {
         DataStoreSavedTeamsRepository(appContext.userDataStore, json)
     val overlayPrefsRepository: OverlayPrefsRepository =
         DataStoreOverlayPrefsRepository(appContext.userDataStore)
+    val overlaySessionRepository: OverlaySessionRepository =
+        DataStoreOverlaySessionRepository(appContext.userDataStore)
 
     val adsManager: AdsManager = AdsManager(appContext)
 }

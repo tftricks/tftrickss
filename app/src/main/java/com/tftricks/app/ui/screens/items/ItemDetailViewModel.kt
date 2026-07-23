@@ -18,10 +18,10 @@ import kotlinx.coroutines.launch
 data class ItemDetailContent(
     val item: Item,
     val isFavorite: Boolean,
+    /** Champions this item is built on across bundled comps, in order of first appearance. */
+    val bestUsers: List<String>,
     /** Champion id lookup by display name, for navigation from best users. */
-    val championIdsByName: Map<String, String>,
-    /** Item id lookup by display name, for navigation from alternatives. */
-    val itemIdsByName: Map<String, String>
+    val championIdsByName: Map<String, String>
 )
 
 class ItemDetailViewModel(
@@ -31,7 +31,13 @@ class ItemDetailViewModel(
 
     private val itemId: String = checkNotNull(savedStateHandle[DetailRoutes.ITEM_ARG])
 
-    private val data = MutableStateFlow<Triple<Item, Map<String, String>, Map<String, String>>?>(null)
+    private data class Loaded(
+        val item: Item,
+        val bestUsers: List<String>,
+        val championIdsByName: Map<String, String>
+    )
+
+    private val data = MutableStateFlow<Loaded?>(null)
     private val error = MutableStateFlow<String?>(null)
 
     val uiState: StateFlow<UiState<ItemDetailContent>> = combine(
@@ -42,28 +48,39 @@ class ItemDetailViewModel(
             loaded == null -> UiState.Loading
             else -> UiState.Success(
                 ItemDetailContent(
-                    item = loaded.first,
+                    item = loaded.item,
                     isFavorite = itemId in favorites,
-                    championIdsByName = loaded.second,
-                    itemIdsByName = loaded.third
+                    bestUsers = loaded.bestUsers,
+                    championIdsByName = loaded.championIdsByName
                 )
             )
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), UiState.Loading)
 
     init {
+        load()
+    }
+
+    private fun load() {
         viewModelScope.launch {
+            error.value = null
             try {
                 val item = container.itemRepository.getItem(itemId)
                 if (item == null) {
                     error.value = "Item not found"
                 } else {
+                    val comps = container.teamCompRepository.getTeamComps()
+                    val bestUsers = mutableListOf<String>()
+                    comps.forEach { comp ->
+                        (comp.finalBoard + comp.variants.flatMap { it.finalBoard })
+                            .filter { item.name in it.items }
+                            .forEach { unit -> if (unit.champion !in bestUsers) bestUsers += unit.champion }
+                    }
                     val champions = container.championRepository.getChampions()
-                    val items = container.itemRepository.getItems()
-                    data.value = Triple(
-                        item,
-                        champions.associate { it.name to it.id },
-                        items.associate { it.name to it.id }
+                    data.value = Loaded(
+                        item = item,
+                        bestUsers = bestUsers,
+                        championIdsByName = champions.associate { it.name to it.id }
                     )
                 }
             } catch (e: Exception) {
@@ -71,6 +88,8 @@ class ItemDetailViewModel(
             }
         }
     }
+
+    fun retry() = load()
 
     fun toggleFavorite() {
         viewModelScope.launch {

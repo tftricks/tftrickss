@@ -5,8 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tftricks.app.di.AppContainer
 import com.tftricks.app.domain.model.Champion
+import com.tftricks.app.domain.model.ComponentRequirement
 import com.tftricks.app.domain.model.FavoriteCategory
 import com.tftricks.app.domain.model.TeamComp
+import com.tftricks.app.domain.model.requiredComponents
 import com.tftricks.app.ui.common.UiState
 import com.tftricks.app.ui.navigation.DetailRoutes
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +24,16 @@ data class CompDetailContent(
     /** Champion lookup by display name, for cost colors and navigation from boards. */
     val championsByName: Map<String, Champion>,
     /** Item id lookup by display name, for navigation from item chips. */
-    val itemIdsByName: Map<String, String>
+    val itemIdsByName: Map<String, String>,
+    /** Base components needed for this comp's full itemization, tallied from live recipe data. */
+    val requiredComponents: List<ComponentRequirement>
+)
+
+private data class LoadedCompDetail(
+    val comp: TeamComp,
+    val championsByName: Map<String, Champion>,
+    val itemIdsByName: Map<String, String>,
+    val requiredComponents: List<ComponentRequirement>
 )
 
 class CompDetailViewModel(
@@ -32,7 +43,7 @@ class CompDetailViewModel(
 
     private val compId: String = checkNotNull(savedStateHandle[DetailRoutes.COMP_ARG])
 
-    private val data = MutableStateFlow<Triple<TeamComp, Map<String, Champion>, Map<String, String>>?>(null)
+    private val data = MutableStateFlow<LoadedCompDetail?>(null)
     private val error = MutableStateFlow<String?>(null)
 
     val uiState: StateFlow<UiState<CompDetailContent>> = combine(
@@ -43,10 +54,11 @@ class CompDetailViewModel(
             loaded == null -> UiState.Loading
             else -> UiState.Success(
                 CompDetailContent(
-                    comp = loaded.first,
+                    comp = loaded.comp,
                     isFavorite = compId in favorites,
-                    championsByName = loaded.second,
-                    itemIdsByName = loaded.third
+                    championsByName = loaded.championsByName,
+                    itemIdsByName = loaded.itemIdsByName,
+                    requiredComponents = loaded.requiredComponents
                 )
             )
         }
@@ -59,12 +71,17 @@ class CompDetailViewModel(
                 if (comp == null) {
                     error.value = "Comp not found"
                 } else {
-                    val champions = container.championRepository.getChampions()
-                    val items = container.itemRepository.getItems()
-                    data.value = Triple(
-                        comp,
-                        champions.associateBy { it.name },
-                        items.associate { it.name to it.id }
+                    // This comp guide is bundled locally, so it shouldn't be blocked by a
+                    // failed live champion/item fetch — fall back to empty lookups instead.
+                    val champions = runCatching { container.championRepository.getChampions() }
+                        .getOrDefault(emptyList())
+                    val items = runCatching { container.itemRepository.getItems() }
+                        .getOrDefault(emptyList())
+                    data.value = LoadedCompDetail(
+                        comp = comp,
+                        championsByName = champions.associateBy { it.name },
+                        itemIdsByName = items.associate { it.name to it.id },
+                        requiredComponents = comp.requiredComponents(items.associateBy { it.name })
                     )
                 }
             } catch (e: Exception) {

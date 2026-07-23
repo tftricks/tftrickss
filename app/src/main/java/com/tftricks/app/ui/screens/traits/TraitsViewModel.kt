@@ -27,7 +27,12 @@ class TraitsViewModel(
     val uiState: StateFlow<UiState<TraitsContent>> = _uiState.asStateFlow()
 
     init {
+        load()
+    }
+
+    private fun load() {
         viewModelScope.launch {
+            _uiState.value = UiState.Loading
             _uiState.value = try {
                 UiState.Success(
                     TraitsContent(
@@ -40,4 +45,6 @@ class TraitsViewModel(
             }
         }
     }
+
+    fun retry() = load()
 }
