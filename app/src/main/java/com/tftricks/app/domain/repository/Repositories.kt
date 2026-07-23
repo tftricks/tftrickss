@@ -5,6 +5,7 @@ import com.tftricks.app.domain.model.Champion
 import com.tftricks.app.domain.model.Item
 import com.tftricks.app.domain.model.PatchNote
 import com.tftricks.app.domain.model.TeamComp
+import com.tftricks.app.domain.model.TeamPlannerEncoding
 import com.tftricks.app.domain.model.Trait
 
 interface TeamCompRepository {
@@ -34,4 +35,10 @@ interface AugmentRepository {
 
 interface PatchNoteRepository {
     suspend fun getPatchNotes(): List<PatchNote>
+}
+
+/** The current set's champion code dictionary for TFT Team Planner paste codes. */
+interface TeamPlannerRepository {
+    /** Null when the live fetch fails — callers should tell the user to try again. */
+    suspend fun getTeamPlannerEncoding(): TeamPlannerEncoding?
 }

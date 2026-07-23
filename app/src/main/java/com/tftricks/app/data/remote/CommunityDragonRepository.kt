@@ -9,11 +9,14 @@ import com.tftricks.app.domain.model.Ability
 import com.tftricks.app.domain.model.Champion
 import com.tftricks.app.domain.model.Item
 import com.tftricks.app.domain.model.ItemCategory
+import com.tftricks.app.domain.model.TeamPlannerEncoding
 import com.tftricks.app.domain.model.Trait
 import com.tftricks.app.domain.model.TraitBreakpoint
+import com.tftricks.app.domain.model.normalizeChampionName
 import com.tftricks.app.domain.repository.ChampionRepository
 import com.tftricks.app.domain.repository.ItemRepository
 import com.tftricks.app.domain.repository.TeamCompRepository
+import com.tftricks.app.domain.repository.TeamPlannerRepository
 import com.tftricks.app.domain.repository.TraitRepository
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -69,10 +72,11 @@ class CommunityDragonRepository(
     private val teamCompRepository: TeamCompRepository,
     private val json: Json,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : ChampionRepository, ItemRepository, TraitRepository {
+) : ChampionRepository, ItemRepository, TraitRepository, TeamPlannerRepository {
 
     private val scope = CoroutineScope(SupervisorJob() + ioDispatcher)
     private val mutex = Mutex()
+    private val teamPlannerMutex = Mutex()
 
     private val httpClient = OkHttpClient.Builder()
         .connectTimeout(15, TimeUnit.SECONDS)
@@ -90,6 +94,10 @@ class CommunityDragonRepository(
     @Volatile private var cachedChampions: List<Champion> = emptyList()
     @Volatile private var cachedItems: List<Item> = emptyList()
     @Volatile private var cachedTraits: List<Trait> = emptyList()
+
+    /** Lazily fetched on first "copy comp" tap — not needed for the app's main flows. */
+    @Volatile private var teamPlannerLoaded = false
+    @Volatile private var cachedTeamPlannerEncoding: TeamPlannerEncoding? = null
 
     private val _status = MutableStateFlow<CommunityDragonStatus>(CommunityDragonStatus.Loading)
     val status: StateFlow<CommunityDragonStatus> = _status.asStateFlow()
@@ -150,6 +158,49 @@ class CommunityDragonRepository(
     }
 
     override suspend fun getTrait(id: String): Trait? = getTraits().find { it.id == id }
+
+    override suspend fun getTeamPlannerEncoding(): TeamPlannerEncoding? {
+        if (teamPlannerLoaded) return cachedTeamPlannerEncoding
+        teamPlannerMutex.withLock {
+            if (teamPlannerLoaded) return cachedTeamPlannerEncoding
+            cachedTeamPlannerEncoding = runCatching { fetchTeamPlannerEncoding() }
+                .onFailure { e -> Log.w(TAG, "Failed to load Team Planner champion codes", e) }
+                .getOrNull()
+            teamPlannerLoaded = true
+        }
+        return cachedTeamPlannerEncoding
+    }
+
+    /**
+     * Sorts the current set's roster alphabetically by `character_id`, then indexes it
+     * 1-based into 2-digit hex codes (position 1 = "01") — this is TFTricks' own code
+     * scheme, not the `team_planner_code` field the response also carries (see
+     * [CDragonTeamPlannerChampion]'s doc). "Current set" is whichever `TFTSet<N>` key
+     * has the highest N; the response can carry more than one during a set transition.
+     */
+    private suspend fun fetchTeamPlannerEncoding(): TeamPlannerEncoding = withContext(ioDispatcher) {
+        if (!isOnline()) error("No internet connection")
+        val root = api.getTeamPlannerData()
+        val setEntries = root.entries.mapNotNull { (key, value) ->
+            SET_KEY_PATTERN.find(key)?.groupValues?.get(1)?.toIntOrNull()?.let { number ->
+                Triple(key, number, value)
+            }
+        }
+        val (setId, _, championsElement) = setEntries.maxByOrNull { it.second }
+            ?: throw IOException("Team Planner response had no TFTSet* entries")
+
+        val champions = decodeEachLenient<CDragonTeamPlannerChampion>(championsElement, "team planner champion")
+        val sortedByCharacterId = champions
+            .mapNotNull { c -> c.characterId?.let { id -> id to c } }
+            .sortedBy { (id, _) -> id }
+
+        val codes = LinkedHashMap<String, String>()
+        sortedByCharacterId.forEachIndexed { index, (_, champion) ->
+            val displayName = champion.displayName ?: return@forEachIndexed
+            codes[normalizeChampionName(displayName)] = "%02x".format(index + 1)
+        }
+        TeamPlannerEncoding(setId = setId, codesByNormalizedName = codes)
+    }
 
     /** Loads once and caches for the session; concurrent callers share one in-flight fetch. */
     private suspend fun ensureLoaded() {
@@ -429,5 +480,6 @@ class CommunityDragonRepository(
     private companion object {
         const val TAG = "CommunityDragon"
         const val GAME_ASSET_BASE = "https://raw.communitydragon.org/latest/game"
+        val SET_KEY_PATTERN = Regex("^TFTSet(\\d+)$")
     }
 }

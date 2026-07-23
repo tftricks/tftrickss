@@ -21,6 +21,7 @@ import com.tftricks.app.domain.repository.OverlaySessionRepository
 import com.tftricks.app.domain.repository.PatchNoteRepository
 import com.tftricks.app.domain.repository.SavedTeamsRepository
 import com.tftricks.app.domain.repository.TeamCompRepository
+import com.tftricks.app.domain.repository.TeamPlannerRepository
 import com.tftricks.app.domain.repository.TraitRepository
 import kotlinx.serialization.json.Json
 
@@ -54,6 +55,7 @@ class AppContainer(context: Context) {
     val championRepository: ChampionRepository = communityDragonRepository
     val itemRepository: ItemRepository = communityDragonRepository
     val traitRepository: TraitRepository = communityDragonRepository
+    val teamPlannerRepository: TeamPlannerRepository = communityDragonRepository
 
     val favoritesRepository: FavoritesRepository =
         DataStoreFavoritesRepository(appContext.userDataStore)

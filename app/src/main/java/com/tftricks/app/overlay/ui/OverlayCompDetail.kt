@@ -24,6 +24,7 @@ import com.tftricks.app.domain.model.requiredComponents
 import com.tftricks.app.overlay.OverlayPanelState
 import com.tftricks.app.ui.components.BoardCellData
 import com.tftricks.app.ui.components.BoardGrid
+import com.tftricks.app.ui.components.CopyCompButton
 import com.tftricks.app.ui.components.SectionLabel
 import com.tftricks.app.ui.components.TierBadge
 import com.tftricks.app.ui.theme.BrandYellow
@@ -66,7 +67,13 @@ fun OverlayCompDetail(
         Row(verticalAlignment = Alignment.CenterVertically) {
             TierBadge(comp.tier)
             Spacer(modifier = Modifier.width(10.dp))
-            Text(comp.name, style = MaterialTheme.typography.titleMedium, color = TextPrimary)
+            Text(
+                comp.name,
+                style = MaterialTheme.typography.titleMedium,
+                color = TextPrimary,
+                modifier = Modifier.weight(1f)
+            )
+            CopyCompButton(comp = comp, teamPlannerRepository = panelState.teamPlannerRepository)
         }
 
         val positioned = comp.finalBoard

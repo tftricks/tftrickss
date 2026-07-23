@@ -1,5 +1,6 @@
 package com.tftricks.app.data.remote
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -57,6 +58,22 @@ data class CDragonItem(
     /** Component item apiNames this is built from; null/absent for base components. */
     val from: List<String>? = null,
     val composition: List<String>? = null
+)
+
+/**
+ * A champion entry from tftchampions-teamplanner.json — verified against a live fetch
+ * (unlike the DTOs above), via a throwaway CI diagnostic job, since this dev
+ * environment's network policy also blocks that endpoint. Real field names confirmed:
+ * `character_id` (e.g. "TFT17_Briar") and `display_name` (e.g. "Bel'Veth"). The response
+ * also carries a `team_planner_code` int per champion that looks like Riot's own
+ * persistent id (non-sequential per current set, e.g. Briar=14 but Tristana=735) — this
+ * DTO intentionally does not decode it, since TFTricks builds its own alphabetical-index
+ * codes per the product spec rather than relying on that field.
+ */
+@Serializable
+data class CDragonTeamPlannerChampion(
+    @SerialName("character_id") val characterId: String? = null,
+    @SerialName("display_name") val displayName: String? = null
 )
 
 /** Observable outcome of the last CommunityDragon fetch attempt. */

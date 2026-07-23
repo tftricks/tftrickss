@@ -220,6 +220,7 @@ private fun OverlayRightColumn(
                 itemIconUrlsByName = itemIconUrlByName,
                 traitIcons = traitIcons,
                 championsByName = championsByName,
+                teamPlannerRepository = panelState.teamPlannerRepository,
                 onClick = { onSelect(comp) }
             )
         }

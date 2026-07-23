@@ -9,4 +9,9 @@ interface CommunityDragonApi {
      *  champion/item/trait entries can be skipped instead of failing the whole parse. */
     @GET("latest/cdragon/tft/en_us.json")
     suspend fun getTftData(): JsonObject
+
+    /** Keyed by set id (e.g. "TFTSet17"); each value is that set's champion roster,
+     *  used to build the TFT Team Planner paste-code champion dictionary. */
+    @GET("latest/plugins/rcp-be-lol-game-data/global/default/v1/tftchampions-teamplanner.json")
+    suspend fun getTeamPlannerData(): JsonObject
 }

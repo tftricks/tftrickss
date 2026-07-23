@@ -23,6 +23,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.tftricks.app.domain.model.Champion
 import com.tftricks.app.domain.model.TeamComp
+import com.tftricks.app.domain.repository.TeamPlannerRepository
+import com.tftricks.app.ui.components.CopyCompButton
 import com.tftricks.app.ui.components.GameIcon
 import com.tftricks.app.ui.components.HexagonShape
 import com.tftricks.app.ui.components.TierBadge
@@ -48,6 +50,7 @@ fun OverlayCompCard(
     itemIconUrlsByName: Map<String, String>,
     traitIcons: Map<String, String>,
     championsByName: Map<String, Champion>,
+    teamPlannerRepository: TeamPlannerRepository,
     onClick: () -> Unit
 ) {
     val shape = RoundedCornerShape(10.dp)
@@ -87,6 +90,11 @@ fun OverlayCompCard(
                     }
                 }
             }
+            CopyCompButton(
+                comp = comp,
+                teamPlannerRepository = teamPlannerRepository,
+                modifier = Modifier.padding(start = 6.dp)
+            )
         }
         Row(
             modifier = Modifier

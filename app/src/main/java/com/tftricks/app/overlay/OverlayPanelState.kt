@@ -12,6 +12,7 @@ import com.tftricks.app.domain.model.Item
 import com.tftricks.app.domain.model.OverlaySession
 import com.tftricks.app.domain.model.TeamComp
 import com.tftricks.app.domain.repository.OverlaySessionRepository
+import com.tftricks.app.domain.repository.TeamPlannerRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -49,6 +50,7 @@ class OverlayPanelState(
     val championIconUrls: StateFlow<Map<String, String>> = container.communityDragonRepository.championIconUrls
     val itemIconUrls: StateFlow<Map<String, String>> = container.communityDragonRepository.itemIconUrls
     val traitIconUrls: StateFlow<Map<String, String>> = container.communityDragonRepository.traitIconUrls
+    val teamPlannerRepository: TeamPlannerRepository = container.teamPlannerRepository
 
     /** The comp shown in the center column, or null when the list hasn't been tapped yet. */
     var selectedCompId: String? by mutableStateOf(null)

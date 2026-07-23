@@ -42,10 +42,12 @@ import com.tftricks.app.domain.model.BoardUnit
 import com.tftricks.app.domain.model.ComponentRequirement
 import com.tftricks.app.domain.model.CompVariant
 import com.tftricks.app.domain.model.TeamComp
+import com.tftricks.app.domain.repository.TeamPlannerRepository
 import com.tftricks.app.ui.AppViewModelProvider
 import com.tftricks.app.ui.components.BoardCellData
 import com.tftricks.app.ui.components.BoardGrid
 import com.tftricks.app.ui.components.CommunityDragonDebugBanner
+import com.tftricks.app.ui.components.CopyCompButton
 import com.tftricks.app.ui.components.ExpandableSection
 import com.tftricks.app.ui.components.FavoriteButton
 import com.tftricks.app.ui.components.GameIcon
@@ -131,7 +133,7 @@ fun CompDetailScreen(
                             onDismiss = { debugBannerDismissed = true }
                         )
                     }
-                    CompHeader(comp, content.isFavorite, traitIcons, viewModel::toggleFavorite)
+                    CompHeader(comp, content.isFavorite, traitIcons, communityDragon, viewModel::toggleFavorite)
                     FinalBoardSection(
                         comp = comp,
                         championIcons = championIcons,
@@ -200,6 +202,7 @@ private fun CompHeader(
     comp: TeamComp,
     isFavorite: Boolean,
     traitIcons: Map<String, String>,
+    teamPlannerRepository: TeamPlannerRepository,
     onToggleFavorite: () -> Unit
 ) {
     InfoCard {
@@ -232,6 +235,11 @@ private fun CompHeader(
                     color = TextSecondary
                 )
             }
+            CopyCompButton(
+                comp = comp,
+                teamPlannerRepository = teamPlannerRepository,
+                modifier = Modifier.padding(end = 4.dp)
+            )
             FavoriteButton(isFavorite = isFavorite, onToggle = onToggleFavorite)
         }
         FlowRow(

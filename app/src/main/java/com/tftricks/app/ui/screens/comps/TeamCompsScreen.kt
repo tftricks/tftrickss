@@ -26,8 +26,10 @@ import com.tftricks.app.domain.model.Champion
 import com.tftricks.app.domain.model.Item
 import com.tftricks.app.domain.model.TeamComp
 import com.tftricks.app.domain.model.Tier
+import com.tftricks.app.domain.repository.TeamPlannerRepository
 import com.tftricks.app.ui.AppViewModelProvider
 import com.tftricks.app.ui.components.BannerAdSlot
+import com.tftricks.app.ui.components.CopyCompButton
 import com.tftricks.app.ui.components.FavoriteButton
 import com.tftricks.app.ui.components.FilterChipRow
 import com.tftricks.app.ui.components.InfoCard
@@ -95,6 +97,7 @@ fun TeamCompsScreen(
                         itemIcons = itemIcons,
                         championsByName = content.championsByName,
                         itemsByName = content.itemsByName,
+                        teamPlannerRepository = communityDragon,
                         onClick = { onOpenComp(comp.id) },
                         onToggleFavorite = { viewModel.toggleFavorite(comp.id) }
                     )
@@ -113,6 +116,7 @@ private fun TeamCompCard(
     itemIcons: Map<String, String>,
     championsByName: Map<String, Champion>,
     itemsByName: Map<String, Item>,
+    teamPlannerRepository: TeamPlannerRepository,
     onClick: () -> Unit,
     onToggleFavorite: () -> Unit
 ) {
@@ -138,6 +142,11 @@ private fun TeamCompCard(
                     color = TextSecondary
                 )
             }
+            CopyCompButton(
+                comp = comp,
+                teamPlannerRepository = teamPlannerRepository,
+                modifier = Modifier.padding(end = 4.dp)
+            )
             FavoriteButton(isFavorite = isFavorite, onToggle = onToggleFavorite)
         }
         Row(
